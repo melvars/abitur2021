@@ -2,6 +2,7 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  user-select: none;
   padding: 0;
   margin: 0;
 }
@@ -44,9 +45,18 @@ body {
   border-radius: 8px;
   overflow: hidden;
   position: absolute;
-  will-change: transform;
   transition: all 0.3s ease-in-out;
   cursor: grab;
+  padding: 20px;
+}
+
+.card * {
+  pointer-events: none;
+}
+
+.moving.card {
+  transition: none;
+  cursor: grabbing;
 }
 
 .yay_or_nay {
