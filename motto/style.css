@@ -1,0 +1,77 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  background: #ccfbfe;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.cards {
+  flex-grow: 1;
+  padding-top: 40px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  /* align-items: flex-end; */
+  z-index: 1;
+}
+
+.card {
+  display: inline-block;
+  width: 90vw;
+  max-width: 400px;
+  height: 70vh;
+  background: white;
+  padding-bottom: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: absolute;
+  will-change: transform;
+  transition: all 0.3s ease-in-out;
+  cursor: grab;
+}
+
+.yay_or_nay {
+  position: absolute;
+  bottom: 0;
+  flex: 0 0 100px;
+  text-align: center;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.yay_or_nay button {
+  border-radius: 50%;
+  line-height: 60px;
+  width: 60px;
+  border: 0;
+  background: white;
+  display: inline-block;
+  margin: 20px;
+}
+
+.yay_or_nay button:focus {
+  outline: 0;
+}
+
+.yay_or_nay img {
+  vertical-align: middle;
+}
