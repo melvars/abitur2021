@@ -1,7 +1,14 @@
 const express = require("express");
 const sqlite3 = require("sqlite3");
-const fs = require("fs");
+const rateLimit = require("express-rate-limit");
 const app = express();
+// const fs = require("fs");
+
+const apiLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 100,
+    message: "Access overflow!",
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -50,6 +57,8 @@ function insert(main, description, votes) {
 
 app.use("/", express.static(__dirname + "/public"));
 
+app.use("/api/", apiLimiter);
+
 app.get("/api/list", (req, res) => {
     db.all("SELECT * FROM theme ORDER BY votes DESC", (err, all) => {
         if (err) {
@@ -91,5 +100,5 @@ app.on("close", () => {
 });
 
 create_db();
-console.log("Listening on port 3000");
+console.log("Listening on port 5005");
 app.listen(5005);
