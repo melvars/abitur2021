@@ -1,6 +1,7 @@
 *,
 *:before,
 *:after {
+    color: #424242;
     box-sizing: border-box;
     user-select: none;
     padding: 0;
@@ -9,7 +10,8 @@
 
 html,
 body {
-    background: #ccfbfe;
+    background-color: #eec0c6;
+    background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
     font-family: sans-serif;
     overflow: hidden;
 }
@@ -60,12 +62,43 @@ body {
     cursor: grabbing;
 }
 
-.yay_or_nay {
+.sebastian {
+    display: none;
     z-index: 100000;
+    width: 100vw;
+    height: 100vh;
+    overflow: scroll;
+    padding-top: 20px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.sebastian li {
+    margin: 10px;
+}
+
+.sebastian button {
+    position: absolute;
+    right: 0;
+}
+
+.yay_or_nay {
+    z-index: 10000;
     position: absolute;
     bottom: 0;
     flex: 0 0 100px;
     text-align: center;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.blabla {
+    z-index: 100000;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex: 0 0 100px;
+    text-align: right;
     padding-top: 20px;
     width: 100%;
 }
@@ -90,9 +123,16 @@ body {
     vertical-align: middle;
 }
 
-.add_button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: unset;
+@media only screen and (max-width: 600px) {
+    .fab button {
+        margin: 10px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .fab button {
+        width: 50px;
+        height: 50px;
+        line-height: 30px;
+    }
 }

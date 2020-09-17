@@ -90,6 +90,35 @@ function skipCard() {
     event.preventDefault();
 }
 
+function jumpTo(event) {
+    document.getElementById("sebastian").style.display = "none";
+    const cards = document.querySelectorAll(".card:not(.removed)");
+    let index = 0;
+    while (cards[index].getAttribute("data-id") != event.target.getAttribute("data-id")) {
+        index++;
+        skipCard();
+    }
+}
+
+function toggleOverview() {
+    const strange = document.getElementById("sebastian");
+    const off = strange.style.display == "none";
+    strange.style.display = off ? "block" : "none";
+    if (!off) return;
+    const overview_list = document.getElementById("overview");
+    overview_list.innerHTML = "";
+    const cards = document.querySelectorAll(".card:not(.removed)");
+    cards.forEach((element) => {
+        const li = document.createElement("li");
+        li.setAttribute("data-id", element.getAttribute("data-id"));
+        li.textContent = `${element.querySelectorAll("h1")[1].innerText} - ${element.querySelector("h2").innerText} (${
+            element.querySelectorAll("h2")[1].innerText
+        })`;
+        li.addEventListener("click", jumpTo);
+        overview_list.appendChild(li);
+    });
+}
+
 function createButtonListener(yay) {
     return function (event) {
         const card = document.querySelectorAll(".card:not(.removed)")[0];
@@ -159,3 +188,21 @@ document.getElementById("add").addEventListener("click", () => {
     const secondary = prompt("Was ist der zweite Teil?", "Wir sind super toll");
     if (main && secondary) add(main, secondary);
 });
+
+document.getElementById("idc").addEventListener("click", () => {
+    const wrapper = document.querySelector(".cards");
+    console.log(wrapper.children.length);
+    for (var i = wrapper.children.length; i >= 0; i--) wrapper.appendChild(wrapper.children[(Math.random() * i) | 0]);
+    initCards();
+});
+
+document.getElementById("aah").addEventListener("click", () => {
+    const elements = document.getElementsByClassName("removed");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].classList.remove("removed");
+    }
+    initCards();
+});
+
+document.getElementById("all").addEventListener("click", toggleOverview);
+document.getElementById("go").addEventListener("click", toggleOverview);
