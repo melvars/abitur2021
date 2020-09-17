@@ -70,7 +70,10 @@ app.post("/api/add", (req, res) => {
 
 app.post("/api/vote", (req, res) => {
     console.log(req.body.id, req.body.vote);
-    if (req.body.vote < -1 || req.body.vote > 1) res.send("error");
+    if (req.body.vote < -1 || req.body.vote > 1) {
+        res.send("error");
+        return;
+    }
 
     db.all("UPDATE theme SET votes = votes + ? WHERE id = ?", [req.body.vote, req.body.id], (err) => {
         if (err) {
