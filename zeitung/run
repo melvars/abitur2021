@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+mkdir -p build/ &&
+    latexmk -output-directory=build/ -xelatex &&
+    zathura build/main.pdf
