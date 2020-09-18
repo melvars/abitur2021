@@ -67,7 +67,8 @@ body {
     z-index: 100000;
     width: 100vw;
     height: 100vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding-top: 20px;
     text-align: center;
     transition: all 0.3s ease-in-out;
