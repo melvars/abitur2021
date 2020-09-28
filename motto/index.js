@@ -23,7 +23,7 @@ function create_db() {
     });
 
     db.run(
-        "CREATE TABLE IF NOT EXISTS theme(id INTEGER PRIMARY KEY AUTOINCREMENT, main TEXT NOT NULL, description TEXT NOT NULL, votes INTEGER DEFAULT 0, UNIQUE(main, description))",
+        "CREATE TABLE IF NOT EXISTS theme(id INTEGER PRIMARY KEY AUTOINCREMENT, main TEXT NOT NULL, description TEXT NOT NULL, votes INTEGER DEFAULT 0, hidden BOOL DEFAULT 0 UNIQUE(main, description))",
         (err) => {
             if (err) console.error(err.message);
         }
@@ -60,7 +60,7 @@ app.use("/", express.static(__dirname + "/public"));
 app.use("/api/", apiLimiter);
 
 app.get("/api/list", (req, res) => {
-    db.all("SELECT * FROM theme ORDER BY votes DESC", (err, all) => {
+    db.all("SELECT * FROM theme WHERE hidden = 0 ORDER BY votes DESC", (err, all) => {
         if (err) {
             res.send("error");
             console.error(err.message);
