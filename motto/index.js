@@ -11,27 +11,26 @@ const apiLimiter = rateLimit({
     message: "Access overflow!",
 });
 
-app.get("/sync", (req, res) => {
-    fs.readFile(__dirname + "/list.txt", "utf8", (err, data) => {
-        if (err) {
-            console.error(err);
-            return res.send("error");
-        }
-        const lines = data.split("\n");
-        lines.forEach(async (line) => {
-            const split = line.split(" - ");
-            try {
-                if (split.length >= 2)
-                    await db.query("INSERT INTO theme (main, description) VALUES (?, ?)", split.slice(0, 2));
-                else console.log(line);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                res.send("ok");
-            }
-        });
-    });
-});
+//app.get("/sync", (req, res) => {
+//    fs.readFile(__dirname + "/list.txt", "utf8", (err, data) => {
+//        if (err) {
+//            console.error(err);
+//            return res.send("error");
+//        }
+//        const lines = data.split("\n");
+//        lines.forEach(async (line) => {
+//            const split = line.split(" - ");
+//            try {
+//                if (split.length >= 2)
+//                    await db.query("INSERT INTO theme (main, description) VALUES (?, ?)", split.slice(0, 2));
+//                else console.log(line);
+//            } catch (e) {
+//                console.error(e);
+//            }
+//        });
+//	res.send("ok");
+//    });
+//});
 
 app.use("/", express.static(__dirname + "/public"));
 
