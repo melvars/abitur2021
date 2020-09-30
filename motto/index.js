@@ -39,7 +39,7 @@ app.use("/api/", apiLimiter);
 
 app.get("/api/list", async (req, res) => {
     try {
-        const themes = await db.query("SELECT * FROM theme" /* WHERE hidden = FALSE ORDER BY votes DESC"*/);
+        const themes = await db.query("SELECT * FROM theme WHERE hidden = FALSE ORDER BY votes DESC");
         res.json(themes);
     } catch (e) {
         console.error(e);
