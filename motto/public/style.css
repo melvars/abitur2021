@@ -124,6 +124,10 @@ body {
     vertical-align: middle;
 }
 
+.top_button img {
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 600px) {
     .fab button {
         margin: 10px;

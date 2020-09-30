@@ -4,7 +4,7 @@ document.querySelector(".wrapper").style.opacity = 1;
 
 function send(id, vote) {
     var xhp = new XMLHttpRequest();
-    xhp.open("POST", "/api/vote");
+    xhp.open("POST", "api/vote");
     xhp.setRequestHeader("Content-type", "application/json");
     xhp.onreadystatechange = () => {
         if (xhp.readyState == 4 && xhp.status == 200) console.log(xhp.responseText);
@@ -16,7 +16,7 @@ function send(id, vote) {
 
 function add(main, description) {
     var xhp = new XMLHttpRequest();
-    xhp.open("POST", "/api/add");
+    xhp.open("POST", "api/add");
     xhp.setRequestHeader("Content-type", "application/json");
     xhp.onreadystatechange = () => {
         if (xhp.readyState == 4 && xhp.status == 200) console.log(xhp.responseText);
@@ -141,7 +141,7 @@ function createButtonListener(yay) {
 }
 
 var xhp = new XMLHttpRequest();
-xhp.open("GET", "/api/list");
+xhp.open("GET", "api/list");
 xhp.onreadystatechange = () => {
     if (xhp.readyState == 4 && xhp.status == 200) {
         let list = JSON.parse(xhp.responseText);
@@ -207,6 +207,10 @@ document.getElementById("aah").addEventListener("click", () => {
 document.getElementById("all").addEventListener("click", toggleOverview);
 document.getElementById("go").addEventListener("click", toggleOverview);
 
-addEventListener("load", () => {
-    window.scrollTo(1, 0);
-}, false);
+addEventListener(
+    "load",
+    () => {
+        window.scrollTo(1, 0);
+    },
+    false,
+);
