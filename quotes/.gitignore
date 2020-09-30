@@ -1,4 +1,0 @@
-.env
-*.db
-*lock*
-node_*
