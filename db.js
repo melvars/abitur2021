@@ -50,7 +50,7 @@ class DB {
                         const password = await bcrypt.hash(pwd, 12);
                         await this.query(
                             "INSERT INTO users (username, name, middlename, surname, password, class_id, type_id) VALUE (?,?,?,?,?,?,?)",
-                            [username, names[0], middlename, surname, password, classIndex + 1, 2]
+                            [username, names[0].replace("\r", ""), middlename, surname, password, classIndex + 1, 2]
                         );
                     }
                 });

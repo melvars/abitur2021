@@ -9,6 +9,9 @@ const app = express.Router();
 
 app.use("/", express.static(__dirname + "/public"));
 
-app.get("/api/list", (req, res) => {});
+app.get("/api/list", async (req, res) => {
+    const users = await db.query("SELECT id, name, middlename, surname FROM users");
+    res.json(users);
+});
 
 module.exports = app;
