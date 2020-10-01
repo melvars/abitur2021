@@ -14,7 +14,7 @@ app.use(session({ secret: "keyboard cat", resave: false, saveUninitialized: true
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", checkUser, (req, res) => res.redirect("/motto"));
+app.use("/", express.static(__dirname + "/overview/public"));
 app.use("/motto", checkUser, motto);
 app.use("/quotes", checkUser, quotes);
 app.use("/auth", auth);
