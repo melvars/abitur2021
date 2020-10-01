@@ -38,13 +38,14 @@ class DB {
         fs.readFile(__dirname + "/names.csv", "utf8", async (err, data) => {
             if (err) throw err;
             const classes = data.split("--");
-            const userPasswords = [];
+            const userPasswords = {};
             console.log("Generating users");
             for (const [classIndex, clazz] of classes.entries()) {
                 const students = clazz.split("\n");
+                userPasswords[classIndex] = [];
                 // students.forEach(async (student) => {
                 for (const student of students) {
-                    console.log(".");
+                    // console.log(".");
                     // Fix undefined
                     if (student && student.length > 3) {
                         const [_, surname, name] = student.split(",");
@@ -55,7 +56,7 @@ class DB {
                         username += names[0].toLowerCase().slice(0, 2);
                         const pwd = nanoid.nanoid(8);
                         const password = await bcrypt.hash(pwd, 12);
-                        userPasswords.push({ username, pwd });
+                        userPasswords[classIndex].push({ username, pwd });
                         await this.query(
                             "INSERT INTO users (username, name, middlename, surname, password, class_id, type_id) VALUE (?,?,?,?,?,?,?)",
                             [username, names[0].replace("\r", ""), middlename, surname, password, classIndex + 1, 2]
