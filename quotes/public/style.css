@@ -20,8 +20,9 @@ form {
     background: white;
 }
 
-input:not([type="checkbox"]),
-button {
+input,
+button,
+select {
     width: 100%;
 }
 

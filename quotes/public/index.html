@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+            integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+
+        <title>Zitate</title>
+    </head>
+    <body>
+        <form class="pure-form pure-form-stacked" action="api/submit" method="post">
+            <fieldset>
+                <legend>Zitate</legend>
+                <label for="author">Author</label>
+                <select name="author" id="author"></select>
+                <label for="quote">Zitat</label>
+                <input name="quote" type="text" id="quote" placeholder="Zitat" />
+                <button type="submit" class="pure-button pure-button-primary">Hinzufügen</button>
+            </fieldset>
+        </form>
+
+        <script src="script.js" charset="utf-8"></script>
+    </body>
+</html>
