@@ -39,6 +39,9 @@ app.put("/api/password", async (req, res) => {
     }
 });
 
-app.get("/api/list", (req, res) => {});
+app.get("/api/list", async (req, res) => {
+    const users = await db.query("SELECT id, name, middlename, surname FROM users");
+    res.json(users);
+});
 
 module.exports = app;
