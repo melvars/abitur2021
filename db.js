@@ -35,13 +35,16 @@ class DB {
     }
 
     initValues() {
-        fs.readFile(__dirname + "/names.csv", "utf8", (err, data) => {
+        fs.readFile(__dirname + "/names.csv", "utf8", async (err, data) => {
             if (err) throw err;
             const classes = data.split("--");
             const userPasswords = [];
-            classes.forEach((clazz, classIndex) => {
+            console.log("Generating users");
+            for (const [classIndex, clazz] of classes.entries()) {
                 const students = clazz.split("\n");
-                students.forEach(async (student) => {
+                // students.forEach(async (student) => {
+                for (const student of students) {
+                    console.log(".");
                     // Fix undefined
                     if (student && student.length > 3) {
                         const [_, surname, name] = student.split(",");
@@ -58,9 +61,12 @@ class DB {
                             [username, names[0].replace("\r", ""), middlename, surname, password, classIndex + 1, 2]
                         );
                     }
-                });
+                }
+            }
+            fs.writeFile(__dirname + "/users.json", JSON.stringify(userPasswords), (err) => {
+                if (err) console.error(err);
             });
-            fs.writeFile(__dirname + "/users.json", JSON.stringify(userPasswords), console.error);
+            console.log("Initialized users!");
         });
     }
 
