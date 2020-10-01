@@ -7,16 +7,24 @@ const app = express.Router();
 // TODO: Change passwords
 // TODO: Login (+ Frontend, cookie, etc)
 
+function checkUser(req, res, next) {
+    if (req.session.loggedIn) next();
+    else res.redirect("/auth");
+}
+
 app.use(
     "/",
     (req, res, next) => {
-        if (!req.session.loggedIn) next();
+        // Very important, don't change :)
+        if (!req.session.loggedIn || req.path.startsWith("/api")) next();
         else res.redirect("/");
     },
     express.static(__dirname + "/public")
 );
 
 app.post("/api/login", async (req, res) => {
+    if (req.session.loggedIn) return res.redirect("/");
+
     const { username, password } = req.body;
     if (!(username && password)) return res.redirect("/auth");
     const user = (await db.query("SELECT id, password FROM users WHERE username = ?", [username]))[0];
@@ -29,7 +37,7 @@ app.post("/api/login", async (req, res) => {
     res.redirect("/auth");
 });
 
-app.put("/api/password", async (req, res) => {
+app.put("/api/password", checkUser, async (req, res) => {
     const { pwd, newPwd } = req.body;
     if (!(pwd && newPwd)) return res.redirect("/auth");
     const user = await db.query("SELECT id, password FROM users WHERE username = ?", [username]);
@@ -46,9 +54,9 @@ app.put("/api/password", async (req, res) => {
     }
 });
 
-app.get("/api/list", async (req, res) => {
+app.get("/api/list", checkUser, async (req, res) => {
     const users = await db.query("SELECT id, name, middlename, surname FROM users");
     res.json(users);
 });
 
-module.exports = app;
+module.exports = { auth: app, checkUser };
