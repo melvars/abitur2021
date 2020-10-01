@@ -8,7 +8,8 @@ const quotes = require("./quotes");
 
 const app = express();
 
-app.use(session({ secret: "keyboard cat", resave: false, saveUninitialized: true, cookie: { secure: true } }));
+// TODO: Use secure: true in production
+app.use(session({ secret: "keyboard cat", resave: false, saveUninitialized: true, cookie: { secure: false } }));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
