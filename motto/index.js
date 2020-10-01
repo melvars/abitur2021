@@ -3,14 +3,13 @@ const rateLimit = require("express-rate-limit");
 const db = require("../db");
 const app = express.Router();
 
-const fs = require("fs");
-
 const apiLimiter = rateLimit({
     windowMs: 10 * 60 * 1000,
     max: 100,
     message: "Access overflow!",
 });
 
+//const fs = require("fs");
 //app.get("/sync", (req, res) => {
 //    fs.readFile(__dirname + "/list.txt", "utf8", (err, data) => {
 //        if (err) {

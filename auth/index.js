@@ -12,14 +12,14 @@ app.use("/", express.static(__dirname + "/public"));
 app.post("/api/login", async (req, res) => {
     const { username, password } = req.body;
     if (!(username && password)) return res.send("error");
-    const user = await db.query("SELECT id, password FROM users WHERE username = ?", [username]);
+    const user = (await db.query("SELECT id, password FROM users WHERE username = ?", [username]))[0];
     if (!user.password) return res.send("error");
     const loggedIn = await bcrypt.compare(password, user.password);
     if (loggedIn) {
         req.session.loggedIn = true;
         req.session.uid = user.id;
     }
-    return res.send(LoggedIn);
+    return res.send(loggedIn);
 });
 
 app.put("/api/password", async (req, res) => {
