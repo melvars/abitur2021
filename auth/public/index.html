@@ -2,8 +2,31 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+            integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+
         <title>Auth</title>
     </head>
-    <body></body>
+    <body>
+        <form class="pure-form pure-form-stacked" action="api/login" method="post">
+            <fieldset>
+                <legend>Login</legend>
+                <label for="username">Username</label>
+                <input name="username" type="text" id="username" placeholder="Username" />
+                <label for="password">Passwort</label>
+                <input name="password" type="password" id="password" placeholder="Passwort" />
+                <label for="remember" class="pure-checkbox">
+                    <input name="remember" type="checkbox" id="remember" />
+                    Angemeldet bleiben
+                </label>
+                <button type="submit" class="pure-button pure-button-primary">Anmelden</button>
+            </fieldset>
+        </form>
+    </body>
 </html>
