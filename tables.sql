@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS users(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
-    middlename VARCHAR(255) NOT NULL,
+    middlename VARCHAR(255) NULL,
     surname VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     class_id INTEGER NOT NULL,
@@ -37,3 +37,11 @@ CREATE TABLE IF NOT EXISTS users(
     CONSTRAINT `fk_class_user` FOREIGN KEY (class_id) REFERENCES class (id),
     CONSTRAINT `fk_type_user` FOREIGN KEY (type_id) REFERENCES types (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO types VALUES (1, "teacher"), (2, "pupil");
+INSERT INTO class VALUES
+    (1, "TGM13.1"),
+    (2, "TGM13.2"),
+    (3, "TGTM13.1"),
+    (4, "TGI13.1"),
+    (5, "TGI13.2");
