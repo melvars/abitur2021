@@ -3,3 +3,4 @@
 node_*
 *.env
 *.csv
+users.json

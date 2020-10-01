@@ -28,6 +28,9 @@ class DB {
             queries.pop();
             for (const query of queries) await this.query(query);
             console.log("Tables created!");
+
+            const res = await this.query("SELECT * FROM users");
+            if (res.length === 0) this.initValues();
         });
     }
 
@@ -35,6 +38,7 @@ class DB {
         fs.readFile(__dirname + "/names.csv", "utf8", (err, data) => {
             if (err) throw err;
             const classes = data.split("--");
+            const userPasswords = [];
             classes.forEach((clazz, classIndex) => {
                 const students = clazz.split("\n");
                 students.forEach(async (student) => {
@@ -48,6 +52,7 @@ class DB {
                         username += names[0].toLowerCase().slice(0, 2);
                         const pwd = nanoid.nanoid(8);
                         const password = await bcrypt.hash(pwd, 12);
+                        userPasswords.push({ username, pwd });
                         await this.query(
                             "INSERT INTO users (username, name, middlename, surname, password, class_id, type_id) VALUE (?,?,?,?,?,?,?)",
                             [username, names[0].replace("\r", ""), middlename, surname, password, classIndex + 1, 2]
@@ -55,6 +60,7 @@ class DB {
                     }
                 });
             });
+            fs.writeFile(__dirname + "/users.json", JSON.stringify(userPasswords), console.error);
         });
     }
 
