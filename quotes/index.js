@@ -21,7 +21,7 @@ app.post("/api/add", async (req, res) => {
 
 app.get("/api/list", async (req, res) => {
     const quotes = await db.query(
-        "SELECT quotes.id, name, middlename, surname, quote FROM quotes INNER JOIN users AS a ON author_id = a.id"
+        "SELECT quotes.id, name, middlename, surname, quote FROM quotes INNER JOIN users AS a ON author_id = a.id ORDER BY name"
     );
     res.json(quotes);
 });

@@ -14,16 +14,20 @@
         <title>Zitate</title>
     </head>
     <body>
-        <form class="pure-form pure-form-stacked" action="api/add" method="post">
-            <fieldset>
-                <legend>Zitate</legend>
-                <label for="author">Author</label>
-                <select name="author" id="author" required></select>
-                <label for="quote">Zitat</label>
-                <input name="quote" type="text" id="quote" placeholder="Zitat" required />
-                <button type="submit" class="pure-button pure-button-primary">Hinzufügen</button>
-            </fieldset>
-        </form>
+        <div>
+            <form class="pure-form pure-form-stacked" action="api/add" method="post">
+                <fieldset>
+                    <legend>Zitate</legend>
+                    <label for="author">Author</label>
+                    <select name="author" id="author" required></select>
+                    <label for="quote">Zitat</label>
+                    <input name="quote" type="text" id="quote" placeholder="Zitat" required />
+                    <button type="submit" class="pure-button pure-button-primary">Hinzufügen</button>
+                </fieldset>
+            </form>
+
+            <ul id="quotes"></ul>
+        </div>
 
         <script src="script.js" charset="utf-8"></script>
     </body>
