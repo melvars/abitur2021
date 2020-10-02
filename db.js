@@ -12,9 +12,6 @@ class DB {
             database: process.env.DBName,
         });
         this.init();
-        this.query("SELECT * FROM users LIMIT 1").then((res) => {
-            if (res.length === 0) this.initValues();
-        });
     }
 
     connect() {
@@ -38,9 +35,9 @@ class DB {
         fs.readFile(__dirname + "/names.csv", "utf8", async (err, data) => {
             if (err) throw err;
 
-            await this.query("INSERT INTO types (name) VALUES ('teacher'), ('puipl')");
+            await this.query("INSERT INTO types (name) VALUES ('teacher'), ('pupil')");
             await this.query(
-                "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), (TGTM13.1), (TGI13.1), (TGI13.2)"
+                "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2')"
             );
 
             const classes = data.split("--");
@@ -61,7 +58,7 @@ class DB {
                         if (middlename) username += middlename[0].toLowerCase();
                         username += names[0].toLowerCase().slice(0, 2);
                         const pwd = nanoid.nanoid(8);
-                        const password = await bcrypt.hash(pwd, 12);
+                        const password = await bcrypt.hash(pwd, 10);
                         userPasswords[classIndex].push({ username, pwd });
                         await this.query(
                             "INSERT INTO users (username, name, middlename, surname, password, class_id, type_id) VALUE (?,?,?,?,?,?,?)",
