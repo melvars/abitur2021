@@ -50,6 +50,17 @@ class DB {
                 });
             });
 
+            fs.readFile(__dirname + "/mottos.txt", "utf8", (err, data) => {
+                if (err) throw err;
+
+                const mottos = data.split("\n");
+                mottos.forEach(async (motto) => {
+                    const [name, desc] = motto.split(" - ");
+                    if (motto)
+                        await this.query("INSERT INTO motto_votes (name, description) VALUES (?, ?)", [name, desc]);
+                });
+            });
+
             const classes = data.split("--");
             const userPasswords = {};
             console.log("Generating users");

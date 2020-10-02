@@ -9,12 +9,13 @@ CREATE TABLE IF NOT EXISTS theme(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- TODO: Remove dropping
-DROP TABLE IF EXISTS quotes;
-DROP TABLE IF EXISTS ranking_questions;
-DROP TABLE IF EXISTS ranking_answers;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS types;
-DROP TABLE IF EXISTS class;
+-- DROP TABLE IF EXISTS motto_votes;
+-- DROP TABLE IF EXISTS quotes;
+-- DROP TABLE IF EXISTS ranking_questions;
+-- DROP TABLE IF EXISTS ranking_answers;
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS types;
+-- DROP TABLE IF EXISTS class;
 
 CREATE TABLE IF NOT EXISTS types(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -71,4 +72,12 @@ CREATE TABLE IF NOT EXISTS ranking_answers(
     CONSTRAINT `fk_question_answer` FOREIGN KEY (question_id) REFERENCES users (id),
     CONSTRAINT `fk_user_answer1` FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT `fk_user_answer2` FOREIGN KEY (answer_id) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS motto_votes(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL DEFAULT '',
+    votes INTEGER DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
