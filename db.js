@@ -57,7 +57,7 @@ class DB {
                 mottos.forEach(async (motto) => {
                     const [name, desc] = motto.split(" - ");
                     if (motto)
-                        await this.query("INSERT INTO motto_votes (name, description) VALUES (?, ?)", [name, desc]);
+                        await this.query("INSERT INTO mottos (name, description) VALUES (?, ?)", [name, desc]);
                 });
             });
 

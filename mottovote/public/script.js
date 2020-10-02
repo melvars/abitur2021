@@ -1,3 +1,4 @@
+const maxVotes = 3;
 get();
 
 async function get() {
@@ -7,17 +8,18 @@ async function get() {
     for (const motto of mottos) {
         const row = document.createElement("div");
         const id = motto.id;
+        
+        for (let i = 0; i < maxVotes; i++) {
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.name = id;
+            row.append(cb);
+        }
+        
+        const text = document.createElement("span");
+        text.textContent = `${motto.name} ${motto.description ? "-" : ""} ${motto.description}`
 
-        const cb = document.createElement("input");
-        cb.type = "checkbox";
-        cb.id = "motto" + id;
-        cb.name = id;
-
-        const label = document.createElement("label");
-        label.for = "motto" + id;
-        label.textContent = `${motto.name} ${motto.description ? "-" : ""} ${motto.description}`
-
-        row.append(cb, label);
+        row.append(text);
         window.vote.appendChild(row);
     }
     addListeners();
@@ -29,15 +31,15 @@ function addListeners() {
     boxes.forEach((box) => {
         box.addEventListener("change", (evt) => {
             const checkedSiblings = document.querySelectorAll("input[type=checkbox]:checked");
-            if (checkedSiblings.length > 3) evt.target.checked = false;
+            if (checkedSiblings.length > maxVotes) evt.target.checked = false;
         });
     });
 
     window.voteButton.addEventListener("click", async () => {
         const checked = document.querySelectorAll("input[type=checkbox]:checked");
-        if (checked.length !== 3) return;
+        if (checked.length > maxVotes) return; // Shouldn't be necessary
         const req = {};
-        for (const box of checked) req[box.name] = 1; // Amount of votes
+        for (const box of checked) req[box.name] = box.name in req ? req[box.name] + 1 : 1; // Amount of votes
         const resp = await fetch("api/vote", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
