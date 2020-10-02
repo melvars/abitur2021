@@ -9,7 +9,18 @@ const quotes = require("./quotes");
 const app = express();
 
 // TODO: Use secure: true in production
-app.use(session({ secret: "keyboard cat", resave: false, saveUninitialized: true, cookie: { secure: false } }));
+const redis = require("redis");
+const RedisStore = require("connect-redis")(session);
+const redisClient = redis.createClient();
+app.use(
+    session({
+        store: new RedisStore({ client: redisClient }),
+        secret: "keyboard cat",
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false },
+    })
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
