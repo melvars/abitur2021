@@ -9,10 +9,10 @@ CREATE TABLE IF NOT EXISTS theme(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- TODO: Remove dropping
-DROP TABLE IF EXISTS quotes;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS types;
-DROP TABLE IF EXISTS class;
+-- DROP TABLE IF EXISTS quotes;
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS types;
+-- DROP TABLE IF EXISTS class;
 
 CREATE TABLE IF NOT EXISTS types(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -49,11 +49,3 @@ CREATE TABLE IF NOT EXISTS quotes(
     CONSTRAINT `fk_user_quote1` FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT `fk_user_quote2` FOREIGN KEY (author_id) REFERENCES users (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO types VALUES (1, "teacher"), (2, "pupil");
-INSERT INTO class VALUES
-    (1, "TGM13.1"),
-    (2, "TGM13.2"),
-    (3, "TGTM13.1"),
-    (4, "TGI13.1"),
-    (5, "TGI13.2");

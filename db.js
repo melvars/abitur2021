@@ -12,7 +12,7 @@ class DB {
             database: process.env.DBName,
         });
         this.init();
-        this.query("SELECT * FROM users").then((res) => {
+        this.query("SELECT * FROM users LIMIT 1").then((res) => {
             if (res.length === 0) this.initValues();
         });
     }
@@ -37,6 +37,12 @@ class DB {
     initValues() {
         fs.readFile(__dirname + "/names.csv", "utf8", async (err, data) => {
             if (err) throw err;
+
+            await this.query("INSERT INTO types (name) VALUES ('teacher'), ('puipl')");
+            await this.query(
+                "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), (TGTM13.1), (TGI13.1), (TGI13.2)"
+            );
+
             const classes = data.split("--");
             const userPasswords = {};
             console.log("Generating users");
