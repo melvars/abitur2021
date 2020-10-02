@@ -9,10 +9,12 @@ CREATE TABLE IF NOT EXISTS theme(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- TODO: Remove dropping
--- DROP TABLE IF EXISTS quotes;
--- DROP TABLE IF EXISTS users;
--- DROP TABLE IF EXISTS types;
--- DROP TABLE IF EXISTS class;
+DROP TABLE IF EXISTS quotes;
+DROP TABLE IF EXISTS ranking_questions;
+DROP TABLE IF EXISTS ranking_answers;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS types;
+DROP TABLE IF EXISTS class;
 
 CREATE TABLE IF NOT EXISTS types(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -48,4 +50,25 @@ CREATE TABLE IF NOT EXISTS quotes(
     UNIQUE KEY uk_quote (author_id, quote),
     CONSTRAINT `fk_user_quote1` FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT `fk_user_quote2` FOREIGN KEY (author_id) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS ranking_questions(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    question VARCHAR(255) NOT NULL,
+    type_id INTEGER NOT NULL,
+
+    UNIQUE KEY uk_question (question, type_id),
+    CONSTRAINT `fk_type_question` FOREIGN KEY (type_id) REFERENCES types (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS ranking_answers(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    question_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL, -- Submitter
+    answer_id INTEGER NOT NULL, -- Selected pupil
+
+    UNIQUE KEY uk_answer (question_id, user_id),
+    CONSTRAINT `fk_question_answer` FOREIGN KEY (question_id) REFERENCES users (id),
+    CONSTRAINT `fk_user_answer1` FOREIGN KEY (user_id) REFERENCES users (id),
+    CONSTRAINT `fk_user_answer2` FOREIGN KEY (answer_id) REFERENCES users (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

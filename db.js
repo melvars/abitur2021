@@ -40,6 +40,16 @@ class DB {
                 "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2')"
             );
 
+            fs.readFile(__dirname + "/poll.txt", "utf8", (err, data) => {
+                if (err) throw err;
+
+                const questions = data.split("\n");
+                questions.forEach((question) => {
+                    if (question.length > 0)
+                        this.query("INSERT INTO ranking_questions (question, type_id) VALUE (?,?)", [question, 2]);
+                });
+            });
+
             const classes = data.split("--");
             const userPasswords = {};
             console.log("Generating users");

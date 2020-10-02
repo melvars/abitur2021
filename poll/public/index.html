@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+            integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+
+        <title>Schüler-Ranking</title>
+    </head>
+    <body>
+        <div>
+            <form class="pure-form pure-form-stacked" action="api/answer" method="post">
+                <fieldset>
+                    <!-- TODO: Add progress -->
+                    <legend>Schüler-Ranking</legend>
+                    <p>Welche/r Schüler/in...</p>
+                    <label id="question_label" for="question"></label>
+                    <input name="question" id="question" hidden></input>
+                    <br/>
+                    <label for="answer">Antwort</label>
+                    <select name="answer" id="answer" required></select>
+                    <button type="submit" class="pure-button pure-button-primary">Antworten</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <script src="script.js" charset="utf-8"></script>
+    </body>
+</html>

@@ -9,7 +9,7 @@ app.post("/api/add", checkUser, async (req, res) => {
     if (!req.body.author || !req.body.quote) return res.send("error");
     try {
         await db.query("INSERT INTO quotes (user_id, author_id, quote) VALUE (?,?,?)", [
-            req.session.uid, // TODO: Add actual user identification
+            req.session.uid,
             parseInt(req.body.author),
             req.body.quote,
         ]);
