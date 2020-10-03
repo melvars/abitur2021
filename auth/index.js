@@ -37,6 +37,8 @@ app.post("/api/login", async (req, res) => {
     res.redirect("/auth");
 });
 
+app.use("/api/logout", (req, res) => req.session.destroy() & res.redirect("/"));
+
 app.put("/api/password", checkUser, async (req, res) => {
     const { pwd, newPwd } = req.body;
     if (!(pwd && newPwd)) return res.redirect("/auth");
