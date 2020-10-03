@@ -21,8 +21,16 @@ function appendQuote(response) {
                 "beforeend",
                 `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${elem["surname"]}: ${
                     elem["quote"]
-                }</li>`,
+                } <span data-id="${elem["id"]}">[Löschen]</span></li>`,
             );
+
+        document.querySelector(`li span[data-id="${elem["id"]}"]`).addEventListener("click", (event) => {
+            fetch("api/delete/" + event.target.getAttribute("data-id"), { method: "DELETE" })
+                .then((response) => response.text())
+                .then((response) => {
+                    if (response == "ok") event.target.parentNode.remove();
+                });
+        });
     });
 }
 
@@ -30,7 +38,7 @@ fetch("/auth/api/list?class=all")
     .then((response) => response.json())
     .then((response) => appendOption(response));
 
-fetch("/quotes/api/list")
+fetch("api/list")
     .then((response) => response.json())
     .then((response) => appendQuote(response));
 
