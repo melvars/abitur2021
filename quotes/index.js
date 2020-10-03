@@ -22,7 +22,8 @@ app.post("/api/add", checkUser, async (req, res) => {
 
 app.get("/api/list", checkUser, async (req, res) => {
     const quotes = await db.query(
-        "SELECT q.id, a.name, a.middlename, a.surname, q.quote, c.name AS class FROM quotes AS q INNER JOIN users AS a ON author_id = a.id INNER JOIN class AS c ON a.class_id = c.id ORDER BY a.name",
+        "SELECT q.id, a.name, a.middlename, a.surname, q.quote, c.name AS class, (q.user_id = ?) AS owner FROM quotes AS q INNER JOIN users AS a ON author_id = a.id INNER JOIN class AS c ON a.class_id = c.id ORDER BY a.name",
+        [req.session.uid],
     );
     res.json(quotes);
 });

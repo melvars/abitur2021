@@ -21,10 +21,11 @@ function appendQuote(response) {
                 "beforeend",
                 `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${elem["surname"]}: ${
                     elem["quote"]
-                } <span data-id="${elem["id"]}">[Löschen]</span></li>`,
+                }${elem["owner"] ? '<span data-id="' + elem["id"] + '">[Löschen]</span></li>' : ""}`,
             );
 
-        document.querySelector(`li span[data-id="${elem["id"]}"]`).addEventListener("click", (event) => {
+        const span = document.querySelector(`li span[data-id="${elem["id"]}"]`);
+        if (span) span.addEventListener("click", (event) => {
             fetch("api/delete/" + event.target.getAttribute("data-id"), { method: "DELETE" })
                 .then((response) => response.text())
                 .then((response) => {
