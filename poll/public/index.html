@@ -14,7 +14,12 @@
         <title>Schüler-Ranking</title>
     </head>
     <body>
-        <div>
+        <div class="pure-menu pure-menu-horizontal">
+            <a href="/" class="pure-menu-item pure-menu-link">Home</a>
+            <a href="/auth/api/logout" class="pure-menu-item pure-menu-link">Logout</a>
+        </div>
+
+        <main>
             <form class="pure-form pure-form-stacked" action="api/answer" method="post">
                 <fieldset>
                     <!-- TODO: Add progress -->
@@ -28,7 +33,7 @@
                     <button type="submit" class="pure-button pure-button-primary">Antworten</button>
                 </fieldset>
             </form>
-        </div>
+        </main>
 
         <script src="script.js" charset="utf-8"></script>
     </body>

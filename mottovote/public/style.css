@@ -8,6 +8,10 @@ body {
     background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
 }
 
+div {
+    background: white;
+}
+
 main {
     display: flex;
     flex-flow: row wrap;
@@ -49,7 +53,7 @@ select {
 }
 
 @media only screen and (max-width: 600px) {
-    div {
+    main {
         width: calc(100% - 50px);
     }
 }

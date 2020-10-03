@@ -9,6 +9,10 @@ body {
 }
 
 div {
+    background: white;
+}
+
+main {
     position: absolute;
     max-height: 80%;
     overflow-y: scroll;
@@ -29,7 +33,7 @@ select {
 }
 
 @media only screen and (max-width: 600px) {
-    div {
+    main {
         width: calc(100% - 50px);
     }
 }
