@@ -13,6 +13,7 @@ async function get() {
             const cb = document.createElement("input");
             cb.type = "checkbox";
             cb.name = id;
+            cb.checked = motto.votes && motto.votes-- > 0
             row.append(cb);
         }
         

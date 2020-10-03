@@ -7,7 +7,13 @@ const app = express.Router();
 app.use("/", checkUser, express.static(__dirname + "/public/"));
 
 app.get("/api/list", checkUser, async (req, res) => {
-    const mottos = await db.query("SELECT id, name, description FROM mottos ORDER BY name, description");
+    const mottos = await db.query("SELECT id, name, description FROM mottos");
+    const votes = await db.query("SELECT motto_id, votes FROM motto_votes WHERE user_id = ?", [req.session.uid]);
+
+    for (const vote of votes) {
+        const mid = mottos.findIndex((motto) => motto.id === vote.motto_id);
+        if (mid) mottos[mid].votes = vote.votes;
+    }
     res.json(mottos);
 });
 
