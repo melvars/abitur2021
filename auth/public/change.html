@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+            integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+
+        <title>Auth</title>
+    </head>
+    <body>
+        <form class="pure-form pure-form-stacked" id="change-form" action="api/password" method="POST">
+            <fieldset>
+                <legend>Login</legend>
+                <label for="old-password">Altes Passwort</label>
+                <input name="oldPassword" type="password" id="old-password" placeholder="Passwort" required />
+                <label for="password">Neues Passwort</label>
+                <input name="newPassword" type="password" id="password" placeholder="Neues Passwort" required />
+                <label for="new-password">Neues Passwort (wiederholt)</label>
+                <input name="newPasswordRep" type="password" id="new-password" placeholder="Neues Passwort" required />
+                <button type="submit" class="pure-button pure-button-primary">Anmelden</button>
+            </fieldset>
+        </form>
+
+        <script src="script.js"></script>
+    </body>
+</html>
