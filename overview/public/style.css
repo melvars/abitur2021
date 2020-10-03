@@ -20,6 +20,10 @@ body {
     background: white;
 }
 
+div {
+    background: white;
+}
+
 @media only screen and (max-width: 600px) {
     .card {
         width: calc(100% - 50px);
