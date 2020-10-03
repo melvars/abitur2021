@@ -10,7 +10,7 @@ function appendOption(response) {
             "beforeend",
             `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${
                 elem["surname"]
-            }</option>`
+            }</option>`,
         );
     });
 }
@@ -23,7 +23,7 @@ function appendQuote(response) {
                 "beforeend",
                 `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${elem["surname"]}: ${
                     elem["quote"]
-                }</li>`
+                }</li>`,
             );
     });
 }

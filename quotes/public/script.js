@@ -8,7 +8,7 @@ function appendOption(response) {
             "beforeend",
             `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${
                 elem["surname"]
-            }</option>`
+            }</option>`,
         );
     });
 }
@@ -21,12 +21,12 @@ function appendQuote(response) {
                 "beforeend",
                 `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${elem["surname"]}: ${
                     elem["quote"]
-                }</li>`
+                }</li>`,
             );
     });
 }
 
-fetch("/auth/api/list")
+fetch("/auth/api/list?class=all")
     .then((response) => response.json())
     .then((response) => appendOption(response));
 

@@ -19,7 +19,7 @@ app.use(
         if (!req.session.loggedIn || req.path.startsWith("/api")) next();
         else res.redirect("/");
     },
-    express.static(__dirname + "/public")
+    express.static(__dirname + "/public"),
 );
 
 app.post("/api/login", async (req, res) => {
@@ -55,7 +55,16 @@ app.put("/api/password", checkUser, async (req, res) => {
 });
 
 app.get("/api/list", checkUser, async (req, res) => {
-    const users = await db.query("SELECT id, name, middlename, surname FROM users");
+    let users;
+    if (req.query.class === "all") {
+        users = await db.query("SELECT id, name, middlename, surname FROM users");
+    } else {
+        users = await db.query(
+            "SELECT id, name, middlename, surname FROM users WHERE class_id = (SELECT class_id FROM users WHERE id = ?) ORDER BY name",
+            [req.session.uid],
+        );
+    }
+
     res.json(users);
 });
 
