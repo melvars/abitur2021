@@ -12,7 +12,6 @@ main {
     display: flex;
     flex-flow: row wrap;
     position: absolute;
-    height: 40%;
     width: 50%;
     left: 50%;
     top: 50%;
@@ -28,6 +27,7 @@ main {
 }
 
 #vote {
+    max-height: 80%;
     margin-bottom: 20px;
     overflow-y: scroll;
     width: 100%;

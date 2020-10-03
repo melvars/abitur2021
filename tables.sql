@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS mottos(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL DEFAULT '',
-    
+
     UNIQUE KEY main (name, description)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
