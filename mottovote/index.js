@@ -3,7 +3,6 @@ const db = require("../db");
 const { checkUser } = require("../auth");
 const app = express.Router();
 
-
 app.use("/", checkUser, express.static(__dirname + "/public/"));
 
 app.get("/api/list", checkUser, async (req, res) => {
@@ -12,7 +11,7 @@ app.get("/api/list", checkUser, async (req, res) => {
 
     for (const vote of votes) {
         const mid = mottos.findIndex((motto) => motto.id === vote.motto_id);
-        if (mid) mottos[mid].votes = vote.votes;
+        if (mid !== undefined) mottos[mid].votes = vote.votes;
     }
     res.json(mottos);
 });
@@ -22,10 +21,11 @@ app.put("/api/vote", checkUser, async (req, res) => {
     try {
         if (Object.keys(req.body).length > 3) return res.send("error");
         for (const mid in req.body) {
-            await db.query(
-                "INSERT INTO motto_votes (user_id, motto_id, votes) VALUES (?, ?, ?)",
-                [req.session.uid, mid, req.body[mid]]
-            );
+            await db.query("INSERT INTO motto_votes (user_id, motto_id, votes) VALUES (?, ?, ?)", [
+                req.session.uid,
+                mid,
+                req.body[mid],
+            ]);
         }
         res.send("ok");
     } catch (e) {
@@ -36,7 +36,9 @@ app.put("/api/vote", checkUser, async (req, res) => {
 
 // Vote result - admin
 app.get("/api/get", checkUser, async (req, res) => {
-    const votes = await db.query("SELECT m.id, m.name, m.description, SUM(votes) votes FROM motto_votes mv RIGHT JOIN mottos m on mv.motto_id = m.id GROUP BY m.id, m.name, m.description ORDER BY SUM(votes) DESC");
+    const votes = await db.query(
+        "SELECT m.id, m.name, m.description, SUM(votes) votes FROM motto_votes mv RIGHT JOIN mottos m on mv.motto_id = m.id GROUP BY m.id, m.name, m.description ORDER BY SUM(votes) DESC",
+    );
     res.json(votes);
 });
 
