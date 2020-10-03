@@ -21,7 +21,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         cookie: { secure: false },
-    })
+    }),
 );
 
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +29,7 @@ app.use(express.json());
 
 app.use("/", express.static(__dirname + "/overview/public"));
 app.use("/motto", checkUser, motto);
-app.use("/mottovote", mottovote);
+app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
 app.use("/auth", auth);

@@ -19,19 +19,20 @@ function appendQuote(response) {
             .getElementById(elem["class"])
             .insertAdjacentHTML(
                 "beforeend",
-                `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${elem["surname"]}: ${
+                `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] : ""}${elem["surname"]}: ${
                     elem["quote"]
-                }${elem["owner"] ? '<span data-id="' + elem["id"] + '">[Löschen]</span></li>' : ""}`,
+                }${elem["owner"] ? ' <span data-id="' + elem["id"] + '">[x]</span></li>' : ""}`,
             );
 
         const span = document.querySelector(`li span[data-id="${elem["id"]}"]`);
-        if (span) span.addEventListener("click", (event) => {
-            fetch("api/delete/" + event.target.getAttribute("data-id"), { method: "DELETE" })
-                .then((response) => response.text())
-                .then((response) => {
-                    if (response == "ok") event.target.parentNode.remove();
-                });
-        });
+        if (span)
+            span.addEventListener("click", (event) => {
+                fetch("api/delete/" + event.target.getAttribute("data-id"), { method: "DELETE" })
+                    .then((response) => response.text())
+                    .then((response) => {
+                        if (response == "ok") event.target.parentNode.remove();
+                    });
+            });
     });
 }
 

@@ -8,17 +8,17 @@ async function get() {
     for (const motto of mottos) {
         const row = document.createElement("div");
         const id = motto.id;
-        
+
         for (let i = 0; i < maxVotes; i++) {
             const cb = document.createElement("input");
             cb.type = "checkbox";
             cb.value = id;
-            cb.checked = motto.votes && motto.votes-- > 0
+            cb.checked = motto.votes && motto.votes-- > 0;
             row.append(cb);
         }
-        
+
         const text = document.createElement("span");
-        text.textContent = `${motto.name} ${motto.description ? "-" : ""} ${motto.description}`
+        text.textContent = `${motto.name} ${motto.description ? "-" : ""} ${motto.description}`;
 
         row.append(text);
         window.vote.appendChild(row);

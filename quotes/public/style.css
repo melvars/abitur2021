@@ -34,6 +34,16 @@ button:not([type="submit"]) {
     font-size: 15px;
 }
 
+li {
+    word-wrap: break-word;
+}
+
+span {
+    float: right;
+    color: red;
+    cursor: pointer;
+}
+
 input,
 button,
 select {
