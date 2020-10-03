@@ -46,7 +46,8 @@ function addListeners() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(req),
         });
-        console.log(await resp.text());
-
+        const res = await resp.text();
+        if (res === "ok") location.reload();
+        else alert(res);
     });
 }

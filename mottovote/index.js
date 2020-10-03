@@ -20,7 +20,7 @@ app.get("/api/list", checkUser, async (req, res) => {
 app.put("/api/vote", checkUser, async (req, res) => {
     await db.query("DELETE FROM motto_votes WHERE user_id = ?", [req.session.uid]);
     try {
-        if (req.body.entries().length > 3) return res.send("error");
+        if (Object.keys(req.body).length > 3) return res.send("error");
         for (const mid in req.body) {
             await db.query(
                 "INSERT INTO motto_votes (user_id, motto_id, votes) VALUES (?, ?, ?)",
