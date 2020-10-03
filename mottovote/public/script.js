@@ -12,7 +12,7 @@ async function get() {
         for (let i = 0; i < maxVotes; i++) {
             const cb = document.createElement("input");
             cb.type = "checkbox";
-            cb.name = id;
+            cb.value = id;
             cb.checked = motto.votes && motto.votes-- > 0
             row.append(cb);
         }
@@ -40,7 +40,7 @@ function addListeners() {
         const checked = document.querySelectorAll("input[type=checkbox]:checked");
         if (checked.length > maxVotes) return; // Shouldn't be necessary
         const req = {};
-        for (const box of checked) req[box.name] = box.name in req ? req[box.name] + 1 : 1; // Amount of votes
+        for (const box of checked) req[box.value] = box.value in req ? req[box.value] + 1 : 1; // Amount of votes
         const resp = await fetch("api/vote", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },

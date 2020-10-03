@@ -1,0 +1,55 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #eec0c6;
+    background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
+}
+
+main {
+    display: flex;
+    flex-flow: row wrap;
+    position: absolute;
+    height: 40%;
+    width: 50%;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+}
+
+#voteButton {
+    height: 10%;
+}
+
+#vote {
+    margin-bottom: 20px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+#vote div {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#vote div input {
+    margin-right: 5px;
+}
+
+button,
+select {
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    div {
+        width: calc(100% - 50px);
+    }
+}

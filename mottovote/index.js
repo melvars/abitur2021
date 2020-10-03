@@ -20,6 +20,7 @@ app.get("/api/list", checkUser, async (req, res) => {
 app.put("/api/vote", checkUser, async (req, res) => {
     await db.query("DELETE FROM motto_votes WHERE user_id = ?", [req.session.uid]);
     try {
+        if (req.body.entries().length > 3) return res.send("error");
         for (const mid in req.body) {
             await db.query(
                 "INSERT INTO motto_votes (user_id, motto_id, votes) VALUES (?, ?, ?)",
@@ -31,6 +32,12 @@ app.put("/api/vote", checkUser, async (req, res) => {
         console.error(e);
         res.send("error");
     }
+});
+
+// Vote result - admin
+app.get("/api/get", checkUser, async (req, res) => {
+    const votes = await db.query("SELECT m.id, m.name, m.description, SUM(votes) votes FROM motto_votes mv RIGHT JOIN mottos m on mv.motto_id = m.id GROUP BY m.id, m.name, m.description ORDER BY SUM(votes) DESC");
+    res.json(votes);
 });
 
 module.exports = app;
