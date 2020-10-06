@@ -37,7 +37,7 @@ class DB {
 
             await this.query("INSERT INTO types (name) VALUES ('teacher'), ('pupil')");
             await this.query(
-                "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2')"
+                "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')"
             );
 
             fs.readFile(__dirname + "/poll.txt", "utf8", (err, data) => {

@@ -44,7 +44,7 @@ fetch("api/list")
     .then((response) => response.json())
     .then((response) => appendQuote(response));
 
-const classes = ["TGI13.1", "TGI13.2", "TGM13.1", "TGM13.2", "TGTM13.1"];
+const classes = ["TGI13.1", "TGI13.2", "TGM13.1", "TGM13.2", "TGTM13.1", "teacher"];
 classes.forEach((clazz) => {
     document.getElementById("open_" + clazz).addEventListener("click", () => {
         const ul = document.getElementById(clazz);

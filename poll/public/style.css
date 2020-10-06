@@ -14,8 +14,6 @@ div {
 
 main {
     position: absolute;
-    max-height: 80%;
-    overflow-y: scroll;
     width: 30%;
     left: 50%;
     top: 50%;
