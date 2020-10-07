@@ -32,3 +32,19 @@
 ...schwänzt am meisten?
 ...macht nie Hausaufgaben?
 ...feiert am meisten?
+--
+...ist am coolsten?
+...ist am schönsten?
+...hat den besten Style?
+...macht die beste Abivorbereitung?
+...verbraucht am meisten Papier (Regenwald)?
+...hat am meisten Allgemeinwissen?
+...ist am pünktlichsten?
+...ist am furchteinflößendsten?
+...hat die hässlichste Schrift?
+...ist am kompetentesten?
+...hat die längste Korrekturzeit?
+...hat die kürzeste Korrekturzeit?
+...ist am gefürchtesten?
+...bestes Lehrerpaar?
+
