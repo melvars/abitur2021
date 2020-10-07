@@ -62,8 +62,8 @@ app.get("/api/list", checkUser, async (req, res) => {
         users = await db.query("SELECT id, name, middlename, surname FROM users ORDER BY name");
     } else {
         users = await db.query(
-            "SELECT id, name, middlename, surname FROM users WHERE class_id = (SELECT class_id FROM users WHERE id = ?) ORDER BY name",
-            [req.session.uid],
+            "SELECT id, name, middlename, surname FROM users WHERE class_id = (SELECT class_id FROM users WHERE id = ?) AND id != ? ORDER BY name",
+            [req.session.uid, req.session.uid],
         );
     }
 

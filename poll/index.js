@@ -7,6 +7,7 @@ app.use("/", checkUser, express.static(__dirname + "/public"));
 
 app.post("/api/answer", checkUser, async (req, res) => {
     if (!req.body.answer || !req.body.question) return res.send("error");
+    if (req.body.answer == req.session.uid) return res.send("error");
     try {
         const user_class = (await db.query("SELECT class_id FROM users WHERE id = ?", [req.session.uid]))[0].class_id;
         const answer_class = (await db.query("SELECT class_id FROM users WHERE id = ?", [parseInt(req.body.answer)]))[0]
