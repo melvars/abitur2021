@@ -35,7 +35,7 @@ class DB {
         fs.readFile(__dirname + "/names.csv", "utf8", async (err, data) => {
             if (err) throw err;
 
-            await this.query("INSERT INTO types (name) VALUES ('teacher'), ('pupil')");
+            await this.query("INSERT INTO types (name) VALUES ('pupil'), ('teacher')");
             await this.query(
                 "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')"
             );
@@ -43,10 +43,13 @@ class DB {
             fs.readFile(__dirname + "/poll.txt", "utf8", (err, data) => {
                 if (err) throw err;
 
-                const questions = data.split("\n");
-                questions.forEach((question) => {
-                    if (question.length > 0)
-                        this.query("INSERT INTO ranking_questions (question, type_id) VALUE (?,?)", [question, 2]);
+                const parts = data.split("--");
+                parts.forEach((part, i) => {
+                    const questions = part.split("\n");
+                    questions.forEach((question) => {
+                        if (question.length > 0)
+                            this.query("INSERT INTO ranking_questions (question, type_id) VALUE (?,?)", [question, i+1]);
+                    });
                 });
             });
 
