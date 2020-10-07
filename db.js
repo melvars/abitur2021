@@ -40,6 +40,7 @@ class DB {
                 "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')"
             );
 
+            // User polls
             fs.readFile(__dirname + "/poll.txt", "utf8", (err, data) => {
                 if (err) throw err;
 
@@ -53,6 +54,7 @@ class DB {
                 });
             });
 
+            // Motto votes
             fs.readFile(__dirname + "/mottos.txt", "utf8", (err, data) => {
                 if (err) throw err;
 
@@ -61,6 +63,15 @@ class DB {
                     const [name, desc] = motto.split(" - ");
                     if (motto)
                         await this.query("INSERT INTO mottos (name, description) VALUES (?, ?)", [name, desc]);
+                });
+            });
+
+            fs.readFile(__dirname + "/profile.txt", "utf8", (err, data) => {
+                if (err) throw err;
+
+                const questions = data.split("\n");
+                questions.forEach((question) => {
+                    if (question) this.query("INSERT INTO profile_questions (question) VALUE (?)", [question]);
                 });
             });
 

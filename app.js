@@ -7,6 +7,7 @@ const motto = require("./motto");
 const mottovote = require("./mottovote");
 const quotes = require("./quotes");
 const poll = require("./poll");
+const profile = require("./profile");
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/motto", checkUser, motto);
 app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
+app.use("/profile", checkUser, profile);
 app.use("/auth", auth);
 
 app.listen(5005, () => console.log("Server started on http://localhost:5005"));
