@@ -1,14 +1,19 @@
 const dropdown = document.getElementById("author");
+const classes = ["TGM13.1", "TGM13.2", "TGTM13.1", "TGI13.1", "TGI13.2", "Lehrer"];
 
 dropdown.insertAdjacentHTML("beforeend", '<option selected="true" disabled>Author auswählen...</option>');
+dropdown.insertAdjacentHTML("beforeend", `<option disabled>--${classes[0]}--</option>`);
 
 function appendOption(response) {
-    response.forEach((elem) => {
+    response.forEach((elem, i) => {
         dropdown.insertAdjacentHTML(
             "beforeend",
-            `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${
-                elem["surname"]
-            }</option>`,
+            (response[i - 1 < 0 ? 0 : i - 1]["class_id"] !== elem["class_id"]
+                ? `<option disabled>--${classes[elem["class_id"] - 1]}--</option>`
+                : "") +
+                `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${
+                    elem["surname"]
+                }</option>`,
         );
     });
 }
@@ -44,7 +49,6 @@ fetch("api/list")
     .then((response) => response.json())
     .then((response) => appendQuote(response));
 
-const classes = ["TGI13.1", "TGI13.2", "TGM13.1", "TGM13.2", "TGTM13.1", "teacher"];
 classes.forEach((clazz) => {
     document.getElementById("open_" + clazz).addEventListener("click", () => {
         const ul = document.getElementById(clazz);

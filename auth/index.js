@@ -59,10 +59,10 @@ app.post("/api/password", checkUser, async (req, res) => {
 app.get("/api/list", checkUser, async (req, res) => {
     let users;
     if (req.query.class === "all") {
-        users = await db.query("SELECT id, name, middlename, surname FROM users ORDER BY name");
+        users = await db.query("SELECT id, name, middlename, surname, class_id FROM users ORDER BY class_id, name");
     } else {
         users = await db.query(
-            "SELECT id, name, middlename, surname FROM users WHERE class_id = (SELECT class_id FROM users WHERE id = ?) AND id != ? ORDER BY name",
+            "SELECT id, name, middlename, surname, class_id FROM users WHERE class_id = (SELECT class_id FROM users WHERE id = ?) AND id != ? ORDER BY name",
             [req.session.uid, req.session.uid],
         );
     }
