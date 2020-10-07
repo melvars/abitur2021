@@ -4,6 +4,9 @@
 -- DROP TABLE IF EXISTS quotes;
 -- DROP TABLE IF EXISTS ranking_questions;
 -- DROP TABLE IF EXISTS ranking_answers;
+-- DROP TABLE IF EXISTS profile_comments;
+-- DROP TABLE IF EXISTS profile_answers;
+-- DROP TABLE IF EXISTS profile_questions;
 -- DROP TABLE IF EXISTS users;
 -- DROP TABLE IF EXISTS types;
 -- DROP TABLE IF EXISTS class;
@@ -83,4 +86,30 @@ CREATE TABLE IF NOT EXISTS motto_votes(
     UNIQUE KEY uk_vote (user_id, motto_id),
     CONSTRAINT `fk_voted_user` FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT `fk_voted_vote` FOREIGN KEY (motto_id) REFERENCES mottos (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS profile_questions(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    question VARCHAR(255) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS profile_answers(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    question_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    answer TEXT NULL, -- Consider VARCHAR
+
+    UNIQUE KEY uk_answer (question_id, user_id),
+    CONSTRAINT `fk_profile_user` FOREIGN KEY (user_id) REFERENCES users (id),
+    CONSTRAINT `fk_profile_question` FOREIGN KEY (question_id) REFERENCES profile_questions (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS profile_comments(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    profile_id INTEGER NOT NULL, -- User's profile
+    user_id INTEGER NOT NULL, -- User who commented
+    comment TEXT NOT NULL,
+
+    CONSTRAINT `fk_user_profile` FOREIGN KEY (profile_id) REFERENCES users (id),
+    CONSTRAINT `fk_user_commenter` FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
