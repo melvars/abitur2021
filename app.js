@@ -34,4 +34,4 @@ app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
 app.use("/auth", auth);
 
-app.listen(5005, () => console.log("Server started on http://localhost:5005"));
+app.listen(process.env.PORT || 5005, () => console.log("Server started on http://localhost:5005"));
