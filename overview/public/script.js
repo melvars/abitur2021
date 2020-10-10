@@ -14,7 +14,7 @@ fetch("/auth/api/status").then(response => response.json()).then(response => {
 		second.innerText = "Logout";
 		if (response.admin) {
 		third.href = "/admin";
-		third.innerText = "Administration";
+		third.innerText = "Admin";
 		}
 	} else {
 		document.querySelectorAll("div.pure-menu")[0].style.display = "none";
