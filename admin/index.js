@@ -32,13 +32,15 @@ app.get("/api/all", checkAdmin, async (req, res) => {
 });
 
 app.get("/api/questions", checkAdmin, async (req, res) => {
-    const questions = await db.query("SELECT q.id, question, t.name type FROM ranking_questions q INNER JOIN types t on type_id = t.id ORDER BY q.id");
+    const questions = await db.query(
+        "SELECT q.id, question, t.name type FROM ranking_questions q INNER JOIN types t on type_id = t.id ORDER BY q.id",
+    );
     res.json(questions);
 });
 
 app.get("/api/answers", checkAdmin, async (req, res) => {
     const answers = await db.query(
-	    "SELECT question_id, name, middlename, surname, count(*) count FROM ranking_questions q INNER JOIN ranking_answers a ON q.id = a.question_id INNER JOIN users u ON answer_id = u.id GROUP BY question_id, answer_id ORDER BY count DESC"
+        "SELECT question_id, name, middlename, surname, count(*) count FROM ranking_questions q INNER JOIN ranking_answers a ON q.id = a.question_id INNER JOIN users u ON answer_id = u.id GROUP BY question_id, answer_id ORDER BY count DESC",
     );
     res.json(answers);
 });
