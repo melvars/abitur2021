@@ -1,5 +1,5 @@
 const dropdown = document.getElementById("author");
-const classes = ["TGM13.1", "TGM13.2", "TGTM13.1", "TGI13.1", "TGI13.2", "Lehrer"];
+const classes = ["TGM13.1", "TGM13.2", "TGTM13.1", "TGI13.1", "TGI13.2", "teacher"];
 
 dropdown.insertAdjacentHTML("beforeend", '<option selected="true" disabled>Author auswählen...</option>');
 dropdown.insertAdjacentHTML("beforeend", `<option disabled>--${classes[0]}--</option>`);
