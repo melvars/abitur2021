@@ -34,12 +34,4 @@ app.put("/api/vote", checkUser, async (req, res) => {
     }
 });
 
-// Vote result - admin
-app.get("/api/get", checkUser, async (req, res) => {
-    const votes = await db.query(
-        "SELECT m.id, m.name, m.description, SUM(votes) votes FROM motto_votes mv RIGHT JOIN mottos m on mv.motto_id = m.id GROUP BY m.id, m.name, m.description ORDER BY SUM(votes) DESC",
-    );
-    res.json(votes);
-});
-
 module.exports = app;

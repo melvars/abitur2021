@@ -2,10 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 
-const { auth, checkUser } = require("./auth");
+const { auth, checkUser, checkAdmin } = require("./auth");
 const mottovote = require("./mottovote");
 const quotes = require("./quotes");
 const poll = require("./poll");
+const admin = require("./admin");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/", express.static(__dirname + "/overview/public"));
 app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
+app.use("/admin", checkAdmin, admin);
 app.use("/auth", auth);
 
 app.listen(process.env.PORT || 5005, () => console.log("Server started on http://localhost:5005"));

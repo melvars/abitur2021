@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS users(
     password VARCHAR(255) NOT NULL,
     class_id INTEGER NOT NULL,
     type_id INTEGER NOT NULL,
+    is_admin BOOLEAN DEFAULT FALSE,
 
     UNIQUE KEY uk_name (name, middlename, surname),
     CONSTRAINT `fk_class_user` FOREIGN KEY (class_id) REFERENCES class (id),

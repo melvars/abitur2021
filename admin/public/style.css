@@ -1,0 +1,33 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #eec0c6;
+    background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
+}
+
+.card {
+    position: absolute;
+    max-height: 80%;
+    overflow: auto;
+    width: 30%;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+}
+
+div {
+    background: white;
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        width: calc(100% - 50px);
+    }
+}
