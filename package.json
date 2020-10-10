@@ -18,6 +18,7 @@
   },
   "scripts": {
     "format": "prettier --write \"*.{html,css,js}\"",
+    "lint": "eslint .",
     "run": "node app.js",
     "dev": "nodemon app.js"
   }

@@ -3,7 +3,6 @@ const express = require("express");
 const session = require("express-session");
 
 const { auth, checkUser } = require("./auth");
-const motto = require("./motto");
 const mottovote = require("./mottovote");
 const quotes = require("./quotes");
 const poll = require("./poll");
@@ -28,7 +27,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/", express.static(__dirname + "/overview/public"));
-app.use("/motto", checkUser, motto);
 app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
