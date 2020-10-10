@@ -2,10 +2,15 @@ const express = require("express");
 const db = require("../db");
 const app = express.Router();
 
-app.use("/", express.static(__dirname + "/public"));
+app.use("/", express.static(__dirname + "/public/"));
+
+app.get("/user/:uid", async (req, res) => {});
 
 // Basic API
-app.get("/api/user", async (req, res) => {});
+app.get("/api/user", async (req, res) => {
+    const user = (await db.query("SELECT name, surname FROM users WHERE id = ?", [req.session.uid]))[0];
+    res.json(user);
+});
 
 app.get("/api/questions", async (req, res) => {
     const questions = await db.query("SELECT id, question FROM profile_questions");
@@ -21,10 +26,38 @@ app.get("/api/questions", async (req, res) => {
 });
 
 app.post("/api/add", async (req, res) => {
-    await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)");
+    try {
+        for (let qid in req.body) {
+            if (!req.body.hasOwnProperty(qid)) continue;
+            await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
+                qid,
+                req.session.uid,
+                req.body[qid].replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+            ]);
+        }
+        res.send("ok");
+    } catch (e) {
+        console.error(e);
+        res.send("error");
+    }
 });
 
-app.put("/api/update", async (req, res) => {});
+app.put("/api/update", async (req, res) => {
+    try {
+        for (let qid in req.body) {
+            if (!req.body.hasOwnProperty(qid)) continue;
+            await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", [
+                req.body[qid].replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+                qid,
+                req.session.uid,
+            ]);
+        }
+        res.send("ok");
+    } catch (e) {
+        console.error(e);
+        res.send("error");
+    }
+});
 
 // Comments API
 app.get("/api/comments/:uid", async (req, res) => {});
