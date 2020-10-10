@@ -89,6 +89,14 @@ app.get("/api/list", checkUser, async (req, res) => {
     res.json(users);
 });
 
-app.get("/api/status", (req, res) => res.json({ loggedIn: req.session.loggedIn }));
+app.get("/api/status", (req, res) => {
+	if (req.session.loggedIn) {
+        db.query("SELECT is_admin FROM users WHERE id = ?", [req.session.uid]).then((ret) => {
+	    res.json({ loggedIn: req.session.loggedIn, admin: ret[0].is_admin ? true : false });
+        });
+	} else {
+	res.json({ loggedIn: false, admin: false });
+	}
+});
 
 module.exports = { auth: app, checkUser, checkAdmin };
