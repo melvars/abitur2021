@@ -29,7 +29,19 @@ fetch("/auth/api/list" + (type == "teacher" ? "?class=teacher" : ""))
     .then((response) => appendOption(response));
 
 fetch("/poll/api/get?type=" + type)
-    .then((response) => response.json())
+    .then(async (response) => {
+        let json;
+        try {
+            return await response.json();
+        } catch (e) {
+            document.querySelector("p").innerText = "";
+            question_label.innerText = "Du hast bereits alle Fragen beantwortet.";
+            document.querySelectorAll("label")[1].innerText = "Danke!";
+            document.querySelector("select").style.display = "none";
+            document.querySelector("button").style.display = "none";
+            throw "Oh nein, alle beantwortet!"; // :^)
+        }
+    })
     .then((response) => {
         question_label.innerText = response["question"];
         question_input.setAttribute("value", response["id"]);
