@@ -7,6 +7,7 @@
 -- DROP TABLE IF EXISTS profile_comments;
 -- DROP TABLE IF EXISTS profile_answers;
 -- DROP TABLE IF EXISTS profile_questions;
+-- DROP TABLE IF EXISTS profile_input_types;
 -- DROP TABLE IF EXISTS users;
 -- DROP TABLE IF EXISTS types;
 -- DROP TABLE IF EXISTS class;
@@ -88,9 +89,17 @@ CREATE TABLE IF NOT EXISTS motto_votes(
     CONSTRAINT `fk_voted_vote` FOREIGN KEY (motto_id) REFERENCES mottos (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS profile_input_types(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    type VARCHAR(20) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS profile_questions(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    question VARCHAR(255) NOT NULL UNIQUE
+    question VARCHAR(255) NOT NULL UNIQUE,
+    question_type INTEGER NOT NULL,
+
+    CONSTRAINT `fk_profile_question_type` FOREIGN KEY (question_type) REFERENCES profile_input_types (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS profile_answers(

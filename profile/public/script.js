@@ -12,6 +12,14 @@ function appendQuestions(question) {
     const label = document.createElement("label");
     label.for = "id_" + question.id;
     label.textContent = question.question;
+    div.appendChild(label);
+
+    if (question.type === "file" && question.answer) {
+        const img = document.createElement("img");
+        img.src = "uploads/" + question.answer;
+        img.alt = "Image";
+        div.appendChild(img);
+    }
 
     const field = document.createElement("input");
     field.id = "id_" + question.id;
@@ -19,8 +27,10 @@ function appendQuestions(question) {
     if (question.answer !== undefined) init = false;
     field.value = question.answer;
     field.placeholder = question.question;
+    field.type = question.type;
+    if (question.type === "file") field.accept = "image/*";
 
-    div.append(label, field);
+    div.appendChild(field);
     fs.insertBefore(div, fs.querySelector("button"));
 }
 
@@ -30,14 +40,13 @@ form.addEventListener("submit", async (evt) => {
     const method = init ? "POST" : "PUT";
 
     const inputs = form.querySelectorAll("input");
-    const body = {};
-    for (const input of inputs) body[input.name] = input.value;
+    const body = new FormData();
+    for (const input of inputs) {
+        if (input.type !== "file") body.append(input.name, input.value);
+        else body.append(input.name, input.files[0] ?? "dbg-image");
+    }
 
-    const resp = await fetch(url, {
-        headers: { "Content-Type": "application/json" },
-        method,
-        body: JSON.stringify(body),
-    });
+    const resp = await fetch(url, { method, body });
     const res = await resp.text();
     if (res !== "ok") alert("AHHHH");
 });

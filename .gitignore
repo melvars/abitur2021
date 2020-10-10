@@ -4,3 +4,4 @@ node_*
 *.env
 *.csv
 users.json
+profile/public/uploads/**/*
