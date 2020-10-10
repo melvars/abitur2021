@@ -11,7 +11,7 @@
         />
         <link rel="stylesheet" href="style.css" type="text/css" media="all" />
 
-        <title>Admin</title>
+        <title>Votes</title>
     </head>
     <body>
         <div class="pure-menu pure-menu-horizontal">
@@ -19,11 +19,10 @@
             <a href="/auth/api/logout" class="pure-menu-item pure-menu-link">Logout</a>
         </div>
         <div class="card">
-            <h2>Admin</h2>
-            <ul>
-                <li><a href="ranking.html">Ranking</a></li>
-                <li><a href="votes.html">Votes</a></li>
-            </ul>
+            <canvas id="votes" width="400" height="400"></canvas>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
+        <script src="votes.js"></script>
     </body>
 </html>

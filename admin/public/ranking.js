@@ -11,7 +11,6 @@ fetch("api/questions")
     });
 
 function render(questions) {
-    console.log(questions);
     const teacher = document.querySelector("ul#teacher");
     const pupil = document.querySelector("ul#pupil");
     questions.forEach((question) => {
