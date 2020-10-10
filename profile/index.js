@@ -2,14 +2,16 @@ const express = require("express");
 const db = require("../db");
 const app = express.Router();
 
-app.use("/", express.static(__dirname + "/public/"));
+app.use("/", express.static(__dirname + "/public"));
 
 // Basic API
 app.get("/api/user", async (req, res) => {});
 
 app.get("/api/questions", async (req, res) => {
     const questions = await db.query("SELECT id, question FROM profile_questions");
-    const answers = await db.query("SELECT answer, question_id FROM profile_answers WHERE user_id = ?", [req.session.uid]);
+    const answers = await db.query("SELECT answer, question_id FROM profile_answers WHERE user_id = ?", [
+        req.session.uid,
+    ]);
 
     for (const answer of answers) {
         const qid = questions.findIndex((question) => question.id === answer.question_id);
@@ -18,7 +20,9 @@ app.get("/api/questions", async (req, res) => {
     res.json(questions);
 });
 
-app.post("/api/add", async (req, res) => {});
+app.post("/api/add", async (req, res) => {
+    await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)");
+});
 
 app.put("/api/update", async (req, res) => {});
 
