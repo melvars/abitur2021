@@ -77,6 +77,15 @@ class DB {
                 });
             });
 
+            fs.readFile(__dirname + "/profile.txt", "utf8", (err, data) => {
+                if (err) throw err;
+
+                const questions = data.split("\n");
+                questions.forEach((question) => {
+                    if (question) this.query("INSERT INTO profile_questions (question) VALUE (?)", [question]);
+                });
+            });
+
             const classes = data.split("--");
             const userPasswords = {};
             console.log("Generating users");
