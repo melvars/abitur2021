@@ -8,23 +8,10 @@ function appendOption(response) {
     response.forEach((elem) => {
         dropdown.insertAdjacentHTML(
             "beforeend",
-            `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${
+            `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] + " " : ""}${
                 elem["surname"]
             }</option>`,
         );
-    });
-}
-
-function appendQuote(response) {
-    response.forEach((elem) => {
-        document
-            .getElementById(elem["class"])
-            .insertAdjacentHTML(
-                "beforeend",
-                `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${elem["surname"]}: ${
-                    elem["quote"]
-                }</li>`,
-            );
     });
 }
 

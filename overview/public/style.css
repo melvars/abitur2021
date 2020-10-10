@@ -10,6 +10,8 @@ body {
 
 .card {
     position: absolute;
+    max-height: 80%;
+    overflow: auto;
     width: 30%;
     left: 50%;
     top: 50%;
