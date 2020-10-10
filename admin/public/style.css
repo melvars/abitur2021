@@ -4,15 +4,17 @@ body {
     margin: 0;
     height: 100%;
     width: 100%;
+    color: #777;
+    line-height: 1.6;
     background-color: #eec0c6;
     background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
 }
 
 .card {
     position: absolute;
-    max-height: 80%;
-    overflow: auto;
-    width: 40%;
+    max-height: calc(100% - 140px);
+    overflow-y: auto;
+    width: 50%;
     left: 50%;
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
@@ -26,8 +28,8 @@ div {
     background: white;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 700px) {
     .card {
-        width: calc(100% - 50px);
+        width: calc(100% - 20%);
     }
 }
