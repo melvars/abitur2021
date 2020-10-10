@@ -33,7 +33,7 @@ main {
 #vote {
     max-height: 80%;
     margin-bottom: 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     width: 100%;
 }
 
