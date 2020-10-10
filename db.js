@@ -37,7 +37,7 @@ class DB {
 
             await this.query("INSERT INTO types (name) VALUES ('pupil'), ('teacher')");
             await this.query(
-                "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')"
+                "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')",
             );
 
             fs.readFile(__dirname + "/poll.txt", "utf8", (err, data) => {
@@ -48,7 +48,10 @@ class DB {
                     const questions = part.split("\n");
                     questions.forEach((question) => {
                         if (question.length > 0)
-                            this.query("INSERT INTO ranking_questions (question, type_id) VALUE (?,?)", [question, i+1]);
+                            this.query("INSERT INTO ranking_questions (question, type_id) VALUE (?,?)", [
+                                question,
+                                i + 1,
+                            ]);
                     });
                 });
             });
@@ -59,8 +62,7 @@ class DB {
                 const mottos = data.split("\n");
                 mottos.forEach(async (motto) => {
                     const [name, desc] = motto.split(" - ");
-                    if (motto)
-                        await this.query("INSERT INTO mottos (name, description) VALUES (?, ?)", [name, desc]);
+                    if (motto) await this.query("INSERT INTO mottos (name, description) VALUES (?, ?)", [name, desc]);
                 });
             });
 
@@ -86,7 +88,7 @@ class DB {
                         userPasswords[classIndex].push({ username, pwd });
                         await this.query(
                             "INSERT INTO users (username, name, middlename, surname, password, class_id, type_id) VALUE (?,?,?,?,?,?,?)",
-                            [username, names[0].replace("\r", ""), middlename, surname, password, classIndex + 1, 2]
+                            [username, names[0].replace("\r", ""), middlename, surname, password, classIndex + 1, 2],
                         );
                     }
                 }
@@ -102,8 +104,6 @@ class DB {
         const conn = await this.connect();
         try {
             return await conn.query(query, params);
-        } catch (e) {
-            throw e;
         } finally {
             conn.release();
         }
