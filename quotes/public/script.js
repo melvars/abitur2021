@@ -11,7 +11,7 @@ function appendOption(response) {
             (response[i - 1 < 0 ? 0 : i - 1]["class_id"] !== elem["class_id"]
                 ? `<option disabled>--${classes[elem["class_id"] - 1]}--</option>`
                 : "") +
-                `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] : " "}${
+                `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] + " " : ""}${
                     elem["surname"]
                 }</option>`,
         );
@@ -24,7 +24,7 @@ function appendQuote(response) {
             .getElementById(elem["class"])
             .insertAdjacentHTML(
                 "beforeend",
-                `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] : ""}${elem["surname"]}: ${
+                `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] + " " : ""}${elem["surname"]}: ${
                     elem["quote"]
                 }${elem["owner"] ? ' <span data-id="' + elem["id"] + '">[x]</span></li>' : ""}`,
             );
