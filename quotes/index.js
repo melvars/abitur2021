@@ -11,7 +11,7 @@ app.post("/api/add", checkUser, async (req, res) => {
         await db.query("INSERT INTO quotes (user_id, author_id, quote) VALUE (?,?,?)", [
             req.session.uid,
             parseInt(req.body.author),
-            req.body.quote,
+            req.body.quote.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
         ]);
         res.redirect("/quotes");
     } catch (e) {
