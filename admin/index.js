@@ -1,0 +1,55 @@
+const express = require("express");
+const db = require("../db");
+const app = express.Router();
+const { checkUser, checkAdmin } = require("../auth");
+
+app.use("/", checkAdmin, express.static(__dirname + "/public"));
+
+// For debugging ig
+app.get("/api/all", checkAdmin, async (req, res) => {
+    const all = [];
+
+    const types = await db.query("SELECT * FROM types ORDER BY id");
+    const clazz = await db.query("SELECT * FROM class ORDER BY id");
+    const users = await db.query("SELECT * FROM users ORDER BY id");
+    const quotes = await db.query("SELECT * FROM quotes ORDER BY id");
+    const ranking_questions = await db.query("SELECT * FROM ranking_questions ORDER BY id");
+    const ranking_answers = await db.query("SELECT * FROM ranking_answers ORDER BY id");
+    const mottos = await db.query("SELECT * FROM mottos ORDER BY id");
+    const motto_votes = await db.query("SELECT * FROM motto_votes ORDER BY id");
+
+    all.push(
+        { quotes },
+        { clazz },
+        { users },
+        { quotes },
+        { ranking_questions },
+        { ranking_answers },
+        { mottos },
+        { motto_votes },
+    );
+    res.json(all);
+});
+
+app.get("/api/questions", checkAdmin, async (req, res) => {
+    const questions = await db.query(
+        "SELECT q.id, question, t.name type FROM ranking_questions q INNER JOIN types t on type_id = t.id ORDER BY q.id",
+    );
+    res.json(questions);
+});
+
+app.get("/api/answers", checkAdmin, async (req, res) => {
+    const answers = await db.query(
+        "SELECT question_id, name, middlename, surname, count(*) count FROM ranking_questions q INNER JOIN ranking_answers a ON q.id = a.question_id INNER JOIN users u ON answer_id = u.id GROUP BY question_id, answer_id ORDER BY count DESC",
+    );
+    res.json(answers);
+});
+
+app.get("/api/votes", checkAdmin, async (req, res) => {
+    const votes = await db.query(
+        "SELECT m.id, m.name, m.description, SUM(votes) votes FROM motto_votes mv RIGHT JOIN mottos m on mv.motto_id = m.id GROUP BY m.id, m.name, m.description ORDER BY SUM(votes) DESC",
+    );
+    res.json(votes);
+});
+
+module.exports = app;

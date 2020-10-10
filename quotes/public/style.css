@@ -16,7 +16,7 @@ main {
     position: absolute;
     max-height: 80%;
     overflow-y: auto;
-    width: 30%;
+    width: 40%;
     left: 50%;
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
@@ -54,7 +54,7 @@ select {
     width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     main {
         width: calc(100% - 50px);
     }

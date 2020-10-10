@@ -14,7 +14,7 @@ div {
 
 form {
     position: absolute;
-    width: 30%;
+    width: 40%;
     left: 50%;
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
@@ -29,7 +29,7 @@ button {
     width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     form {
         width: calc(100% - 50px);
     }

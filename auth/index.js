@@ -4,12 +4,22 @@ const db = require("../db");
 
 const app = express.Router();
 
-// TODO: Change passwords
-// TODO: Login (+ Frontend, cookie, etc)
-
 function checkUser(req, res, next) {
     if (req.session.loggedIn) next();
     else res.redirect("/auth");
+}
+
+function checkAdmin(req, res, next) {
+    if (!req.session.loggedIn) res.redirect("/auth");
+
+    try {
+        db.query("SELECT is_admin FROM users WHERE id = ?", [req.session.uid]).then((ret) => {
+            if (ret[0].is_admin == 1) next();
+            else res.redirect("/");
+        });
+    } catch (e) {
+        res.redirect("/");
+    }
 }
 
 app.use(
@@ -79,6 +89,14 @@ app.get("/api/list", checkUser, async (req, res) => {
     res.json(users);
 });
 
-app.get("/api/status", (req, res) => res.json({ loggedIn: req.session.loggedIn }));
+app.get("/api/status", (req, res) => {
+	if (req.session.loggedIn) {
+        db.query("SELECT is_admin FROM users WHERE id = ?", [req.session.uid]).then((ret) => {
+	    res.json({ loggedIn: req.session.loggedIn, admin: ret[0].is_admin ? true : false });
+        });
+	} else {
+	res.json({ loggedIn: false, admin: false });
+	}
+});
 
-module.exports = { auth: app, checkUser };
+module.exports = { auth: app, checkUser, checkAdmin };

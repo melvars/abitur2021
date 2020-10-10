@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+            integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+
+        <title>Votes</title>
+    </head>
+    <body>
+        <div class="pure-menu pure-menu-horizontal">
+            <a href="/" class="pure-menu-item pure-menu-link">Home</a>
+            <a href="/auth/api/logout" class="pure-menu-item pure-menu-link">Logout</a>
+        </div>
+        <div class="card">
+            <button class="pure-button" id="switch">Switch</button>
+            <br />
+            <canvas id="votes" width="400" height="400"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
+        <script src="votes.js"></script>
+    </body>
+</html>
