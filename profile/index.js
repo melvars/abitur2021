@@ -7,7 +7,7 @@ app.use(fileupload({}));
 
 app.use("/", express.static(__dirname + "/public/"));
 
-app.get("/user/:uid", async (req, res) => { });
+app.get("/user/:uid", async (req, res) => {});
 
 // Basic API
 app.get("/api/user", async (req, res) => {
@@ -16,7 +16,9 @@ app.get("/api/user", async (req, res) => {
 });
 
 app.get("/api/questions", async (req, res) => {
-    const questions = await db.query("SELECT q.id, q.question, t.type FROM profile_questions q INNER JOIN profile_input_types t ON t.id = q.question_type");
+    const questions = await db.query(
+        "SELECT q.id, q.question, t.type FROM profile_questions q INNER JOIN profile_input_types t ON t.id = q.question_type",
+    );
     const answers = await db.query("SELECT answer, question_id FROM profile_answers WHERE user_id = ?", [
         req.session.uid,
     ]);
@@ -36,7 +38,7 @@ app.post("/api/add", async (req, res) => {
             await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
                 qid,
                 req.session.uid,
-                answer
+                answer,
             ]);
         }
         for (let fid in req.files) {
@@ -46,7 +48,7 @@ app.post("/api/add", async (req, res) => {
 
             image = req.files[fid];
             imageType = image.name.split(".").reverse()[0];
-            imageName = `${req.session.uid}_${(new Date()).getTime()}.${imageType}`;
+            imageName = `${req.session.uid}_${new Date().getTime()}.${imageType}`;
             image.mv(__dirname + "/public/uploads/" + imageName);
             await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
                 qid,
@@ -79,7 +81,7 @@ app.put("/api/update", async (req, res) => {
 
             image = req.files[fid];
             imageType = image.name.split(".").reverse()[0];
-            imageName = `${req.session.uid}_${(new Date()).getTime()}.${imageType}`;
+            imageName = `${req.session.uid}_${new Date().getTime()}.${imageType}`;
             image.mv(__dirname + "/public/uploads/" + imageName);
             await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", [
                 imageName,
@@ -95,12 +97,12 @@ app.put("/api/update", async (req, res) => {
 });
 
 // Comments API
-app.get("/api/comments/:uid", async (req, res) => { });
+app.get("/api/comments/:uid", async (req, res) => {});
 
-app.post("/api/comment", async (req, res) => { });
+app.post("/api/comment", async (req, res) => {});
 
-app.put("/api/comment", async (req, res) => { });
+app.put("/api/comment", async (req, res) => {});
 
-app.delete("/api/comment", async (req, res) => { });
+app.delete("/api/comment", async (req, res) => {});
 
 module.exports = app;

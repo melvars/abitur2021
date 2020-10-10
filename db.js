@@ -40,7 +40,6 @@ class DB {
                 "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')",
             );
 
-
             const types = ["number", "file", "date", "text", "color"];
             await this.query("INSERT INTO profile_input_types (type) VALUES (?), (?), (?), (?), (?)", types);
 
@@ -80,7 +79,10 @@ class DB {
                 questions.forEach((question) => {
                     if (question) {
                         const [q, type] = question.split(" - ");
-                        this.query("INSERT INTO profile_questions (question, question_type) VALUE (?, ?)", [q, types.indexOf(type) + 1]);
+                        this.query("INSERT INTO profile_questions (question, question_type) VALUE (?, ?)", [
+                            q,
+                            types.indexOf(type) + 1,
+                        ]);
                     }
                 });
             });

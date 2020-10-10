@@ -38,7 +38,7 @@ app.post("/api/login", async (req, res) => {
     const { username, password } = req.body;
     if (!(username && password)) return res.redirect("/auth");
     const user = (await db.query("SELECT id, password FROM users WHERE username = ?", [username]))[0];
-    if (!user.password) return res.redirect("/auth");
+    if (!user || !user.password) return res.redirect("/auth");
     const loggedIn = await bcrypt.compare(password, user.password);
     if (loggedIn) {
         req.session.loggedIn = true;
@@ -53,7 +53,7 @@ app.post("/api/password", checkUser, async (req, res) => {
     const { oldPassword, newPassword, newPasswordRep } = req.body;
     if (!(oldPassword && newPassword && newPasswordRep) || newPassword !== newPasswordRep) return res.send("error");
     const user = (await db.query("SELECT id, password FROM users WHERE id = ?", [req.session.uid]))[0];
-    if (!user.password) return res.send("error");
+    if (!user || !user.password) return res.send("error");
     if (req.session.loggedIn && user.id === req.session.uid) return res.redirect("/auth");
     if (!(await bcrypt.compare(oldPassword, user.password))) return res.send("error");
     try {
@@ -90,13 +90,13 @@ app.get("/api/list", checkUser, async (req, res) => {
 });
 
 app.get("/api/status", (req, res) => {
-	if (req.session.loggedIn) {
+    if (req.session.loggedIn) {
         db.query("SELECT is_admin FROM users WHERE id = ?", [req.session.uid]).then((ret) => {
-	    res.json({ loggedIn: req.session.loggedIn, admin: ret[0].is_admin ? true : false });
+            res.json({ loggedIn: req.session.loggedIn, admin: ret[0].is_admin ? true : false });
         });
-	} else {
-	res.json({ loggedIn: false, admin: false });
-	}
+    } else {
+        res.json({ loggedIn: false, admin: false });
+    }
 });
 
 module.exports = { auth: app, checkUser, checkAdmin };
