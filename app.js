@@ -6,6 +6,7 @@ const { auth, checkUser, checkAdmin } = require("./auth");
 const mottovote = require("./mottovote");
 const quotes = require("./quotes");
 const poll = require("./poll");
+const profile = require("./profile");
 const admin = require("./admin");
 
 const app = express();
@@ -31,6 +32,7 @@ app.use("/", express.static(__dirname + "/overview/public"));
 app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
+app.use("/profile", checkUser, profile);
 app.use("/admin", checkAdmin, admin);
 app.use("/auth", auth);
 

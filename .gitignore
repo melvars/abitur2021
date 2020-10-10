@@ -1,6 +1,8 @@
 *.db
 *lock*
 node_*
+.vscode/
 *.env
 *.csv
 users.json
+profile/public/uploads/**/*
