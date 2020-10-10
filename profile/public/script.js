@@ -49,6 +49,7 @@ form.addEventListener("submit", async (evt) => {
     const resp = await fetch(url, { method, body });
     const res = await resp.text();
     if (res !== "ok") alert("AHHHH");
+    else location.reload();
 });
 
 fetch("api/user")
