@@ -12,7 +12,6 @@ if ((idx = params.indexOf("-r")) > -1) {
     const param = params[idx + 1];
     switch (param) {
         case "all":
-        case "user":
             db.resetAll()
                 .then(() => console.info("Regenerated everything!"))
                 .then(() => process.exit(0))
@@ -44,6 +43,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             break;
         default:
             console.info("Nothing to do!");
+            process.exit(0);
             break;
     }
 } else if ((idx = params.indexOf("-U")) > -1) {
@@ -83,9 +83,9 @@ if ((idx = params.indexOf("-r")) > -1) {
             break;
         default:
             console.info("Nothing to do!");
+            process.exit(0);
             break;
     }
-
 } else if ((idx = params.indexOf("--user")) > -1) {
     // User management (e.g.: Regen user pwd)
     const uid = params[idx + 1];

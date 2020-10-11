@@ -25,7 +25,7 @@ function appendQuestions(question) {
     field.id = "id_" + question.id;
     field.name = question.id;
     if (question.answer !== undefined) init = false;
-    field.value = question.answer;
+    field.value = question.answer || "";
     field.placeholder = question.question;
     field.type = question.type;
     if (question.type === "file") field.accept = "image/*";

@@ -20,14 +20,16 @@ class DB {
     async init() {
         const tables = await this.getTables();
         for (const table of tables) if (table) await this.query(table);
-        console.info("Database initialized!")
+        console.info("Database initialized!");
         const res = await this.query("SELECT id FROM users");
         if (res.length === 0) this.initValues();
     }
 
     async initValues() {
         await this.query("INSERT INTO types (name) VALUES ('pupil'), ('teacher')");
-        await this.query("INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')");
+        await this.query(
+            "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')",
+        );
 
         await this.initPolls();
         await this.initMottovote();
@@ -42,7 +44,7 @@ class DB {
 
     async regenerateTables() {
         const drops = await fs.readFile(__dirname + "/drop.sql", "utf8");
-        for (const stmt of drops.split(";")) if (stmt) await this.query(stmt);
+        for (const stmt of drops.split(";")) if (stmt && stmt.length > 1) await this.query(stmt);
         const tables = await this.getTables();
         for (const table of tables) if (table) await this.query(table);
     }
@@ -81,15 +83,17 @@ class DB {
         for (const question of questions) {
             if (question) {
                 const [q, type] = question.split(" - ");
-                await this.query("INSERT INTO profile_questions (question, question_type) VALUE (?, ?)", [q, types.indexOf(type) + 1])
-                    .catch(() => console.log("Profile question already exists!"));
+                await this.query("INSERT INTO profile_questions (question, question_type) VALUE (?, ?)", [
+                    q,
+                    types.indexOf(type) + 1,
+                ]).catch(() => console.log("Profile question already exists!"));
             }
         }
     }
 
     async resetMottovote() {
         const tables = await this.getTables();
-        await this.query("DROP TABLE IF EXISTS motto_votes;DROP TABLE IF EXISTS mottos;");
+        await this.query("DROP TABLE IF EXISTS motto_votes");
         await this.query(tables[6]);
         await this.query(tables[7]);
         await this.initMottovote();
@@ -101,8 +105,9 @@ class DB {
         for (const motto of mottos) {
             const [name, desc] = motto.split(" - ");
             if (motto) {
-                await this.query("INSERT INTO mottos (name, description) VALUES (?, ?)", [name, desc])
-                    .catch(() => console.log("Vote option already exists!"));
+                await this.query("INSERT INTO mottos (name, description) VALUES (?, ?)", [name, desc]).catch(() =>
+                    console.log("Vote option already exists!"),
+                );
             }
         }
     }
@@ -126,8 +131,7 @@ class DB {
                     await this.query("INSERT INTO ranking_questions (question, type_id) VALUE (?,?)", [
                         question,
                         i + 1,
-                    ])
-                        .catch(() => console.log("Poll question already exists!"));
+                    ]).catch(() => console.log("Poll question already exists!"));
                 }
             }
         }
@@ -153,7 +157,7 @@ class DB {
                     const pwd = nanoid.nanoid(8);
                     const password = await bcrypt.hash(pwd, 10);
                     userPasswords[classIndex].push({ username, pwd });
-                    this.query(
+                    await this.query(
                         "INSERT INTO users (username, name, middlename, surname, password, class_id, type_id) VALUE (?,?,?,?,?,?,?)",
                         [
                             username,
@@ -168,7 +172,7 @@ class DB {
                 }
             }
         }
-        fs.writeFile(__dirname + "/users.json", JSON.stringify(userPasswords));
+        await fs.writeFile(__dirname + "/users.json", JSON.stringify(userPasswords));
         console.log("Initialized users!");
     }
 
