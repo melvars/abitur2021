@@ -10,7 +10,7 @@ function checkUser(req, res, next) {
 }
 
 function checkAdmin(req, res, next) {
-    if (!req.session.loggedIn) res.redirect("/auth");
+    if (!req.session.loggedIn) return res.redirect("/auth");
 
     try {
         db.query("SELECT is_admin FROM users WHERE id = ?", [req.session.uid]).then((ret) => {
