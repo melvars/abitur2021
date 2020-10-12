@@ -33,6 +33,7 @@ app.post("/api/login", async (req, res) => {
     if (!user || !user.password) return res.redirect("/auth");
     const loggedIn = await bcrypt.compare(password, user.password);
     if (loggedIn) {
+        console.log("LOGIN: " + user.id);
         req.session.loggedIn = true;
         req.session.isAdmin = user.is_admin;
         req.session.uid = user.id;
@@ -40,7 +41,11 @@ app.post("/api/login", async (req, res) => {
     res.redirect("/auth");
 });
 
-app.use("/api/logout", (req, res) => req.session.destroy() & res.redirect("/"));
+app.use("/api/logout", checkUser, (req, res) => {
+    console.log("LOGOUT: " + req.session.uid);
+    req.session.destroy();
+    res.redirect("/");
+});
 
 app.post("/api/password", checkUser, async (req, res) => {
     const { oldPassword, newPassword, newPasswordRep } = req.body;
@@ -50,6 +55,7 @@ app.post("/api/password", checkUser, async (req, res) => {
     if (!user || !user.password) return res.send("error");
     if (!(await bcrypt.compare(oldPassword, user.password))) return res.send("error");
     try {
+        console.log("PASSWORD CHANGE: " + user.id);
         const newHash = await bcrypt.hash(newPassword, 12);
         await db.query("UPDATE users SET password = ? WHERE id = ?", [newHash, req.session.uid]);
         res.redirect("/");

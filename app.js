@@ -2,6 +2,7 @@ require("dotenv").config();
 require("./db").init();
 const express = require("express");
 const session = require("express-session");
+require("log-timestamp");
 
 const { auth, checkUser, checkAdmin } = require("./auth");
 const mottovote = require("./mottovote");
