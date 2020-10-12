@@ -7,7 +7,9 @@ if (!["teacher", "pupil"].includes(type)) window.location.href = "/";
 
 dropdown.insertAdjacentHTML(
     "beforeend",
-    '<option selected="true" disabled>' + (type == "teacher" ? "Lehrer" : "Schüler") + "/in auswählen...</option>",
+    '<option value="" selected="true" disabled>' +
+        (type == "teacher" ? "Lehrer" : "Schüler") +
+        "/in auswählen...</option>",
 );
 document.querySelector("legend").innerText = type == "teacher" ? "Lehrer-Ranking" : "Schüler-Ranking";
 document.querySelector("p").innerText = "Welche/r " + (type == "teacher" ? "Lehrer/in" : "Schüler/in") + "...";
