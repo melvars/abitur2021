@@ -44,10 +44,9 @@ app.use("/api/logout", (req, res) => req.session.destroy() & res.redirect("/"));
 
 app.post("/api/password", checkUser, async (req, res) => {
     const { oldPassword, newPassword, newPasswordRep } = req.body;
-    if (!(oldPassword && newPassword && newPasswordRep) || newPassword !== newPasswordRep) return res.send("error");
+    if (!oldPassword || !newPassword || !newPasswordRep || newPassword !== newPasswordRep || newPassword.length < 8) return res.send("error");
     const user = (await db.query("SELECT id, password FROM users WHERE id = ?", [req.session.uid]))[0];
     if (!user || !user.password) return res.send("error");
-    if (req.session.loggedIn && user.id === req.session.uid) return res.redirect("/auth");
     if (!(await bcrypt.compare(oldPassword, user.password))) return res.send("error");
     try {
         const newHash = await bcrypt.hash(newPassword, 12);
