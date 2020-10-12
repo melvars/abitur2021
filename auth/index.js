@@ -10,16 +10,8 @@ function checkUser(req, res, next) {
 }
 
 function checkAdmin(req, res, next) {
-    if (!req.session.loggedIn) return res.redirect("/auth");
-
-    try {
-        db.query("SELECT is_admin FROM users WHERE id = ?", [req.session.uid]).then((ret) => {
-            if (ret[0].is_admin == 1) next();
-            else res.redirect("/");
-        });
-    } catch (e) {
-        res.redirect("/");
-    }
+    if (!(req.session.loggedIn && req.session.isAdmin)) return res.redirect("/" + (req.session.isAdmin ? "auth" : ""));
+    else next();
 }
 
 app.use(
@@ -37,11 +29,12 @@ app.post("/api/login", async (req, res) => {
 
     const { username, password } = req.body;
     if (!(username && password)) return res.redirect("/auth");
-    const user = (await db.query("SELECT id, password FROM users WHERE username = ?", [username]))[0];
+    const user = (await db.query("SELECT id, password, is_admin FROM users WHERE username = ?", [username]))[0];
     if (!user || !user.password) return res.redirect("/auth");
     const loggedIn = await bcrypt.compare(password, user.password);
     if (loggedIn) {
         req.session.loggedIn = true;
+        req.session.isAdmin = user.is_admin;
         req.session.uid = user.id;
     }
     res.redirect("/auth");

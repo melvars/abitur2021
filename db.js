@@ -94,6 +94,7 @@ class DB {
     async resetMottovote() {
         const tables = await this.getTables();
         await this.query("DROP TABLE IF EXISTS motto_votes");
+        await this.query("DROP TABLE IF EXISTS mottos");
         await this.query(tables[6]);
         await this.query(tables[7]);
         await this.initMottovote();

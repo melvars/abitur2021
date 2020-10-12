@@ -6,7 +6,7 @@ const app = express.Router();
 app.use("/", checkUser, express.static(__dirname + "/public/"));
 
 app.get("/api/list", checkUser, async (req, res) => {
-    const mottos = await db.query("SELECT id, name, description FROM mottos");
+    const mottos = await db.query("SELECT id, name, description FROM mottos ORDER BY name, description");
     const votes = await db.query("SELECT motto_id, votes FROM motto_votes WHERE user_id = ?", [req.session.uid]);
 
     for (const vote of votes) {

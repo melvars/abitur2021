@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS motto_votes;
+DROP TABLE IF EXISTS mottos;
 DROP TABLE IF EXISTS quotes;
 DROP TABLE IF EXISTS ranking_questions;
 DROP TABLE IF EXISTS ranking_answers;

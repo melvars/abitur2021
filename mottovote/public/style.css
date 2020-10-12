@@ -32,6 +32,7 @@ main {
 
 #voteButton {
     height: 10%;
+    margin-bottom: 10px;
 }
 
 #vote {
