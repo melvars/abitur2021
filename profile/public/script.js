@@ -51,7 +51,6 @@ form.addEventListener("submit", async (evt) => {
     if (res !== "ok") alert("AHHHH");
     else location.reload();
 });
-
 fetch("api/user")
     .then((response) => response.json())
     .then(updateHeading)

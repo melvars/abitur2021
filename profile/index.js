@@ -7,8 +7,6 @@ app.use(fileupload({}));
 
 app.use("/", express.static(__dirname + "/public/"));
 
-app.get("/user/:uid", async (req, res) => {});
-
 // Basic API
 app.get("/api/user", async (req, res) => {
     const user = (await db.query("SELECT name, surname FROM users WHERE id = ?", [req.session.uid]))[0];
@@ -97,12 +95,56 @@ app.put("/api/update", async (req, res) => {
 });
 
 // Comments API
-app.get("/api/comments/:uid", async (req, res) => {});
+app.get("/api/comments/:uid", async (req, res) => {
+    const uid = req.params.uid;
+    const comments = await db.query("SELECT * FROM profile_comments WHERE profile_id = ?", [uid]);
+    res.json(comments);
+});
 
-app.post("/api/comment", async (req, res) => {});
+app.post("/api/comment", async (req, res) => {
+    const { pid, comment } = req.body;
+    if (!pid || !comment) return res.send("error");
+    try {
+        await db.query("INSERT INTO profile_comments (user_id, profile_id, comment) VALUES (?,?,?)", [
+            req.session.uid,
+            pid,
+            comment,
+        ]);
+    } catch (e) {
+        console.error(e);
+        return res.send("error");
+    }
+});
 
-app.put("/api/comment", async (req, res) => {});
+app.put("/api/comment", async (req, res) => {
+    const { pid, cid, comment } = req.body;
+    if (!pid || !comment || !cid) return res.send("error");
+    try {
+        await db.query("UPDATE profile_comments SET comment = ? WHERE user_id = ? AND profile_id = ? AND id = ?", [
+            comment,
+            req.session.uid,
+            pid,
+            cid,
+        ]);
+    } catch (e) {
+        console.error(e);
+        return res.send("error");
+    }
+});
 
-app.delete("/api/comment", async (req, res) => {});
+app.delete("/api/comment", async (req, res) => {
+    const { pid, cid } = req.body;
+    if (!pid || !cid) return res.send("error");
+    try {
+        await db.query("DELETE FROM profile_comments WHERE user_id = ? AND profile_id = ? AND id = ?", [
+            req.session.uid,
+            pid,
+            cid,
+        ]);
+    } catch (e) {
+        console.error(e);
+        return res.send("error");
+    }
+});
 
 module.exports = app;
