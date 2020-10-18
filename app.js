@@ -17,13 +17,14 @@ const app = express();
 const redis = require("redis");
 const RedisStore = require("connect-redis")(session);
 const redisClient = redis.createClient();
+const ttl = 15778800000; // 6 Months
 app.use(
     session({
         store: new RedisStore({ client: redisClient }),
         secret: process.env.sessionSecret,
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false },
+        cookie: { secure: false, expires: new Date(Date.now() + ttl), maxAge: ttl },
     }),
 );
 
