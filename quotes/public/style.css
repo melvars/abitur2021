@@ -46,8 +46,10 @@ li {
 
 span {
     float: right;
-    color: red;
     cursor: pointer;
+    background: url("/feather/icons/trash.svg") no-repeat center;
+    width: 30px;
+    height: 30px;
 }
 
 input,

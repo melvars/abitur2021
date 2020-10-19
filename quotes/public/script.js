@@ -29,12 +29,13 @@ function appendQuote(response) {
                 "beforeend",
                 `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] + " " : ""}${elem["surname"]}: ${
                     elem["quote"]
-                }${elem["owner"] ? ' <span data-id="' + elem["id"] + '">[x]</span></li>' : ""}`,
+                }${elem["owner"] ? ' <span data-id="' + elem["id"] + '"></span></li>' : ""}`,
             );
 
         const span = document.querySelector(`li span[data-id="${elem["id"]}"]`);
         if (span)
             span.addEventListener("click", (event) => {
+                if (!confirm("Bist du dir sicher, dass du das Zitat löschen willst?")) return;
                 fetch("api/delete/" + event.target.getAttribute("data-id"), { method: "DELETE" })
                     .then((response) => response.text())
                     .then((response) => {

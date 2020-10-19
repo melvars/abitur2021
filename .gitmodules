@@ -1,0 +1,3 @@
+[submodule "overview/public/feather"]
+	path = overview/public/feather
+	url = https://github.com/feathericons/feather.git

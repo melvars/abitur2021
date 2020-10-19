@@ -12,7 +12,7 @@ function addUser(userData) {
         if (!questions.hasOwnProperty(questionID)) continue;
         const question = questions[questionID];
         const div = document.createElement("div");
-        div.innerHTML = `<b>${question.question}</b>: <span>${question.answer || ""}</span>`;
+        div.innerHTML = `<b>${question.question}</b> <span>${question.answer || ""}</span>`;
         divs.push(div);
     }
     const h1 = document.createElement("h1");
@@ -27,9 +27,9 @@ function addUser(userData) {
 }
 
 async function addComments(comments) {
-    const h1 = document.createElement("h1");
-    h1.textContent = "Kommentare";
-    h1.addEventListener("click", (evt) => {
+    const h2 = document.createElement("h2");
+    h2.textContent = "Kommentare";
+    h2.addEventListener("click", (evt) => {
         const qDivs = evt.target.parentElement.querySelectorAll("div");
         qDivs.forEach(
             (div) => (div.style.display = !div.style.display || div.style.display === "flex" ? "none" : "flex"),
@@ -49,8 +49,8 @@ async function addComments(comments) {
 
             const del = document.createElement("span");
             del.classList.add("delete-btn");
-            del.textContent = "[Löschen]";
             del.addEventListener("click", async (evt) => {
+                if (!confirm("Bist du sicher, dass du den Kommentar löschen willst?")) return;
                 const body = JSON.stringify({
                     pid: uid,
                     cid: evt.target.parentElement.parentElement.dataset.id,
@@ -66,11 +66,13 @@ async function addComments(comments) {
 
             const edit = document.createElement("span");
             edit.classList.add("edit-btn");
-            edit.textContent = "[Bearbeiten]";
             edit.addEventListener("click", (evt) => {
                 const updateDiv = document.createElement("div");
+                updateDiv.id = "edit-div";
 
-                const input = document.createElement("input");
+                const inputDiv = document.createElement("div");
+                const input = document.createElement("textarea");
+                input.placeholder = "Dein Kommentar...";
                 input.value = comment.comment;
                 const submit = document.createElement("input");
                 submit.type = "submit";
@@ -92,7 +94,8 @@ async function addComments(comments) {
                     if (res.success) window.location.reload();
                 });
 
-                updateDiv.append(input, submit);
+                inputDiv.append(input, submit);
+                updateDiv.append(inputDiv);
                 div.insertAdjacentElement("beforebegin", updateDiv);
                 commentsDiv.removeChild(div);
             });
@@ -103,16 +106,16 @@ async function addComments(comments) {
         divs.push(div);
     }
 
-    commentsDiv.append(h1, ...divs);
+    commentsDiv.append(h2, ...divs);
 
     const addDiv = document.createElement("div");
     addDiv.id = "add-div";
     const add = document.createElement("span");
     add.classList.add("add-btn");
-    add.textContent = "[Neuen Kommentar hinzufügen]";
     add.addEventListener("click", (evt) => {
         const div = document.createElement("div");
         const input = document.createElement("textarea");
+        input.placeholder = "Dein Kommentar...";
         const submit = document.createElement("input");
         submit.type = "submit";
         submit.value = "Hinzufügen";
