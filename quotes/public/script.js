@@ -3,7 +3,7 @@ const classes = ["TGM13.1", "TGM13.2", "TGTM13.1", "TGI13.1", "TGI13.2", "teache
 
 dropdown.insertAdjacentHTML(
     "beforeend",
-    '<option disabled value="" selected="true" disabled>Author auswählen...</option>',
+    '<option disabled value="" selected="true" disabled>Autor auswählen...</option>',
 );
 dropdown.insertAdjacentHTML("beforeend", `<option disabled value="">--${classes[0]}--</option>`);
 
