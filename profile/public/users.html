@@ -5,6 +5,12 @@
         <meta name="viewport" content="width=device-width" />
         <title>Benutzer</title>
         <link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+            integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+            crossorigin="anonymous"
+        />
     </head>
     <body>
         <div class="pure-menu pure-menu-horizontal">
@@ -12,7 +18,16 @@
             <a href="/auth/api/logout" class="pure-menu-item pure-menu-link">Logout</a>
         </div>
 
-        <main></main>
+        <main>
+            <p>Nutzerliste</p>
+            <div id="student-list">
+                <ul id="class_1"></ul>
+                <ul id="class_2"></ul>
+                <ul id="class_3"></ul>
+                <ul id="class_4"></ul>
+                <ul id="class_5"></ul>
+            </div>
+        </main>
 
         <script src="users.js" charset="utf-8"></script>
     </body>

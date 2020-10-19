@@ -44,3 +44,58 @@ img {
         width: calc(100% - 20%);
     }
 }
+
+#student-list li {
+    cursor: pointer;
+}
+
+#student-list li:hover {
+    opacity: 0.8;
+}
+
+#user h1 {
+    cursor: pointer;
+}
+
+#user h1:hover {
+    opacity: 0.8;
+}
+
+#comments div {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+#comments h1 {
+    cursor: pointer;
+}
+
+#comments h1:hover {
+    opacity: 0.8;
+}
+
+#comments .edit-btn,
+#comments .delete-btn,
+#comments .add-btn {
+    cursor: pointer;
+}
+
+#comments .edit-btn:hover,
+#comments .delete-btn:hover,
+#comments .add-btn:hover {
+    opacity: 0.8;
+}
+
+#comments #add-div {
+    justify-content: center;
+}
+
+#comments #add-div div {
+    width: 100%;
+}
+
+#comments #add-div div textarea {
+    width: 100%;
+    height: 80%;
+}

@@ -1,9 +1,10 @@
 function addUser(user) {
-    const div = document.createElement("div");
-    // Idk what to do lel
+    const li = document.createElement("li");
+    li.textContent = `${user.name} ${user.middlename || ""} ${user.surname}`;
+    li.addEventListener("click", () => window.location.assign(`./user.html?uid=${user.id}`));
+    document.getElementById("class_" + user.class_id).appendChild(li);
 }
 
-fetch("api/users")
+fetch("/auth/api/list?class=all")
     .then((response) => response.json())
-    .then((response) => response.forEach(addUser))
-    .catch(console.error);
+    .then((response) => response.forEach(addUser));
