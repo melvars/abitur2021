@@ -52,4 +52,11 @@ app.get("/api/votes", checkAdmin, async (req, res) => {
     res.json(votes);
 });
 
+app.get("/api/participation", checkAdmin, async (req, res) => {
+    const participation = await db.query(
+        "SELECT c.name, CAST(COUNT(DISTINCT user_id) AS float) / CAST((SELECT COUNT(*) FROM users WHERE class_id = u.class_id) AS float) * 100 percentage FROM motto_votes INNER JOIN users u ON user_id = u.id INNER JOIN class c ON class_id = c.id GROUP BY class_id",
+    );
+    res.json(participation);
+});
+
 module.exports = app;
