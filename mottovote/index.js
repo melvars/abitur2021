@@ -30,7 +30,7 @@ app.put("/api/vote", checkUser, async (req, res) => {
         res.send("ok");
     } catch (e) {
         console.error(e);
-        res.send("error");
+        return res.send("error");
     }
 });
 

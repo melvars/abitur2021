@@ -43,11 +43,15 @@ app.post("/api/add", async (req, res) => {
         for (let qid in req.body) {
             if (!req.body.hasOwnProperty(qid) || req.body[qid] === "dbg-image") continue;
             let answer = req.body[qid].replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
-                qid,
-                req.session.uid,
-                answer.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-            ]);
+            try {
+                await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
+                    qid,
+                    req.session.uid,
+                    answer.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+                ]);
+            } catch (e) {
+                console.error(e);
+            }
         }
         for (let fid in req.files) {
             if (!req.files.hasOwnProperty(fid)) return;
@@ -58,11 +62,15 @@ app.post("/api/add", async (req, res) => {
             imageType = image.name.split(".").reverse()[0];
             imageName = `${req.session.uid}_${new Date().getTime()}.${imageType}`;
             image.mv(__dirname + "/public/uploads/" + imageName);
-            await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
-                fid,
-                req.session.uid,
-                imageName,
-            ]);
+            try {
+                await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
+                    fid,
+                    req.session.uid,
+                    imageName,
+                ]);
+            } catch (e) {
+                console.error(e);
+            }
         }
         res.send("ok");
     } catch (e) {
@@ -76,11 +84,15 @@ app.put("/api/update", async (req, res) => {
         for (let qid in req.body) {
             if (!req.body.hasOwnProperty(qid) || req.body[qid] === "dbg-image") continue;
             let answer = req.body[qid].replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", [
-                answer,
-                qid,
-                req.session.uid,
-            ]);
+            try {
+                await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", [
+                    answer,
+                    qid,
+                    req.session.uid,
+                ]);
+            } catch (e) {
+                console.error(e);
+            }
         }
         for (let fid in req.files) {
             if (!req.files.hasOwnProperty(fid)) return;
@@ -91,11 +103,15 @@ app.put("/api/update", async (req, res) => {
             imageType = image.name.split(".").reverse()[0];
             imageName = `${req.session.uid}_${new Date().getTime()}.${imageType}`;
             image.mv(__dirname + "/public/uploads/" + imageName);
-            await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", [
-                imageName,
-                fid,
-                req.session.uid,
-            ]);
+            try {
+                await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", [
+                    imageName,
+                    fid,
+                    req.session.uid,
+                ]);
+            } catch (e) {
+                console.error(e);
+            }
         }
         res.send("ok");
     } catch (e) {

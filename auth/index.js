@@ -10,8 +10,9 @@ function checkUser(req, res, next) {
 }
 
 function checkAdmin(req, res, next) {
-    if (!(req.session.loggedIn && req.session.isAdmin)) return res.redirect("/" + (req.session.isAdmin ? "auth" : ""));
-    else next();
+    if (req.session.loggedIn && req.session.isAdmin) next();
+    else if (req.session.loggedIn) return res.redirect("/");
+    else return res.redirect("/auth");
 }
 
 app.use(
@@ -89,13 +90,7 @@ app.get("/api/list", checkUser, async (req, res) => {
 });
 
 app.get("/api/status", (req, res) => {
-    if (req.session.loggedIn) {
-        db.query("SELECT is_admin FROM users WHERE id = ?", [req.session.uid]).then((ret) => {
-            res.json({ loggedIn: req.session.loggedIn, admin: ret[0].is_admin ? true : false });
-        });
-    } else {
-        res.json({ loggedIn: false, admin: false });
-    }
+    res.json({ loggedIn: req.session.loggedIn, admin: req.session.isAdmin });
 });
 
 module.exports = { auth: app, checkUser, checkAdmin };
