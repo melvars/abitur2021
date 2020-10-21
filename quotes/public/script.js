@@ -27,9 +27,11 @@ function appendQuote(response) {
             .getElementById(elem["class"])
             .insertAdjacentHTML(
                 "beforeend",
-                `<li>${elem["name"]} ${elem["middlename"] ? elem["middlename"] + " " : ""}${elem["surname"]}: ${
-                    elem["quote"]
-                }${elem["owner"] ? ' <span data-id="' + elem["id"] + '"></span></li>' : ""}`,
+                `<li><span class="text">${elem["name"]} ${elem["middlename"] ? elem["middlename"] + " " : ""}${
+                    elem["surname"]
+                }: ${elem["quote"]}</span>${
+                    elem["owner"] ? ' <span class="delete-btn" data-id="' + elem["id"] + '"></span></li>' : ""
+                }`,
             );
 
         const span = document.querySelector(`li span[data-id="${elem["id"]}"]`);
