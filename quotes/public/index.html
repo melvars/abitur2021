@@ -23,10 +23,10 @@
             <form class="pure-form pure-form-stacked" action="api/add" method="post">
                 <fieldset>
                     <legend>Zitate</legend>
-                    <label for="author">Autor</label>
+                    <label for="author">Autor (die Person, die zitiert wird)</label>
                     <select name="author" id="author" required></select>
-                    <label for="quote">Zitat</label>
-                    <input name="quote" type="text" id="quote" placeholder="Zitat" required />
+                    <label for="quote">Zitat (max. 255 Zeichen)</label>
+                    <input name="quote" type="text" id="quote" placeholder="Zitat" maxlength="255" required />
                     <button type="submit" class="pure-button pure-button-primary">Hinzufügen</button>
                 </fieldset>
             </form>
