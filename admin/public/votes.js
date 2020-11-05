@@ -1,11 +1,11 @@
 let date;
 let chart;
 
-fetch("api/votes")
+fetch("/admin/api/votes")
     .then((response) => response.json())
     .then((response) => {
         data = response;
-        render("bar");
+        render("pie");
     });
 
 function render(type) {
@@ -42,7 +42,7 @@ function render(type) {
 }
 
 let index = 0;
-const types = ["pie", "doughnut", "polarArea", "radar", "line", "bar"];
+const types = ["doughnut", "bar", "polarArea", "radar", "line", "pie"];
 document.getElementById("switch").addEventListener("click", () => {
     chart.destroy();
     render(types[index]);

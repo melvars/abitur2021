@@ -3,7 +3,16 @@ const db = require("../db");
 const app = express.Router();
 const { checkUser, checkAdmin } = require("../auth");
 
-app.use("/", checkAdmin, express.static(__dirname + "/public"));
+// app.use("/", checkAdmin, express.static(__dirname + "/public"));
+app.use(
+    "/",
+    (req, res, next) => {
+        console.log(req.path);
+        if ((req.session.loggedIn && req.session.isAdmin) || req.path.startsWith("/api/votes")) next();
+        else res.redirect("/");
+    },
+    express.static(__dirname + "/public"),
+);
 
 // For debugging ig
 app.get("/api/all", checkAdmin, async (req, res) => {
@@ -45,7 +54,7 @@ app.get("/api/answers", checkAdmin, async (req, res) => {
     res.json(answers);
 });
 
-app.get("/api/votes", checkAdmin, async (req, res) => {
+app.get("/api/votes", checkUser, async (req, res) => {
     const votes = await db.query(
         "SELECT m.id, m.name, m.description, SUM(votes) votes FROM motto_votes mv RIGHT JOIN mottos m on mv.motto_id = m.id GROUP BY m.id, m.name, m.description ORDER BY SUM(votes) DESC",
     );
