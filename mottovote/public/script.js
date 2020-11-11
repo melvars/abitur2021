@@ -1,4 +1,4 @@
-const maxVotes = 3;
+const maxVotes = 1;
 get();
 
 async function get() {
