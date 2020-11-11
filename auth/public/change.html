@@ -24,9 +24,23 @@
                 <label for="old-password">Altes Passwort</label>
                 <input name="oldPassword" type="password" id="old-password" placeholder="Passwort" required />
                 <label for="password">Neues Passwort</label>
-                <input name="newPassword" type="password" id="password" placeholder="Neues Passwort" required />
+                <input
+                    name="newPassword"
+                    type="password"
+                    id="password"
+                    placeholder="Neues Passwort"
+                    minlength="8"
+                    required
+                />
                 <label for="new-password">Neues Passwort (wiederholt)</label>
-                <input name="newPasswordRep" type="password" id="new-password" placeholder="Neues Passwort" required />
+                <input
+                    name="newPasswordRep"
+                    type="password"
+                    id="new-password"
+                    placeholder="Neues Passwort"
+                    minlength="8"
+                    required
+                />
                 <button type="submit" class="pure-button pure-button-primary">Anmelden</button>
             </fieldset>
         </form>
