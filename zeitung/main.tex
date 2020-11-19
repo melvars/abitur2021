@@ -19,6 +19,14 @@
 \title{ABI Zeitung 2021}
 \author{des RBS Ulm}
 
+% Updated: https://tex.stackexchange.com/a/7657
+% Import all tex files from a directory
+\def\app@exe{\immediate\write18}
+\def\Ainput#1{
+    \app@exe{cat #1/*.tex > #1/files.tmp}
+    \InputIfFileExists{#1/files.tmp}{}{}
+    \AtEndDocument{\app@exe{rm -f #1/files.tmp}}}
+
 \maketitle
 
 %\tableofcontents
@@ -26,8 +34,6 @@
 \section{Einführung}
 Heeerzlich willkommen!
 
-\input{parts/students/Lars_Kroenner.tex}
-
-%\includegraphics[width=0.5\textwidth]{test}
+\Ainput{parts/students/}
 
 \end{document}
