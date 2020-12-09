@@ -33,16 +33,27 @@
 ...macht nie Hausaufgaben?
 ...feiert am meisten?
 --
-...ist am coolsten?
-...ist am schönsten?
+...magst du am liebsten?
+...ist am hübschesten? (weiblich)
+...ist am hübschesten? (männlich)
 ...hat den besten Style?
 ...macht die beste Abivorbereitung?
-...verbraucht am meisten Papier (Regenwald)?
-...hat am meisten Allgemeinwissen?
 ...ist am pünktlichsten?
 ...ist am furchteinflößendsten?
 ...hat die hässlichste Schrift?
-...ist am kompetentesten?
-...hat die längste Korrekturzeit?
-...hat die kürzeste Korrekturzeit?
-...ist am gefürchtesten?
+...hat den höchsten Regendwalddurchsatz?
+...ist am lustigsten?
+...hat das größte Allgemeinwissen?
+...hat das größte Fachwissen?
+...korrigiert am langsamsten?
+...korrigiert am schnellsten?
+...ist am strengsten/gefürchtetsten?
+...ist am organisiertesten?
+...schweift als schnellste/r ab?
+...fährt den dicksten Wagen?
+...ist am enthusiastischsten?
+...hat die schlimmsten Tafelbilder?
+...setzt sich am meisten für die SchülerInnen ein?
+...ist am legendärsten?
+...ist am esoterischsten?
+>>>>>>> Stashed changes
