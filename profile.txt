@@ -1,1 +1,9 @@
-Was ist dein Alter? - number
+Geburtsdatum - date
+Wohnort - text
+Ohne das hätte ich die Oberstufe nicht geschafft - text
+Am meisten werde ich vermissen - text
+Hobbies - text
+Zukunftspläne - text
+Lebensmotto/Seniorquote - text
+Lieblingsbands/musiker/genre - text
+Lieblingsfach/Hassfach - text
