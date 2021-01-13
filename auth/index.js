@@ -93,4 +93,16 @@ app.get("/api/status", (req, res) => {
     res.json({ loggedIn: req.session.loggedIn, admin: req.session.isAdmin });
 });
 
+app.get("/api/self", checkUser, async (req, res) => {
+    try {
+        const user = await db.query(
+            "SELECT id, username, name, middlename, surname, class_id, type_id, is_admin FROM users WHERE id = ?",
+            [req.session.uid]);
+        res.json(user[0]);
+    } catch (e) {
+        console.error(e);
+        return res.send("error");
+    }
+});
+
 module.exports = { auth: app, checkUser, checkAdmin };

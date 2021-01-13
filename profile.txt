@@ -5,5 +5,6 @@ Am meisten werde ich vermissen - text
 Hobbies - text
 Zukunftspläne - text
 Lebensmotto/Seniorquote - text
-Lieblingsbands/musiker/genre - text
-Lieblingsfach/Hassfach - text
+Lieblingsbands/-musiker/-genre - text
+Lieblingsfach - text
+Hassfach - text

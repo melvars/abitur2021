@@ -34,8 +34,8 @@ app.use(express.json());
 app.use("/", express.static(__dirname + "/overview/public"));
 app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
-// app.use("/poll", checkUser, poll);
-// app.use("/profile", checkUser, profile);
+app.use("/poll", checkUser, poll);
+app.use("/profile", checkUser, profile);
 app.use("/admin", admin); // Lel
 app.use("/auth", auth);
 

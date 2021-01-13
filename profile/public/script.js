@@ -3,7 +3,7 @@ const form = document.querySelector("form");
 let init = true;
 
 function updateHeading(user) {
-    document.getElementById("username").textContent = `${user.name} ${user.surname}`;
+    document.getElementById("username").textContent = `Steckbrief: ${user.name} ${user.middlename || ""} ${user.surname}`;
 }
 
 function appendQuestions(question) {
@@ -51,7 +51,8 @@ form.addEventListener("submit", async (evt) => {
     if (res !== "ok") alert("AHHHH");
     else location.reload();
 });
-fetch("api/user")
+
+fetch("/auth/api/self")
     .then((response) => response.json())
     .then(updateHeading)
     .catch(console.error);
