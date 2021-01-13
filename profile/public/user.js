@@ -22,6 +22,8 @@ function addUser(userData) {
         qDivs.forEach(
             (div) => (div.style.display = !div.style.display || div.style.display === "block" ? "none" : "block"),
         );
+        if (h1.classList.contains("bananenkuchen")) h1.classList.remove("bananenkuchen");
+        else h1.classList.add("bananenkuchen");
     });
     userDiv.append(h1, ...divs);
 }
@@ -34,6 +36,8 @@ async function addComments(comments) {
         qDivs.forEach(
             (div) => (div.style.display = !div.style.display || div.style.display === "flex" ? "none" : "flex"),
         );
+        if (h2.classList.contains("bananenkuchen")) h2.classList.remove("bananenkuchen");
+        else h2.classList.add("bananenkuchen");
     });
     const divs = [];
     for (const comment of comments) {
