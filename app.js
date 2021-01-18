@@ -36,7 +36,7 @@ app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
 app.use("/profile", checkUser, profile);
-app.use("/admin", admin); // Lel
+app.use("/admin", checkAdmin, admin); // Lel
 app.use("/auth", auth);
 
 app.listen(process.env.PORT || 5005, () => console.log(`Server started on http://localhost:${process.env.PORT}`));

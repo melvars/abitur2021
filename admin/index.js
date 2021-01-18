@@ -49,12 +49,12 @@ app.get("/api/questions", checkAdmin, async (req, res) => {
 
 app.get("/api/answers", checkAdmin, async (req, res) => {
     const answers = await db.query(
-        "SELECT question_id, name, middlename, surname, count(*) count FROM ranking_questions q INNER JOIN ranking_answers a ON q.id = a.question_id INNER JOIN users u ON answer_id = u.id GROUP BY question_id, answer_id ORDER BY count DESC",
+        "SELECT question_id, u.name, u.middlename, u.surname, c.name class, count(*) count FROM ranking_questions q INNER JOIN ranking_answers a ON q.id = a.question_id INNER JOIN users u ON answer_id = u.id INNER JOIN class c ON u.class_id = c.id GROUP BY question_id, answer_id ORDER BY count DESC",
     );
     res.json(answers);
 });
 
-app.get("/api/votes", async (req, res) => {
+app.get("/api/votes", checkAdmin, async (req, res) => {
     const votes = await db.query(
         "SELECT m.id, m.name, m.description, SUM(votes) votes FROM motto_votes mv RIGHT JOIN mottos m on mv.motto_id = m.id GROUP BY m.id, m.name, m.description ORDER BY SUM(votes) DESC",
     );
