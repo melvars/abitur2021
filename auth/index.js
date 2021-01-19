@@ -30,7 +30,9 @@ app.post("/api/login", async (req, res) => {
 
     const { username, password } = req.body;
     if (!(username && password)) return res.redirect("/auth");
-    const user = (await db.query("SELECT id, password, is_admin FROM users WHERE username = ?", [username]))[0];
+    const user = (
+        await db.query("SELECT id, password, is_admin, class_id FROM users WHERE username = ?", [username])
+    )[0];
     if (!user || !user.password) return res.redirect("/auth");
     const loggedIn = await bcrypt.compare(password, user.password);
     if (loggedIn) {
@@ -38,6 +40,7 @@ app.post("/api/login", async (req, res) => {
         req.session.loggedIn = true;
         req.session.isAdmin = user.is_admin;
         req.session.uid = user.id;
+        req.session.cid = user.class_id;
     }
     res.redirect("/auth");
 });

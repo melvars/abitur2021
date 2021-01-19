@@ -6,3 +6,5 @@ node_*
 *.csv
 users.json
 profile/public/uploads/**/*
+
+images.txt
