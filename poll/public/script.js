@@ -55,6 +55,12 @@ fetch(`/poll/api/question/${qid}?type=${type}`)
         } else getNext(); // Resets
     });
 
+fetch(`api/questions/${type}`)
+    .then(response => response.json())
+    .then(response => {
+        // TODO: PROGRESS POGGERS
+    });
+
 function getNext(q = 0) {
     window.location.assign(`/poll/?qid=${q}&type=${type}`);
 }

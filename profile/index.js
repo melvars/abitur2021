@@ -17,7 +17,7 @@ app.get("/api/user/:uid", async (req, res) => {
 
     for (const answer of answers) {
         const qid = questions.findIndex((question) => question.id === answer.question_id);
-        if (qid !== undefined) questions[qid].answer = answer.answer;
+        if (qid >= 0) questions[qid].answer = answer.answer;
     }
     res.json({ user: user[0], questions });
 });
@@ -33,7 +33,7 @@ app.get("/api/questions", async (req, res) => {
 
     for (const answer of answers) {
         const qid = questions.findIndex((question) => question.id === answer.question_id);
-        if (qid !== undefined) questions[qid].answer = answer.answer;
+        if (qid >= 0) questions[qid].answer = answer.answer;
     }
     res.json(questions);
 });

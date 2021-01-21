@@ -29,6 +29,32 @@ app.get("/api/question/:id", checkUser, async (req, res) => {
     }
 });
 
+app.get("/api/questions/:type", checkUser, async (req, res) => {
+    const type = req.params.type;
+    const types = ["pupil", "teacher"];
+    const fail = { success: false };
+    if (types.includes(type)) {
+        try {
+            const questions = await db.query(`SELECT id
+                                              FROM ranking_questions rq
+                                              WHERE type_id = ?`, [types.indexOf(type) + 1]);
+            const answers = await db.query(`SELECT question_id
+                                            FROM ranking_answers
+                                            WHERE user_id = ?`, [req.session.uid]);
+            const resp = [];
+            for (const question of questions) {
+                const qid = answers.findIndex((answer) => question.id === answer.question_id);
+                console.log(qid);
+                resp.push({ id: question.id, answered: qid >= 0 });
+            }
+            res.json(resp);
+        } catch (e) {
+            console.error(e);
+            res.json(fail);
+        }
+    } else res.json(fail);
+})
+
 app.post("/api/answer/:type", checkUser, async (req, res) => {
     return await answer(req, res, "INSERT INTO ranking_answers (answer_id, question_id, user_id) VALUE (?,?,?)");
 });
@@ -47,7 +73,7 @@ async function answer(req, res, qu) {
         const { question, answer } = req.body;
         if (+answer === +req.session.uid) return res.json(fail);
         try {
-            const answerTypes = await db.query("SELECT type_id FROM users WHERE id = ?", [question]);
+            const answerTypes = await db.query("SELECT type_id FROM ranking_questions WHERE id = ?", [question]);
             if (!answerTypes.length > 0) return res.json(fail);
             if (type !== types[answerTypes[0].type_id - 1]) return res.json(fail);
             if (type === types[0]) {

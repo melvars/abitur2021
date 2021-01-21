@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 require("dotenv").config();
-const bcrypt = require("bcrypt");
-const nanoid = require("nanoid");
 const db = require("./db");
 
 const params = process.argv.slice(2);

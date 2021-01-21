@@ -11,7 +11,7 @@ app.get("/api/list", checkUser, async (req, res) => {
 
     for (const vote of votes) {
         const mid = mottos.findIndex((motto) => motto.id === vote.motto_id);
-        if (mid !== undefined) mottos[mid].votes = vote.votes;
+        if (mid >= 0) mottos[mid].votes = vote.votes;
     }
     res.json(mottos);
 });
