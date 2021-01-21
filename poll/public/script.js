@@ -1,19 +1,26 @@
-const type = getParameterByName("type");
+const query = new URL(window.location.href).searchParams;
+const type = query.get("type");
+const qid = query.get("qid") || 0;
+let method = "POST";
+
 const dropdown = document.getElementById("answer");
 const question_input = document.getElementById("question");
 const question_label = document.getElementById("question_label");
+const submit = document.getElementById("submit-btn");
+const skip = document.getElementById("skip-btn");
 
 if (!["teacher", "pupil"].includes(type)) window.location.href = "/";
 
 dropdown.insertAdjacentHTML(
     "beforeend",
-    '<option value="" selected="true" disabled>' +
-        (type == "teacher" ? "Lehrer" : "Schüler") +
-        "/in auswählen...</option>",
+    '<option value="" selected disabled>' +
+    (type === "teacher" ? "Lehrer" : "Schüler") +
+    "/in auswählen...</option>",
 );
-document.querySelector("legend").innerText = type == "teacher" ? "Lehrer-Ranking" : "Schüler-Ranking";
-document.querySelector("p").innerText = "Welche/r " + (type == "teacher" ? "Lehrer/in" : "Schüler/in") + "...";
-document.querySelector("form").setAttribute("action", "api/answer?type=" + type);
+document.querySelector("legend").innerText = type === "teacher" ? "Lehrer-Ranking" : "Schüler-Ranking";
+document.querySelector("p").innerText = "Welche/r " + (type === "teacher" ? "Lehrer/in" : "Schüler/in") + "...";
+
+skip.addEventListener("click", () => getNext(parseInt(qid) + 1));
 
 function appendOption(response) {
     response.forEach((elem) => {
@@ -26,35 +33,46 @@ function appendOption(response) {
     });
 }
 
-fetch("/auth/api/list" + (type == "teacher" ? "?class=teacher" : ""))
+fetch("/auth/api/list" + (type === "teacher" ? "?class=teacher" : ""))
     .then((response) => response.json())
     .then((response) => appendOption(response));
 
-fetch("/poll/api/get?type=" + type)
-    .then(async (response) => {
-        let json;
-        try {
-            return await response.json();
-        } catch (e) {
-            document.querySelector("p").innerText = "";
-            question_label.innerText = "Du hast bereits alle Fragen beantwortet.";
-            document.querySelectorAll("label")[1].innerText = "Danke!";
-            document.querySelector("select").style.display = "none";
-            document.querySelector("button").style.display = "none";
-            throw "Oh nein, alle beantwortet!"; // :^)
-        }
-    })
+fetch(`/poll/api/question/${qid}?type=${type}`)
+    .then((response) => response.json())
     .then((response) => {
-        question_label.innerText = response["question"];
-        question_input.setAttribute("value", response["id"]);
+        if (!response.empty()) {
+            question_label.innerText = response["question"];
+            question_input.setAttribute("value", response["id"]);
+            if (response.answer) {
+                for (const c of dropdown.children) if (+c.value === response.answer) c.selected = true;
+                method = "PUT";
+            }
+            submit.addEventListener("click", async () => {
+                await request();
+                getNext(parseInt(qid) + 1);
+                if (method === "POST") method = "PUT";
+            });
+        } else getNext(); // Resets
     });
 
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+function getNext(q = 0) {
+    window.location.assign(`/poll/?qid=${q}&type=${type}`);
+}
+
+async function request() {
+    const body = JSON.stringify({
+        question: question_input.value,
+        answer: dropdown.value,
+    });
+    const resp = await fetch(`api/answer/${type}`, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body,
+    });
+    return resp.json();
+}
+
+// I did this myself lel 🤨
+Object.prototype.empty = function () {
+    return Object.keys(this).length === 0
 }

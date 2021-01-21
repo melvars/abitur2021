@@ -2,6 +2,7 @@
 *lock*
 node_*
 .vscode/
+.idea/
 *.env
 *.csv
 users.json

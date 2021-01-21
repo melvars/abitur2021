@@ -5,54 +5,63 @@ const { checkUser } = require("../auth");
 
 app.use("/", checkUser, express.static(__dirname + "/public"));
 
-app.post("/api/answer", checkUser, async (req, res) => {
-    if (!req.body.answer || !req.body.question || !req.query.type) return res.send("error");
-    if (req.body.answer == req.session.uid) return res.send("error");
+app.get("/api/question/:id", checkUser, async (req, res) => {
     try {
-        if (req.query.type == "pupil") {
-            const user_class = (await db.query("SELECT class_id FROM users WHERE id = ?", [req.session.uid]))[0]
-                .class_id;
-            const answer_class = (
-                await db.query("SELECT class_id FROM users WHERE id = ?", [parseInt(req.body.answer)])
-            )[0].class_id;
-            if (user_class != answer_class) return res.send("error");
-        } else if (req.query.type == "teacher") {
-            const answer_type = (
-                await db.query(
-                    "SELECT t.name FROM users AS u INNER JOIN types AS t ON u.type_id = t.id WHERE u.id = ?",
-                    [parseInt(req.body.answer)],
-                )
-            )[0].name;
-            if (answer_type != "teacher") return res.send("error");
+        const questions = await db.query(`SELECT rq.id, rq.question
+                                          FROM ranking_questions rq
+                                                   INNER JOIN types t on rq.type_id = t.id
+                                          WHERE t.name = ?`, [req.query.type]);
+        const id = req.params.id;
+        if (id >= 0 && id < questions.length) {
+            const question = questions[id];
+            const answers = await db.query(`SELECT *
+                                            FROM ranking_answers
+                                            WHERE question_id = ?
+                                              AND user_id = ?`, [question.id, req.session.uid]);
+            question.answer = answers.length > 0 ? answers[0].answer_id : undefined;
+            res.json(question); // 😜
         } else {
-            return res.send("error");
+            res.json({});
         }
-
-        await db.query("INSERT INTO ranking_answers (question_id, user_id, answer_id) VALUE (?,?,?)", [
-            parseInt(req.body.question),
-            req.session.uid,
-            parseInt(req.body.answer),
-        ]);
-        res.redirect("/poll?type=" + req.query.type);
     } catch (e) {
         console.error(e);
-        res.send("error");
+        res.json({ success: false });
     }
 });
 
-app.get("/api/get", checkUser, async (req, res) => {
-    try {
-        const question = (
-            await db.query(
-                "SELECT q.id, q.question, t.name FROM ranking_questions AS q INNER JOIN types AS t ON type_id = t.id WHERE q.id NOT IN (SELECT question_id FROM ranking_answers WHERE user_id = ?) AND t.name = ? LIMIT 1",
-                [req.session.uid, req.query.type],
-            )
-        )[0];
-        res.json(question);
-    } catch (e) {
-        console.error(e);
-        res.send("error");
-    }
+app.post("/api/answer/:type", checkUser, async (req, res) => {
+    return await answer(req, res, "INSERT INTO ranking_answers (answer_id, question_id, user_id) VALUE (?,?,?)");
 });
+
+app.put("/api/answer/:type", checkUser, async (req, res) => {
+    return await answer(req, res, "UPDATE ranking_answers SET answer_id = ? WHERE question_id = ? AND user_id = ?");
+});
+
+// TODO: Puzzle bar
+
+async function answer(req, res, qu) {
+    const type = req.params.type;
+    const types = ["pupil", "teacher"];
+    const fail = { success: false };
+    if (types.includes(type)) {
+        const { question, answer } = req.body;
+        if (+answer === +req.session.uid) return res.json(fail);
+        try {
+            const answerTypes = await db.query("SELECT type_id FROM users WHERE id = ?", [question]);
+            if (!answerTypes.length > 0) return res.json(fail);
+            if (type !== types[answerTypes[0].type_id - 1]) return res.json(fail);
+            if (type === types[0]) {
+                const userClass = (await db.query("SELECT class_id FROM users WHERE id = ?", [req.session.uid]))[0].class_id;
+                const answerUsers = await db.query("SELECT class_id FROM users WHERE id = ?", [answer]);
+                if (!answerUsers.length > 0 || userClass !== answerUsers[0].class_id) return res.json(fail);
+            } else if (type !== types[1]) return res.json(fail)
+            await db.query(qu, [answer, question, req.session.uid]);
+            res.json({ success: true });
+        } catch (e) {
+            console.error(e);
+            res.json(fail);
+        }
+    } else res.json(fail);
+}
 
 module.exports = app;

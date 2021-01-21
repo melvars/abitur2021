@@ -20,19 +20,22 @@
         </div>
 
         <main>
-            <form class="pure-form pure-form-stacked" action="api/answer" method="post">
+<!--            <form class="pure-form pure-form-stacked" action="api/answer" method="post">-->
+            <div class="pure-form pure-form-stacked">
                 <fieldset>
                     <!-- TODO: Add progress -->
                     <legend>Schüler-Ranking</legend>
                     <p>Welche/r Schüler/in...</p>
                     <label id="question_label" for="question"></label>
                     <input name="question" id="question" hidden />
-                    <br />
                     <label for="answer">Antwort</label>
                     <select name="answer" id="answer" required></select>
-                    <button type="submit" class="pure-button pure-button-primary">Antworten</button>
+                    <button type="submit" id="submit-btn" class="pure-button pure-button-primary">Antworten</button>
+                    <button id="skip-btn" class="pure-button pure-button-danger">Weiter</button>
                 </fieldset>
-            </form>
+            </div>
+
+<!--            </form>-->
         </main>
 
         <script src="script.js" charset="utf-8"></script>
