@@ -7,20 +7,26 @@ const dropdown = document.getElementById("answer");
 const question_input = document.getElementById("question");
 const question_label = document.getElementById("question_label");
 const submit = document.getElementById("submit-btn");
+const prev = document.getElementById("prev-btn");
 const skip = document.getElementById("skip-btn");
+const progress = document.getElementById("progress");
 
 if (!["teacher", "pupil"].includes(type)) window.location.href = "/";
 
 dropdown.insertAdjacentHTML(
     "beforeend",
-    '<option value="" selected disabled>' +
-    (type === "teacher" ? "Lehrer" : "Schüler") +
-    "/in auswählen...</option>",
+    '<option value="" selected disabled>' + (type === "teacher" ? "Lehrer" : "Schüler") + "/in auswählen...</option>",
 );
 document.querySelector("legend").innerText = type === "teacher" ? "Lehrer-Ranking" : "Schüler-Ranking";
 document.querySelector("p").innerText = "Welche/r " + (type === "teacher" ? "Lehrer/in" : "Schüler/in") + "...";
 
 skip.addEventListener("click", () => getNext(parseInt(qid) + 1));
+prev.addEventListener("click", () => getNext(parseInt(qid) - 1));
+
+if (qid == 0) {
+    prev.style.display = "none";
+    skip.style.width = "100%";
+}
 
 function appendOption(response) {
     response.forEach((elem) => {
@@ -35,30 +41,43 @@ function appendOption(response) {
 
 fetch("/auth/api/list" + (type === "teacher" ? "?class=teacher" : ""))
     .then((response) => response.json())
-    .then((response) => appendOption(response));
-
-fetch(`/poll/api/question/${qid}?type=${type}`)
-    .then((response) => response.json())
-    .then((response) => {
-        if (!response.empty()) {
-            question_label.innerText = response["question"];
-            question_input.setAttribute("value", response["id"]);
-            if (response.answer) {
-                for (const c of dropdown.children) if (+c.value === response.answer) c.selected = true;
-                method = "PUT";
-            }
-            submit.addEventListener("click", async () => {
-                await request();
-                getNext(parseInt(qid) + 1);
-                if (method === "POST") method = "PUT";
+    .then((response) => appendOption(response))
+    .then(() => {
+        fetch(`/poll/api/question/${qid}?type=${type}`)
+            .then((response) => response.json())
+            .then((response) => {
+                if (!response.empty()) {
+                    question_label.innerText = response["question"];
+                    question_input.setAttribute("value", response["id"]);
+                    if (response.answer) {
+                        for (const c of dropdown.children) if (+c.value === response.answer) c.selected = true;
+                        method = "PUT";
+                    }
+                    submit.addEventListener("click", async () => {
+                        await request();
+                        getNext(parseInt(qid) + 1);
+                        if (method === "POST") method = "PUT";
+                    });
+                } else getNext(); // Resets
             });
-        } else getNext(); // Resets
     });
 
 fetch(`api/questions/${type}`)
-    .then(response => response.json())
-    .then(response => {
-        // TODO: PROGRESS POGGERS
+    .then((response) => response.json())
+    .then((response) => {
+        for (const elem of response) {
+            progress.insertAdjacentHTML(
+                "beforeend",
+                `<div data-current="${elem.id == qid}" data-answered="${elem.answered}">${elem.id + 1}</div>`,
+            );
+        }
+    })
+    .then(() => {
+        document.querySelectorAll("div.bar div").forEach((elem) => {
+            elem.addEventListener("click", () => {
+                getNext(+elem.innerText - 1);
+            });
+        });
     });
 
 function getNext(q = 0) {
@@ -80,5 +99,5 @@ async function request() {
 
 // I did this myself lel 🤨
 Object.prototype.empty = function () {
-    return Object.keys(this).length === 0
-}
+    return Object.keys(this).length === 0;
+};

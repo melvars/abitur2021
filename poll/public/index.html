@@ -23,13 +23,19 @@
             <div class="pure-form pure-form-stacked">
                 <fieldset>
                     <legend>Schüler-Ranking</legend>
+
+                    <div class="bar" id="progress"></div>
+
                     <p>Welche/r Schüler/in...</p>
                     <label id="question_label" for="question"></label>
                     <input name="question" id="question" hidden />
                     <label for="answer">Antwort</label>
                     <select name="answer" id="answer" required></select>
                     <button type="submit" id="submit-btn" class="pure-button pure-button-primary">Antworten</button>
-                    <button id="skip-btn" class="pure-button pure-button-danger">Weiter</button>
+                    <div class="back-skip pure-button-group" role="group">
+                        <button id="prev-btn" class="pure-button">Zurück</button>
+                        <button id="skip-btn" class="pure-button">Weiter</button>
+                    </div>
                 </fieldset>
             </div>
         </main>
