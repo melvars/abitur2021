@@ -7,7 +7,9 @@ fetch("api/questions")
             .then((answers) => answers.json())
             .then((answers) => {
                 questions.forEach((question) => (question.answers = []));
-                answers.forEach((answer) => questions[answer.question_id - 1].answers.push(answer));
+                answers.forEach((answer) =>
+                    questions.filter((q) => q.id === answer.question_id)[0].answers.push(answer),
+                );
                 render(questions);
             });
     });

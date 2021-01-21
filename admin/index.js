@@ -7,7 +7,6 @@ const { checkUser, checkAdmin } = require("../auth");
 app.use(
     "/",
     (req, res, next) => {
-        console.log(req.path);
         if ((req.session.loggedIn && req.session.isAdmin) || req.path.startsWith("/api/votes")) next();
         else res.redirect("/");
     },
