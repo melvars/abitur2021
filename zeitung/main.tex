@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper, 13pt]{article}
 
 % Packages
 \usepackage[a4paper, inner=2.5cm, outer=2.5cm, top=2.5cm, bottom=2cm, bindingoffset=0cm]{geometry}
@@ -6,6 +6,12 @@
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{fontspec,xunicode,xltxtra}
+\usepackage{afterpage}
+\usepackage{sectsty}
+
+% Font
+\setmainfont{"[font.ttf]"}
+\sectionfont{\fontsize{20}{15}\selectfont}
 
 % GERMAN
 \usepackage[ngerman=ngerman-x-latest]{hyphsubst}
@@ -27,13 +33,62 @@
     \InputIfFileExists{#1/files.tmp}{}{}
     \AtEndDocument{\app@exe{rm -f #1/files.tmp}}}
 
-\maketitle
+%\maketitle
 
-%\tableofcontents
+\tableofcontents
+\newpage
 
-\section{Einführung}
+\section{Vorwort}
 Heeerzlich willkommen!
+\newpage
 
+\section{Stufenfoto}
+\newpage
+
+\section{Prozente}
+\newpage
+
+\section{Lehrersteckbriefe}
+\newpage
+
+\section{Lehrerranking}
+\newpage
+
+\section{Es ist kein Geheimnis, dass...}
+\newpage
+
+\section{Klassenseiten}
+\newpage
+
+\section{Schülersteckbriefe}
 \Ainput{parts/students/}
+\newpage
+
+\section{Schülerranking}
+\newpage
+
+\section{Zitate}
+\newpage
+
+\section{Fotos}
+\newpage
+
+\section{Schullandheime}
+\newpage
+
+\section{Kurse}
+\newpage
+
+\section{Abikomitee}
+\newpage
+
+\section{Neuer Abschnitt}
+\newpage
+
+\section{Impressum}
+\newpage
+
+\section{Werbung}
+\newpage
 
 \end{document}
