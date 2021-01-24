@@ -22,7 +22,7 @@ class DB {
         for (const table of tables) if (table) await this.query(table);
         console.info("Database initialized!");
         const res = await this.query("SELECT id FROM users");
-        if (res.length === 0) this.initValues();
+        if (res.length === 0) await this.initValues();
     }
 
     async initValues() {
@@ -34,6 +34,7 @@ class DB {
         await this.initPolls();
         await this.initMottovote();
         await this.initProfiles();
+        await this.initQuestions();
         await this.initUsers();
     }
 
@@ -175,6 +176,23 @@ class DB {
         }
         await fs.writeFile(__dirname + "/users.json", JSON.stringify(userPasswords));
         console.log("Initialized users!");
+    }
+
+    async initQuestions() {
+        const data = (await fs.readFile(__dirname + "/questions.txt", "utf8")).split("\n");
+        for (const q of data) {
+            await this.query("INSERT INTO question_questions (question) VALUE (?)", [q])
+                .catch(() => console.info("Question already exists!"));
+        }
+    }
+
+    async resetQuestions() {
+        const tables = await this.getTables();
+        await this.query("DROP TABLE question_answers");
+        await this.query("DROP TABLE question_questions");
+        await this.query(tables[12]);
+        await this.query(tables[13]);
+        await this.initQuestions();
     }
 
     async regenerateUser(uid) {

@@ -11,6 +11,7 @@ const quotes = require("./quotes");
 const poll = require("./poll");
 const profile = require("./profile");
 const admin = require("./admin");
+const questions = require("./questions");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
 app.use("/profile", checkUser, profile);
+app.use("/questions", checkUser, questions);
 app.use("/admin", checkAdmin, admin); // Lel
 app.use("/auth", auth);
 

@@ -39,6 +39,12 @@ if ((idx = params.indexOf("-r")) > -1) {
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;
+        case "questions":
+            db.resetQuestions()
+                .then(() => console.info("Resetted questions!"))
+                .then(() => process.exit(0))
+                .catch(console.error);
+            break;
         default:
             console.info("Nothing to do!");
             process.exit(0);
@@ -57,6 +63,8 @@ if ((idx = params.indexOf("-r")) > -1) {
                 .then(() => console.info("Updating polls!"))
                 .then(() => db.initProfiles())
                 .then(() => console.info("Updating profile!"))
+                .then(() => db.initQuestions())
+                .then(() => console.info("Updating Quotes"))
                 .then(() => process.exit(0))
                 .catch(console.error);
 
@@ -76,6 +84,12 @@ if ((idx = params.indexOf("-r")) > -1) {
         case "profile":
             db.initProfiles()
                 .then(() => console.info("Updating profile!"))
+                .then(() => process.exit(0))
+                .catch(console.error);
+            break;
+        case "questions":
+            db.initQuestions()
+                .then(() => console.info("Updating questions!"))
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;

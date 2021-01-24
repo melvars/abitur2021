@@ -1,0 +1,79 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    color: #424242;
+    line-height: 1.6;
+    background-color: #eec0c6;
+    background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
+}
+
+div {
+    background: white;
+}
+
+main {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+}
+
+input,
+button,
+select {
+    width: 100%;
+    color: #424242;
+}
+
+div.bar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+div.bar div {
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    padding: 2px;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.bar div[data-answered="true"] {
+    background: green;
+}
+
+div.bar div[data-answered="false"] {
+    background: red;
+}
+
+div.bar div[data-current="true"] {
+    background: #0078e7;
+}
+
+.back-skip, .answer-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.back-skip button {
+    width: 50%;
+}
+
+@media only screen and (max-width: 700px) {
+    main {
+        width: calc(100% - 20%);
+    }
+}
