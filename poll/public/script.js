@@ -97,7 +97,7 @@ async function request() {
     return resp.json();
 }
 
-// I did this myself lel 🤨
+// I did this myself lel
 Object.prototype.empty = function () {
     return Object.keys(this).length === 0;
 };

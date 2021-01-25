@@ -17,31 +17,31 @@ if ((idx = params.indexOf("-r")) > -1) {
             break;
         case "motto":
             db.resetMottovote()
-                .then(() => console.info("Resetted motto voting!"))
+                .then(() => console.info("Reset motto voting!"))
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;
         case "poll":
             db.resetPolls()
-                .then(() => console.info("Resetted polls!"))
+                .then(() => console.info("Reset polls!"))
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;
         case "profile":
             db.resetProfiles()
-                .then(() => console.info("Resetted profiles!"))
+                .then(() => console.info("Reset profiles!"))
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;
         case "quotes":
             db.resetQuotes()
-                .then(() => console.info("Resetted quotes!"))
+                .then(() => console.info("Reset quotes!"))
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;
         case "questions":
             db.resetQuestions()
-                .then(() => console.info("Resetted questions!"))
+                .then(() => console.info("Reset questions!"))
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;

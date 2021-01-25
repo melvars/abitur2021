@@ -52,7 +52,7 @@ function getNext(q = 0) {
     window.location.assign(`/questions/?qid=${q}`);
 }
 
-// I did this myself lel 🤨
+// I did this myself lel
 Object.prototype.empty = function () {
     return Object.keys(this).length === 0;
 };
@@ -78,6 +78,6 @@ buttons.on("click", async (e) => {
         method = "PUT";
         getNext(qid);
         // document.querySelector(`.answer-btn[data-value="${e.target.dataset.value}"]`).style.opacity = "0.5";
-        // document.querySelector(`.answer-btn[data-value="${+!+e.target.dataset.value}"]`).style.opacity = "1"; // Let's not talk about it 😉
+        // document.querySelector(`.answer-btn[data-value="${+!+e.target.dataset.value}"]`).style.opacity = "1"; // Let's not talk about it
     }
 });

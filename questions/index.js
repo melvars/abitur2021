@@ -22,7 +22,7 @@ app.get("/api/question/:id", checkUser, async (req, res) => {
                 [question.id, req.session.uid],
             );
             question.answer = answers.length > 0 ? answers[0].answer : undefined;
-            res.json(question); // 😜
+            res.json(question);
         } else {
             res.json({});
         }
