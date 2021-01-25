@@ -8,6 +8,9 @@
 \usepackage{fontspec,xunicode,xltxtra}
 \usepackage{afterpage}
 \usepackage{sectsty}
+\usepackage{tikz,float}
+\usepackage{svg,lipsum}
+\usepackage{eso-pic}
 
 % Font
 \setmainfont{"[font.ttf]"}
@@ -28,67 +31,34 @@
 % Updated: https://tex.stackexchange.com/a/7657
 % Import all tex files from a directory
 \def\app@exe{\immediate\write18}
-\def\Ainput#1{
+\def\inputall#1{
     \app@exe{cat #1/*.tex > #1/files.tmp}
     \InputIfFileExists{#1/files.tmp}{}{}
     \AtEndDocument{\app@exe{rm -f #1/files.tmp}}}
 
+\def\part#1{\input{parts/#1.tex}\newpage}
+\def\student{\input{parts/studenttemplate.tex}}
+
 %\maketitle
 
-\tableofcontents
-\newpage
-
-\section{Vorwort}
-Heeerzlich willkommen!
-\newpage
-
-\section{Stufenfoto}
-\newpage
-
-\section{Prozente}
-\newpage
-
-\section{Lehrersteckbriefe}
-\newpage
-
-\section{Lehrerranking}
-\newpage
-
-\section{Es ist kein Geheimnis, dass...}
-\newpage
-
-\section{Klassenseiten}
-\newpage
-
-\section{Schülersteckbriefe}
-\Ainput{parts/students/}
-\newpage
-
-\section{Schülerranking}
-\newpage
-
-\section{Zitate}
-\newpage
-
-\section{Fotos}
-\newpage
-
-\section{Schullandheime}
-\newpage
-
-\section{Kurse}
-\newpage
-
-\section{Abikomitee}
-\newpage
-
-\section{Neuer Abschnitt}
-\newpage
-
-\section{Impressum}
-\newpage
-
-\section{Werbung}
-\newpage
+\part{titlepage}
+\part{tableofcontents}
+\part{introduction}
+\part{classphoto}
+\part{questionnaire}
+\part{teacherprofiles}
+\part{teacherranking}
+\part{secrets}
+\part{classoverview}
+\part{studentprofiles}
+\part{studentranking}
+\part{citations}
+\part{photos}
+\part{trips}
+\part{courseoverview}
+\part{committeeoverview}
+\part{conclusion}
+\part{advertisements}
+\part{imprint}
 
 \end{document}

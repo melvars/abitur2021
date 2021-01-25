@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+if [ "$1" = "clean" ]; then
+    rm -rf build/
+fi
+
 mkdir -p build/ &&
     latexmk -shell-escape -output-directory=build/ -xelatex &&
     zathura build/main.pdf

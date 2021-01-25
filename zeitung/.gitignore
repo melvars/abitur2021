@@ -1,4 +1,5 @@
 build/
 *.log
+svg-inkscape/
 parts/students/*.tex
 parts/students/figures/

@@ -1,0 +1,19 @@
+% Student template
+% TODO: Image borders
+
+%\begin{figure}[H]
+%\includesvg[keepaspectratio=true, scale=0.2]{ring}
+%\end{figure}
+
+\tikz[remember picture,overlay]
+\node[inner sep=0pt] at (2, -5) {
+	\includegraphics[keepaspectratio=true, scale=1]{ring.png}
+};
+
+\def\studentinformation#1#2#3{
+    \begin{tikzpicture}[overlay]
+        \node[] at (11, -1) {\huge{Name: #1}};
+        \node[] at (11, -2) {\huge{Wohnort: #2}};
+        \node[] at (11, -3) {\huge{Geburtsdatum: #3}};
+    \end{tikzpicture}
+}
