@@ -30,7 +30,7 @@ fetch(`api/question/${qid}`)
         } else getNext(); // Resets
     });
 
-fetch(`api/questions`)
+fetch("api/questions")
     .then((response) => response.json())
     .then((response) => {
         for (const elem of response) {
@@ -61,14 +61,14 @@ NodeList.prototype.on = function (listener, event) {
     for (const node of this) {
         node.addEventListener(listener, event);
     }
-}
+};
 
 buttons.on("click", async (e) => {
     const body = JSON.stringify({
         question: question_input.value,
         answer: e.target.dataset.value === "1",
     });
-    const resp = await fetch(`api/answer`, {
+    const resp = await fetch("api/answer", {
         method,
         headers: { "Content-Type": "application/json" },
         body,
@@ -76,7 +76,7 @@ buttons.on("click", async (e) => {
     const res = await resp.json();
     if (res.success) {
         method = "PUT";
-        getNext(qid);
+        getNext(qid + 1);
         // document.querySelector(`.answer-btn[data-value="${e.target.dataset.value}"]`).style.opacity = "0.5";
         // document.querySelector(`.answer-btn[data-value="${+!+e.target.dataset.value}"]`).style.opacity = "1"; // Let's not talk about it
     }
