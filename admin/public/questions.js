@@ -52,6 +52,5 @@ function render(index) {
 document.getElementById("switch").addEventListener("click", () => {
     chart.destroy();
     render(++question_index);
-    if (question_index + 1 < data.length) question_index++;
-    else question_index = 0;
+    if (question_index + 1 >= data.length) question_index = -1;
 });
