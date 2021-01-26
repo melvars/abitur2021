@@ -141,15 +141,25 @@ CREATE TABLE IF NOT EXISTS question_questions
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+CREATE TABLE IF NOT EXISTS question_options
+(
+    id            INTEGER PRIMARY KEY AUTO_INCREMENT,
+    answer_option VARCHAR(50),
+    question_id   INTEGER NOT NULL,
+    CONSTRAINT `fk_question_question2` FOREIGN KEY (question_id) REFERENCES question_questions (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
 CREATE TABLE IF NOT EXISTS question_answers
 (
     id          INTEGER PRIMARY KEY AUTO_INCREMENT,
     question_id INTEGER NOT NULL,
     user_id     INTEGER NOT NULL,
-    answer      BOOLEAN NULL,
+    option_id   INTEGER NOT NULL,
 
     UNIQUE KEY uk_answer (question_id, user_id),
     CONSTRAINT `fk_question_user` FOREIGN KEY (user_id) REFERENCES users (id),
-    CONSTRAINT `fk_question_question` FOREIGN KEY (question_id) REFERENCES question_questions (id)
+    CONSTRAINT `fk_question_question` FOREIGN KEY (question_id) REFERENCES question_questions (id),
+    CONSTRAINT `fk_question_answer2` FOREIGN KEY (option_id) REFERENCES question_options (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;

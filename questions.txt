@@ -1,2 +1,8 @@
-Bist du blöd?
-Fällst du durch?
+Single/Vergeben - Single,Vergeben
+Schulweg - Bus,Bahn,Auto,Fahrrad,Fuß
+Schon einmal blau gemacht - Ja,Nein
+Nach der Schule - Auslandsjahr,Arbeit,Ausbildung,Work & Travel,Pause,Studium
+Geschwister - Ja,Nein
+Raucher - Ja,Nein
+Drogen - Ja,Nein
+Jungfrau - Ja,Nein

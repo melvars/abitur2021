@@ -7,7 +7,6 @@ const question_label = document.getElementById("question_label");
 const prev = document.getElementById("prev-btn");
 const skip = document.getElementById("skip-btn");
 const progress = document.getElementById("progress");
-const buttons = document.querySelectorAll(".answer-btn");
 
 skip.addEventListener("click", () => getNext(qid + 1));
 prev.addEventListener("click", () => getNext(qid - 1));
@@ -23,10 +22,21 @@ fetch(`api/question/${qid}`)
         if (!response.empty()) {
             question_label.innerText = response["question"];
             question_input.setAttribute("value", response["id"]);
+            const div = document.getElementsByClassName("answer-buttons")[0];
+            const prop = 100 / response.options.length;
+            for (const option of response.options) {
+                const btn = document.createElement("btn");
+                btn.classList.add("pure-button", "pure-button-primary", "answer-btn");
+                btn.dataset.value = `${option.id}`;
+                btn.textContent = option.answer_option;
+                btn.style.width = `${prop}%`;
+                div.append(btn);
+            }
+            addListeners();
             if (response.answer !== undefined) {
                 method = "PUT";
+                document.querySelector(`.answer-btn[data-value="${response.answer}"]`).style.opacity = "0.5";
             }
-            document.querySelector(`.answer-btn[data-value="${response.answer}"]`).style.opacity = "0.5";
         } else getNext(); // Resets
     });
 
@@ -63,21 +73,19 @@ NodeList.prototype.on = function (listener, event) {
     }
 };
 
-buttons.on("click", async (e) => {
-    const body = JSON.stringify({
-        question: question_input.value,
-        answer: e.target.dataset.value === "1",
+function addListeners() {
+    const buttons = document.querySelectorAll(".answer-btn");
+    buttons.on("click", async (e) => {
+        const body = JSON.stringify({
+            question: question_input.value,
+            answer: e.target.dataset.value,
+        });
+        const resp = await fetch("api/answer", {
+            method,
+            headers: { "Content-Type": "application/json" },
+            body,
+        });
+        const res = await resp.json();
+        if (res.success) getNext(qid + 1);
     });
-    const resp = await fetch("api/answer", {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body,
-    });
-    const res = await resp.json();
-    if (res.success) {
-        method = "PUT";
-        getNext(qid + 1);
-        // document.querySelector(`.answer-btn[data-value="${e.target.dataset.value}"]`).style.opacity = "0.5";
-        // document.querySelector(`.answer-btn[data-value="${+!+e.target.dataset.value}"]`).style.opacity = "1"; // Let's not talk about it
-    }
-});
+}

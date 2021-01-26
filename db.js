@@ -19,9 +19,9 @@ class DB {
 
     async init() {
         const tables = await this.getTables();
-        for (const table of tables) if (table) await this.query(table);
+        for (const table of tables) if (table && table.length > 1) await this.query(table);
         console.info("Database initialized!");
-        const res = await this.query("SELECT id FROM users");
+        const res = await this.query("SELECT id FROM users LIMIT 1");
         if (res.length === 0) await this.initValues();
     }
 
@@ -47,7 +47,7 @@ class DB {
         const drops = await fs.readFile(__dirname + "/drop.sql", "utf8");
         for (const stmt of drops.split(";")) if (stmt && stmt.length > 1) await this.query(stmt);
         const tables = await this.getTables();
-        for (const table of tables) if (table) await this.query(table);
+        for (const table of tables) if (table && table.length > 1) await this.query(table);
     }
 
     async resetQuotes() {
@@ -180,18 +180,28 @@ class DB {
 
     async initQuestions() {
         const data = (await fs.readFile(__dirname + "/questions.txt", "utf8")).split("\n");
-        for (const q of data) {
-            await this.query("INSERT INTO question_questions (question) VALUE (?)", [q])
-                .catch(() => console.info("Question already exists!"));
+        for (const question of data) {
+            try {
+                const [q, a] = question.split(" - ");
+                const { insertId } = await this.query("INSERT INTO question_questions (question) VALUE (?)", [q]);
+                for (const answer of a.split(",")) {
+                    await this.query("INSERT INTO question_options (answer_option, question_id) VALUE (?,?)", [answer, insertId]);
+                }
+            } catch (e) {
+                console.error(e);
+                console.info("Question already exists!");
+            }
         }
     }
 
     async resetQuestions() {
         const tables = await this.getTables();
-        await this.query("DROP TABLE question_answers");
-        await this.query("DROP TABLE question_questions");
+        await this.query("DROP TABLE IF EXISTS question_answers");
+        await this.query("DROP TABLE IF EXISTS question_options");
+        await this.query("DROP TABLE IF EXISTS question_questions");
         await this.query(tables[12]);
         await this.query(tables[13]);
+        await this.query(tables[14]);
         await this.initQuestions();
     }
 
