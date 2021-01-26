@@ -9,9 +9,9 @@ app.get("/api/question/:id", checkUser, async (req, res) => {
     try {
         const questions = await db.query(
             `SELECT rq.id, rq.question
-                                          FROM ranking_questions rq
-                                                   INNER JOIN types t on rq.type_id = t.id
-                                          WHERE t.name = ?`,
+             FROM ranking_questions rq
+                      INNER JOIN types t on rq.type_id = t.id
+             WHERE t.name = ?`,
             [req.query.type],
         );
         const id = req.params.id;
@@ -19,9 +19,9 @@ app.get("/api/question/:id", checkUser, async (req, res) => {
             const question = questions[id];
             const answers = await db.query(
                 `SELECT *
-                                            FROM ranking_answers
-                                            WHERE question_id = ?
-                                              AND user_id = ?`,
+                 FROM ranking_answers
+                 WHERE question_id = ?
+                   AND user_id = ?`,
                 [question.id, req.session.uid],
             );
             question.answer = answers.length > 0 ? answers[0].answer_id : undefined;
@@ -43,14 +43,14 @@ app.get("/api/questions/:type", checkUser, async (req, res) => {
         try {
             const questions = await db.query(
                 `SELECT id
-                                              FROM ranking_questions rq
-                                              WHERE type_id = ?`,
+                 FROM ranking_questions rq
+                 WHERE type_id = ?`,
                 [types.indexOf(type) + 1],
             );
             const answers = await db.query(
                 `SELECT question_id
-                                            FROM ranking_answers
-                                            WHERE user_id = ?`,
+                 FROM ranking_answers
+                 WHERE user_id = ?`,
                 [req.session.uid],
             );
             const resp = [];
@@ -83,7 +83,7 @@ async function answer(req, res, qu) {
     const fail = { success: false };
     if (types.includes(type)) {
         const { question, answer } = req.body;
-        if (+answer === +req.session.uid) return res.json(fail);
+        if (+answer === +req.session.uid || !question || !answer) return res.json(fail);
         try {
             const answerTypes = await db.query("SELECT type_id FROM ranking_questions WHERE id = ?", [question]);
             if (!answerTypes.length > 0) return res.json(fail);
