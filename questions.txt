@@ -1,8 +1,8 @@
-Single/Vergeben - Single,Vergeben
-Schulweg - Bus,Bahn,Auto,Fahrrad,Fuß
-Schon einmal blau gemacht - Ja,Nein
-Nach der Schule - Auslandsjahr,Arbeit,Ausbildung,Work & Travel,Pause,Studium
-Geschwister - Ja,Nein
-Raucher - Ja,Nein
-Drogen - Ja,Nein
-Jungfrau - Ja,Nein
+Bist du Single/Vergeben? - Single,Vergeben
+Wie kommst du hauptsächlich zur Schule? - Bus,Bahn,Auto,Fahrrad,Fuß
+Hast du schon einmal blau gemacht? - Ja,Nein
+Was machst du nach der Schule? - Auslandsjahr,Arbeit,Ausbildung,Work & Travel,Pause,Studium
+Hast du Geschwister? - Ja,Nein
+Rauchst du? - Ja,Nein
+Hast du bewusstseinserweiternde Substanzen zu dir genommen? - Ja,Nein
+Bist du noch Jungfrau (nicht Sternzeichen)? - Ja,Nein

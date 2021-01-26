@@ -23,13 +23,11 @@ fetch(`api/question/${qid}`)
             question_label.innerText = response["question"];
             question_input.setAttribute("value", response["id"]);
             const div = document.getElementsByClassName("answer-buttons")[0];
-            const prop = 100 / response.options.length;
             for (const option of response.options) {
                 const btn = document.createElement("btn");
                 btn.classList.add("pure-button", "pure-button-primary", "answer-btn");
                 btn.dataset.value = `${option.id}`;
                 btn.textContent = option.answer_option;
-                btn.style.width = `${prop}%`;
                 div.append(btn);
             }
             addListeners();

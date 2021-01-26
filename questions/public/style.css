@@ -63,9 +63,14 @@ div.bar div[data-current="true"] {
     background: #0078e7;
 }
 
-.back-skip, .answer-buttons {
+.back-skip,
+.answer-buttons {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+}
+
+.answer-btn {
+    width: 100%;
 }
 
 .back-skip button {

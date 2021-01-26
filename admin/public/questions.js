@@ -1,23 +1,31 @@
-let data;
 let chart;
+const data = [];
+let question_index = 0;
 
-fetch("/admin/api/votes")
+const label = document.getElementById("question");
+
+fetch("/admin/api/percentages")
     .then((response) => response.json())
     .then((response) => {
-        data = response;
-        render("pie");
+        response.forEach((e) => {
+            if (!data[e.id - 1]) data[e.id - 1] = [];
+            data[e.id - 1].push(e);
+        });
+        render(question_index);
     });
 
-function render(type) {
-    const ctx = document.getElementById("votes").getContext("2d");
+function render(index) {
+    const ctx = document.getElementById("questions").getContext("2d");
+    const q = data[question_index];
+    label.innerText = q[0].question;
     chart = new Chart(ctx, {
-        type,
+        type: "pie",
         data: {
-            labels: data.map((v) => v.name),
+            labels: [...new Set(q.map((a) => a.option))],
             datasets: [
                 {
                     label: "# of Votes",
-                    data: data.map((v) => v.votes || 0),
+                    data: q.map((a) => a.count || 0),
                     backgroundColor: () => "#" + (Math.random().toString(16) + "0000000").slice(2, 8),
                     borderWidth: 1,
                 },
@@ -41,11 +49,9 @@ function render(type) {
     });
 }
 
-let index = 0;
-const types = ["doughnut", "bar", "polarArea", "radar", "line", "pie"];
 document.getElementById("switch").addEventListener("click", () => {
     chart.destroy();
-    render(types[index]);
-    if (index + 1 < types.length) index++;
-    else index = 0;
+    render(++question_index);
+    if (question_index + 1 < data.length) question_index++;
+    else question_index = 0;
 });

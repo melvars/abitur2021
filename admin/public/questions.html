@@ -11,7 +11,7 @@
         />
         <link rel="stylesheet" href="style.css" type="text/css" media="all" />
 
-        <title>Admin</title>
+        <title>Fragen</title>
     </head>
     <body>
         <div class="pure-menu pure-menu-horizontal">
@@ -19,15 +19,13 @@
             <a href="/auth/api/logout" class="pure-menu-item pure-menu-link">Logout</a>
         </div>
         <div class="card">
-            <h2>Admin</h2>
-            <div class="pure-menu">
-                <ul class="pure-menu-list">
-                    <li class="pure-menu-item"><a href="ranking.html" class="pure-menu-link">Ranking</a></li>
-                    <li class="pure-menu-item"><a href="questions.html" class="pure-menu-link">Fragen</a></li>
-                    <li class="pure-menu-item"><a href="votes.html" class="pure-menu-link">Votes</a></li>
-                    <li class="pure-menu-item"><a href="participation.html" class="pure-menu-link">Teilnahme</a></li>
-                </ul>
-            </div>
+            <button class="pure-button" id="switch">Switch</button>
+            <br />
+            <h2 id="question"></h2>
+            <canvas id="questions" width="400" height="400"></canvas>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
+        <script src="questions.js"></script>
     </body>
 </html>

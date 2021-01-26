@@ -39,9 +39,16 @@ app.get("/api/all", checkAdmin, async (req, res) => {
     res.json(all);
 });
 
+app.get("/api/percentages", checkAdmin, async (req, res) => {
+    const percentages = await db.query(
+        "SELECT q.id, q.question question, o.answer_option option, COUNT(a.user_id) count FROM question_questions q INNER JOIN question_options o ON q.id = o.question_id INNER JOIN question_answers a ON o.id = a.option_id GROUP BY o.id",
+    );
+    res.json(percentages);
+});
+
 app.get("/api/questions", checkAdmin, async (req, res) => {
     const questions = await db.query(
-        "SELECT q.id, question, t.name type FROM ranking_questions q INNER JOIN types t on type_id = t.id ORDER BY q.id",
+        "SELECT q.id, question, t.name type FROM ranking_questions q INNER JOIN types t ON type_id = t.id ORDER BY q.id",
     );
     res.json(questions);
 });
