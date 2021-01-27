@@ -3,6 +3,7 @@
 node_*
 .vscode/
 .idea/
+*.log
 *.env
 *.csv
 users.json
