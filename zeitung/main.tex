@@ -26,13 +26,15 @@
 
 % Header & footer
 \renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{30pt}
+\addtolength{\topmargin}{-18pt}
 \pagestyle{fancy}
 \fancyheadoffset{2.5cm}
 \fancyfootoffset{2.5cm}
 \fancyhf{}
-\fancyhead[L]{\hspace*{0.5cm}\Huge{\rightmark}}
+\fancyhead[L]{\hspace*{1cm}\Huge{\rightmark}}
 %\fancyhead[R]{Abitur 2021}
-\lfoot{\hspace*{0.5cm}\huge{\thepage}}
+\lfoot{\hspace*{1cm}\huge{\thepage}}
 
 % Custom title command for header
 \renewcommand{\sectionmark}[1]{\markright{#1}}
