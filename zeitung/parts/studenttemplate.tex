@@ -6,18 +6,28 @@
 %\end{figure}
 
 \clearpage
-\tikz[remember picture,overlay]
-\node[inner sep=0pt] at (2, -5) {
-	\includegraphics[keepaspectratio=true, scale=1]{ring.png}
-};
+\def\studentinformation#1#2#3#4#5#6{
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[inner sep=0pt] at (2, -4) {
+			\includegraphics[keepaspectratio=true, width=200pt]{parts/students/figures/#1.jpg}
+		};
+	\end{tikzpicture}
 
-\def\studentinformation#1#2#3{
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[inner sep=0pt] at (2, -4) {
+			\includegraphics[keepaspectratio=true, width=250pt]{ring.png}
+		};
+	\end{tikzpicture}
+
+	\sectionmark{Steckbrief - #2}
 	\begin{tikzpicture}[overlay]
 		\node[] at (11, -1) {
 			\Large{\begin{tabular}{ l l }
-				\textbf{Name:} & #1 \\
-				\textbf{Wohnort:} & #2 \\
-				\textbf{Geburtsdatum:} & #3
+				\textbf{Name:} & #2 \\
+				\textbf{Geburtstag:} & #3 \\
+				\textbf{Lieblingsfach:} & #4 \\
+				\textbf{Hobbies:} & #5 \\
+				\textbf{Lieblingsgenre:} & #6 \\
 			\end{tabular}}
 		};
 	\end{tikzpicture}
