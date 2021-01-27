@@ -2,6 +2,21 @@ const fs = document.querySelector("fieldset");
 const form = document.querySelector("form");
 let init = true;
 
+const popup = document.querySelector(".popup");
+const popupImage = document.querySelector("#popup-img");
+const cropper = new Cropper(popupImage, { // ration 2/3
+    dragMode: 'move',
+    aspectRatio: 2 / 3,
+    autoCropArea: 0.65,
+    restore: false,
+    guides: false,
+    center: false,
+    highlight: false,
+    cropBoxMovable: false,
+    cropBoxResizable: false,
+    toggleDragModeOnDblclick: false,
+});
+
 function updateHeading(user) {
     document.getElementById("username").textContent = `Steckbrief: ${user.name} ${user.middlename || ""} ${user.surname}`;
 }
@@ -28,7 +43,22 @@ function appendQuestions(question) {
     field.value = question.answer || "";
     field.placeholder = question.question;
     field.type = question.type;
-    if (question.type === "file") field.accept = "image/*";
+    if (question.type === "file") {
+        field.accept = "image/*";
+        field.addEventListener("input", e => {
+            const file = e.target.files[0];
+            popupImage.file = file;
+            const reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function (e) {
+                    aImg.src = e.target.result;
+                };
+            })(popupImage);
+            reader.readAsDataURL(file);
+            popupImage.style.display = "block !important";
+            console.log(cropper);
+        });
+    }
 
     div.appendChild(field);
     fs.insertBefore(div, fs.querySelector("button"));

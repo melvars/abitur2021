@@ -132,3 +132,9 @@ img {
     height: 80%;
     margin-bottom: 12px;
 }
+
+.popup {
+    z-index: 10;
+    position: absolute;
+    display: none;
+}
