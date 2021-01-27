@@ -2,19 +2,38 @@
 
 \clearpage
 
-% TODO: Add offset calculation variables (pretty easy)
 \providecommand\studentimages[1]{%
+	% Ring
+	\def\ringx{50pt}
+	\def\ringy{250pt}
+	\def\ringwidth{250pt}
+	\def\ringimgwidth{180pt}
+	\def\ringoffset{(\ringwidth - \ringimgwidth) / 2}
 	\AddToShipoutPictureBG*{
 		\AtTextUpperLeft{
-			\put(-15, -215){\includegraphics[keepaspectratio=true, width=180pt]{parts/students/figures/#1.jpg}}
-			\put(-50, -250){\includegraphics[keepaspectratio=true, width=250pt]{ring.png}}
+			\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
+				\includegraphics[keepaspectratio=true, width=\ringimgwidth]{parts/students/figures/#1.jpg}
+			}
+			\put(-\ringx, -\ringy){
+				\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
+			}
 		}
 	}
 
+	% Frame
+	\def\framex{130pt}
+	\def\framey{40pt}
+	\def\framewidth{180pt}
+	\def\frameimgwidth{160pt}
+	\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
 	\AddToShipoutPictureBG*{
 		\AtTextLowerLeft{
-			\put(\textwidth - 120, 50){\includegraphics[keepaspectratio=true, width=160pt]{parts/students/figures/#1_child.jpg}}
-			\put(\textwidth - 130, 40){\includegraphics[keepaspectratio=true, width=180pt]{rahmen.png}}
+			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset){
+				\includegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/students/figures/#1_child.jpg}
+			}
+			\put(\textwidth - \framex, \framey){
+				\includegraphics[keepaspectratio=true, width=\framewidth]{rahmen.png}
+			}
 		}
 	}
 }
