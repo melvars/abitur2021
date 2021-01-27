@@ -6,4 +6,5 @@ fi
 
 mkdir -p build/ &&
     latexmk -shell-escape -output-directory=build/ -xelatex &&
-    zathura build/main.pdf
+    zathura build/main.pdf &&
+    (scp build/main.pdf server:/home/melvin/Abizeugs/zeitung.pdf &>/dev/null)

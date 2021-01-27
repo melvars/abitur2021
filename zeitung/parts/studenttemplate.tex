@@ -1,12 +1,8 @@
 % Student template
-% TODO: Image borders
-
-%\begin{figure}[H]
-%\includesvg[keepaspectratio=true, scale=0.2]{ring}
-%\end{figure}
 
 \clearpage
-\def\studentinformation#1#2#3#4#5#6{
+
+\providecommand\studentimages[1]{%
 	% Bild in Ring
 	\begin{tikzpicture}[remember picture, overlay]
 		\node[inner sep=0pt] at (2, -4) {
@@ -21,31 +17,52 @@
 		};
 	\end{tikzpicture}
 
-	% Steckbrief Tabelle
-	\sectionmark{Steckbrief - #2}
-	\begin{tikzpicture}[overlay]
-		\node[] at (11, -1) {
-			\Large{\begin{tabular}{ l l }
-				\textbf{Name:} & #2 \\
-				\textbf{Geburtstag:} & #3 \\
-				\textbf{Lieblingsfach:} & #4 \\
-				\textbf{Hobbies:} & #5 \\
-				\textbf{Lieblingsgenre:} & #6 \\
-			\end{tabular}}
-		};
-	\end{tikzpicture}
-
 	% Bild in Rahmen
 	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (14, -17.5) {
+		\node[inner sep=0pt] at (14, -18.5) {
 			\includegraphics[keepaspectratio=true, width=160pt]{parts/students/figures/#1_child.jpg}
 		};
 	\end{tikzpicture}
 
 	% Rahmen
 	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (14, -17) {
+		\node[inner sep=0pt] at (14, -18) {
 			\includegraphics[keepaspectratio=true, width=180pt]{rahmen.png}
 		};
 	\end{tikzpicture}
+}
+
+\providecommand\studentprofile[8]{%
+	\sectionmark{Steckbrief - #1}
+
+	% Steckbrief Tabelle
+	\begin{tikzpicture}[overlay]
+		\node[text width=250pt, align=left] at (12, -4) {
+			\Large{\begin{tabular}{@{}ll@{}}
+				\textbf{Name:} & #1 \\
+				\textbf{Geburtstag:} & #2 \\
+				\textbf{Lieblingsfach:} & #3 \\
+				\textbf{Hobbies:} & #4 \\
+				\textbf{Lieblingsgenre:} & #5 \\
+			\end{tabular}}\\~\\
+			\textbf{Das werde ich am meisten vermissen:}\\#6\\~\\
+			\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\#7\\~\\
+			\textbf{Lebensmotto:}\\#8\\~\\
+		};
+	\end{tikzpicture}
+}
+
+\providecommand\studenttable[2]{%
+	\vskip 9cm
+	\hspace*{-1.2cm}
+	\Large{\begin{tabular}{@{}ll@{}}
+		\textbf{Erkennungsmerkmale:} & #1 \\
+		\textbf{Zukunftspläne:} & #2 \\
+	\end{tabular}}
+}
+
+\providecommand\studentcomments[1]{%
+	\begin{figure}[H]
+		\hspace*{-2.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
+	\end{figure}
 }
