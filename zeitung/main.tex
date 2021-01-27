@@ -13,6 +13,7 @@
 \usepackage{eso-pic}
 \usepackage{fancyhdr}
 \usepackage{background}
+\usepackage{changepage}
 
 % Font
 \setmainfont{"[tierra-nueva.otf]"}[BoldFont="[tierra-nueva-bold.otf]"]
@@ -25,6 +26,14 @@
 % Figures
 \graphicspath{{figures/}}
 
+% Flip image if odd
+\newcommand\oddflip[2][]{
+	\checkoddpage
+	\ifoddpage\includegraphics[#1]{#2}
+	\else\scalebox{-1}[1]{\includegraphics[#1]{#2}}
+	\fi
+}
+
 % Header & footer
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -35,8 +44,8 @@
 \fancyfootoffset{2.5cm}
 \fancyhf{}
 \fancyhead[L]{\hspace*{1cm}\vspace*{0.3cm}\Huge{\rightmark}}
-\fancyfoot[R]{\vspace*{-50pt}\includegraphics[keepaspectratio=true, width=\paperwidth]{welle.png}}
-\fancyfoot[L]{\vspace*{-1.3cm}\hspace*{3cm}\Huge{\thepage}}
+\fancyfoot[R]{\vspace*{-50pt}\oddflip[keepaspectratio=true, width=\paperwidth]{welle.png}}
+\fancyfoot[L]{\checkoddpage\vspace*{-1.3cm}\hspace*{\ifoddpage 3cm \else 17.5cm \fi}\Huge{\thepage}}
 
 % Custom title command for header
 \renewcommand{\sectionmark}[1]{\markright{#1}}
@@ -55,9 +64,9 @@
 % Import all tex files from a directory
 \def\app@exe{\immediate\write18}
 \def\inputall#1{
-    \app@exe{cat #1/*.tex > #1/files.tmp}
-    \InputIfFileExists{#1/files.tmp}{}{}
-    \AtEndDocument{\app@exe{rm -f #1/files.tmp}}}
+	\app@exe{cat #1/*.tex > #1/files.tmp}
+	\InputIfFileExists{#1/files.tmp}{}{}
+	\AtEndDocument{\app@exe{rm -f #1/files.tmp}}}
 
 \def\part#1{\input{parts/#1.tex}\newpage}
 \def\student{\input{parts/studenttemplate.tex}}
@@ -66,7 +75,7 @@
 
 \backgroundsetup{contents={}}
 \part{titlepage}
-\backgroundsetup{contents={\includegraphics[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1,placement=top,opacity=1,position=current page.north}
+\backgroundsetup{contents={\oddflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position=current page.north}
 \part{tableofcontents}
 \part{introduction}
 \part{classphoto}

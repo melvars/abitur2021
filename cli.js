@@ -65,7 +65,7 @@ if ((idx = params.indexOf("-r")) > -1) {
                 user.middlename || ""
             } ${
                 user.surname
-            }}{18.12.2002}{Mathematik}{Schlafen}{Canadian Pop}{Herr Schwarz}{Gehirn}{Cogito ergo sum}\n\\studenttable{Meistens wunderhübsch}{Essen}`;
+            }}{18.12.2002}{Mathematik}{Schlafen}{Canadian Pop}{Herr Schwarz}{Gehirn}{Cogito ergo sum}\n\\studenttable{Meistens wunderhübsch}{Essen}\n\\studentcomments{}`;
             fs.writeFile(
                 __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
                 textex,

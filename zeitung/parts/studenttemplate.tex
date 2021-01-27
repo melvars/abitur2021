@@ -4,17 +4,24 @@
 
 % Returns a default file if not found
 \providecommand\dfincludegraphics[2][]{
-    \IfFileExists{#2}
-    {
-        \includegraphics[#1]{#2}
-    }
-    {
-        %\fbox{File not found}
-    }
+	\IfFileExists{#2}
+	{
+		\includegraphics[#1]{#2}
+	}
+	{
+		%\fbox{File not found}
+	}
 }
 
 \providecommand\studentimages[1]{%
+	\checkoddpage
+
 	% Ring
+	% \ifoddpage
+	% 	\def\ringx{50pt}
+	% \else
+	% 	\def\ringx{\pagewdith - 50pt}
+	% \fi
 	\def\ringx{50pt}
 	\def\ringy{250pt}
 	\def\ringwidth{250pt}
@@ -56,12 +63,12 @@
 	\begin{tikzpicture}[overlay]
 		\node[text width=250pt, align=left] at (12, -5) {
 			\Large{\begin{tabular}{@{}ll@{}}
-				\textbf{Name:} & #1 \\
-				\textbf{Geburtstag:} & #2 \\
-				\textbf{Lieblingsfach:} & #3 \\
-				\textbf{Hobbies:} & #4 \\
-				\textbf{Lieblingsgenre:} & #5 \\
-			\end{tabular}}\\~\\
+					\textbf{Name:}           & #1 \\
+					\textbf{Geburtstag:}     & #2 \\
+					\textbf{Lieblingsfach:}  & #3 \\
+					\textbf{Hobbies:}        & #4 \\
+					\textbf{Lieblingsgenre:} & #5 \\
+				\end{tabular}}\\~\\
 			\textbf{Das werde ich am meisten vermissen:}\\#6\\~\\
 			\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\#7\\~\\
 			\textbf{Lebensmotto:}\\#8\\~\\
@@ -73,9 +80,9 @@
 	\vskip 10cm
 	\hspace*{-1.2cm}
 	\Large{\begin{tabular}{@{}ll@{}}
-		\textbf{Erkennungsmerkmale:} & #1 \\
-		\textbf{Zukunftspläne:} & #2 \\
-	\end{tabular}}
+			\textbf{Erkennungsmerkmale:} & #1 \\
+			\textbf{Zukunftspläne:}      & #2 \\
+		\end{tabular}}
 }
 
 \providecommand\studentcomments[1]{%
