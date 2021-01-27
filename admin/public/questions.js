@@ -32,6 +32,8 @@ function render(index) {
             ],
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
             legend: {
                 display: false,
             },

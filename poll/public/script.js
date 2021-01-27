@@ -17,7 +17,7 @@ dropdown.insertAdjacentHTML(
     "beforeend",
     '<option value="" selected disabled>' + (type === "teacher" ? "Lehrer" : "Schüler") + "/in auswählen...</option>",
 );
-document.querySelector("legend").innerText = type === "teacher" ? "Lehrer-Ranking" : "Schüler-Ranking";
+document.querySelector("title").textContent = document.querySelector("legend").innerText = type === "teacher" ? "Lehrer-Ranking" : "Schüler-Ranking";
 document.querySelector("p").innerText = "Welche/r " + (type === "teacher" ? "Lehrer/in" : "Schüler/in") + "...";
 
 skip.addEventListener("click", () => getNext(parseInt(qid) + 1));

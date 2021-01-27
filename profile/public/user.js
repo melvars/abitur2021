@@ -18,6 +18,7 @@ function addUser(userData) {
     }
     const h1 = document.createElement("h1");
     h1.textContent = `${user.name} ${user.middlename || ""} ${user.surname}`;
+    document.querySelector("title").textContent = h1.textContent;
     h1.addEventListener("click", (evt) => {
         const qDivs = evt.target.parentElement.querySelectorAll("div");
         qDivs.forEach(
