@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 require("dotenv").config();
 const db = require("./db");
+const fs = require("fs");
 
 const params = process.argv.slice(2);
 
@@ -56,6 +57,25 @@ if ((idx = params.indexOf("-r")) > -1) {
             process.exit(0);
             break;
     }
+} else if ((idx = params.indexOf("-d")) > -1) {
+    // TODO: More dumping
+    db.dump().then((data) => {
+        data.users.forEach((user) => {
+            const textex = `\\student\n\\studentimages{${user.username}}\n\\studentprofile{${user.name} ${
+                user.middlename || ""
+            } ${
+                user.surname
+            }}{18.12.2002}{Mathematik}{Schlafen}{Canadian Pop}{Herr Schwarz}{Gehirn}{Cogito ergo sum}\n\\studenttable{Meistens wunderhübsch}{Essen}`;
+            fs.writeFile(
+                __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
+                textex,
+                (err) => {
+                    if (err) console.error(err);
+                },
+            );
+        });
+    });
+    console.log("Probably finished.. Async?");
 } else if ((idx = params.indexOf("-U")) > -1) {
     // Update management (e.g.: add new poll options)
     const param = params[idx + 1];

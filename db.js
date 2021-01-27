@@ -185,7 +185,10 @@ class DB {
                 const [q, a] = question.split(" - ");
                 const { insertId } = await this.query("INSERT INTO question_questions (question) VALUE (?)", [q]);
                 for (const answer of a.split(",")) {
-                    await this.query("INSERT INTO question_options (answer_option, question_id) VALUE (?,?)", [answer, insertId]);
+                    await this.query("INSERT INTO question_options (answer_option, question_id) VALUE (?,?)", [
+                        answer,
+                        insertId,
+                    ]);
                 }
             } catch (e) {
                 console.error(e);
@@ -216,6 +219,13 @@ class DB {
         const password = await bcrypt.hash(pwd, 10);
         await this.query("UPDATE users SET password = ? WHERE id = ?", [password, uid]);
         console.log(`New password for ${uid}: ${pwd}`);
+    }
+
+    async dump() {
+        const users = await this.query(
+            "SELECT u.id, u.username, u.name, u.middlename, u.surname, c.name class, t.name type FROM users u INNER JOIN class c ON u.class_id = c.id INNER JOIN types t ON u.type_id = t.id WHERE t.name = 'pupil'",
+        );
+        return { users };
     }
 
     async query(query, params) {

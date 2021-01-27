@@ -2,6 +2,17 @@
 
 \clearpage
 
+% Returns a default file if not found
+\providecommand\dfincludegraphics[2][]{
+    \IfFileExists{#2}
+    {
+        \includegraphics[#1]{#2}
+    }
+    {
+        %\fbox{File not found}
+    }
+}
+
 \providecommand\studentimages[1]{%
 	% Ring
 	\def\ringx{50pt}
@@ -12,7 +23,7 @@
 	\AddToShipoutPictureBG*{
 		\AtTextUpperLeft{
 			\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
-				\includegraphics[keepaspectratio=true, width=\ringimgwidth]{parts/students/figures/#1.jpg}
+				\dfincludegraphics[keepaspectratio=true, width=\ringimgwidth]{parts/students/figures/#1.jpg}
 			}
 			\put(-\ringx, -\ringy){
 				\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
@@ -29,7 +40,7 @@
 	\AddToShipoutPictureBG*{
 		\AtTextLowerLeft{
 			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset){
-				\includegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/students/figures/#1_child.jpg}
+				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/students/figures/#1_child.jpg}
 			}
 			\put(\textwidth - \framex, \framey){
 				\includegraphics[keepaspectratio=true, width=\framewidth]{rahmen.png}
