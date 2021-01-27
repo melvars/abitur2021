@@ -2,34 +2,21 @@
 
 \clearpage
 
+% TODO: Add offset calculation variables (pretty easy)
 \providecommand\studentimages[1]{%
-	% Bild in Ring
-	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (2, -4) {
-			\includegraphics[keepaspectratio=true, width=200pt]{parts/students/figures/#1.jpg}
-		};
-	\end{tikzpicture}
+	\AddToShipoutPictureBG*{
+		\AtTextUpperLeft{
+			\put(-15, -215){\includegraphics[keepaspectratio=true, width=180pt]{parts/students/figures/#1.jpg}}
+			\put(-50, -250){\includegraphics[keepaspectratio=true, width=250pt]{ring.png}}
+		}
+	}
 
-	% Ring
-	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (2, -4) {
-			\includegraphics[keepaspectratio=true, width=250pt]{ring.png}
-		};
-	\end{tikzpicture}
-
-	% Bild in Rahmen
-	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (14, -18.5) {
-			\includegraphics[keepaspectratio=true, width=160pt]{parts/students/figures/#1_child.jpg}
-		};
-	\end{tikzpicture}
-
-	% Rahmen
-	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (14, -18) {
-			\includegraphics[keepaspectratio=true, width=180pt]{rahmen.png}
-		};
-	\end{tikzpicture}
+	\AddToShipoutPictureBG*{
+		\AtTextLowerLeft{
+			\put(\textwidth - 120, 50){\includegraphics[keepaspectratio=true, width=160pt]{parts/students/figures/#1_child.jpg}}
+			\put(\textwidth - 130, 40){\includegraphics[keepaspectratio=true, width=180pt]{rahmen.png}}
+		}
+	}
 }
 
 \providecommand\studentprofile[8]{%
@@ -37,7 +24,7 @@
 
 	% Steckbrief Tabelle
 	\begin{tikzpicture}[overlay]
-		\node[text width=250pt, align=left] at (12, -4) {
+		\node[text width=250pt, align=left] at (12, -5) {
 			\Large{\begin{tabular}{@{}ll@{}}
 				\textbf{Name:} & #1 \\
 				\textbf{Geburtstag:} & #2 \\
@@ -53,7 +40,7 @@
 }
 
 \providecommand\studenttable[2]{%
-	\vskip 9cm
+	\vskip 10cm
 	\hspace*{-1.2cm}
 	\Large{\begin{tabular}{@{}ll@{}}
 		\textbf{Erkennungsmerkmale:} & #1 \\
