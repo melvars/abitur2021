@@ -1,6 +1,7 @@
 const uid = new URL(window.location.href).searchParams.get("uid");
 const userDiv = document.getElementById("user");
 const commentsDiv = document.getElementById("comments");
+const charDiv = document.getElementById("char");
 
 if (uid < 1 || uid > 119) window.location.assign("./users.html"); // Well
 
@@ -146,6 +147,44 @@ async function addComments(comments) {
     commentsDiv.append(addDiv);
 }
 
+function addChar(char) {
+    let method = "POST";
+    const h2 = document.createElement("h2");
+    h2.textContent = "Erkennungsmerkmal";
+    h2.addEventListener("click", (evt) => {
+        const divs = evt.target.parentElement.querySelectorAll("div");
+        divs.forEach(
+            (div) => (div.style.display = !div.style.display || div.style.display === "flex" ? "none" : "flex"),
+        );
+        if (h2.classList.contains("bananenkuchen")) h2.classList.remove("bananenkuchen");
+        else h2.classList.add("bananenkuchen");
+    });
+    const inp = document.createElement("input");
+    const btn = document.createElement("button");
+    btn.textContent = "Senden";
+
+    if (char.hasOwnProperty("txt")) {
+        method = "PUT";
+        inp.value = char.txt;
+    }
+
+    inp.maxLength = 255;
+
+    btn.addEventListener("click", async e => {
+        const char = inp.value;
+        const body = JSON.stringify({ char });
+        await fetch(`api/char/${uid}`, {
+            method,
+            headers: { "Content-Type": "application/json" },
+            body,
+        });
+    });
+    const div = document.createElement("div");
+    div.style.display = "flex";
+    div.append(inp, btn);
+    charDiv.append(h2, div);
+}
+
 fetch(`api/user/${uid}`)
     .then((response) => response.json())
     .then(addUser);
@@ -153,3 +192,7 @@ fetch(`api/user/${uid}`)
 fetch(`api/comments/${uid}`)
     .then((response) => response.json())
     .then(addComments);
+
+fetch(`api/char/${uid}`)
+    .then((response) => response.json())
+    .then(addChar);

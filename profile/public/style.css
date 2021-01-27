@@ -64,12 +64,14 @@ img {
 }
 
 #user h1:after,
-#comments h2:after {
+#comments h2:after,
+#char h2:after {
     content: url(/feather/icons/chevron-up.svg);
 }
 
 #user h1.bananenkuchen:after,
-#comments h2.bananenkuchen:after {
+#comments h2.bananenkuchen:after,
+#char h2.bananenkuchen:after {
     content: url(/feather/icons/chevron-down.svg);
 }
 

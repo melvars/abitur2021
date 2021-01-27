@@ -163,3 +163,16 @@ CREATE TABLE IF NOT EXISTS question_answers
     CONSTRAINT `fk_question_answer2` FOREIGN KEY (option_id) REFERENCES question_options (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+CREATE TABLE IF NOT EXISTS profile_char
+(
+    id         INTEGER PRIMARY KEY AUTO_INCREMENT,
+    profile_id INTEGER     NOT NULL, -- profile
+    user_id    INTEGER     NOT NULL, -- user who submitted
+    txt        VARCHAR(255) NOT NULL,
+
+    UNIQUE KEY uk_answer (profile_id, user_id),
+    CONSTRAINT `fk_char_user` FOREIGN KEY (profile_id) REFERENCES users (id),
+    CONSTRAINT `fk_char_user2` FOREIGN KEY (user_id) REFERENCES users (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

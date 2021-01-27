@@ -205,6 +205,12 @@ class DB {
         await this.initQuestions();
     }
 
+    async resetCharacteristics() {
+        const tables = await this.getTables();
+        await this.query("DROP TABLE IF EXISTS profile_char");
+        await this.query(tables[15]);
+    }
+
     async regenerateUser(uid) {
         const pwd = nanoid.nanoid(8);
         const password = await bcrypt.hash(pwd, 10);

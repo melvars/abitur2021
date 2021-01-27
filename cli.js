@@ -45,6 +45,12 @@ if ((idx = params.indexOf("-r")) > -1) {
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;
+        case "char":
+            db.resetCharacteristics()
+                .then(() => console.info("Reset char!"))
+                .then(() => process.exit(0))
+                .catch(console.error);
+            break;
         default:
             console.info("Nothing to do!");
             process.exit(0);
