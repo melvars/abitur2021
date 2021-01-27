@@ -7,18 +7,21 @@
 
 \clearpage
 \def\studentinformation#1#2#3#4#5#6{
+	% Bild in Ring
 	\begin{tikzpicture}[remember picture, overlay]
 		\node[inner sep=0pt] at (2, -4) {
 			\includegraphics[keepaspectratio=true, width=200pt]{parts/students/figures/#1.jpg}
 		};
 	\end{tikzpicture}
 
+	% Ring
 	\begin{tikzpicture}[remember picture, overlay]
 		\node[inner sep=0pt] at (2, -4) {
 			\includegraphics[keepaspectratio=true, width=250pt]{ring.png}
 		};
 	\end{tikzpicture}
 
+	% Steckbrief Tabelle
 	\sectionmark{Steckbrief - #2}
 	\begin{tikzpicture}[overlay]
 		\node[] at (11, -1) {
@@ -29,6 +32,20 @@
 				\textbf{Hobbies:} & #5 \\
 				\textbf{Lieblingsgenre:} & #6 \\
 			\end{tabular}}
+		};
+	\end{tikzpicture}
+
+	% Bild in Rahmen
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[inner sep=0pt] at (14, -17.5) {
+			\includegraphics[keepaspectratio=true, width=160pt]{parts/students/figures/#1_child.jpg}
+		};
+	\end{tikzpicture}
+
+	% Rahmen
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[inner sep=0pt] at (14, -17) {
+			\includegraphics[keepaspectratio=true, width=180pt]{rahmen.png}
 		};
 	\end{tikzpicture}
 }

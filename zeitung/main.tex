@@ -9,9 +9,10 @@
 \usepackage{afterpage}
 \usepackage{sectsty}
 \usepackage{tikz,float}
-\usepackage{svg,lipsum}
+\usepackage{svg,kantlipsum,lipsum}
 \usepackage{eso-pic}
 \usepackage{fancyhdr}
+\usepackage{background}
 
 % Font
 \setmainfont{"[tierra-nueva.otf]"}[BoldFont="[tierra-nueva-bold.otf]"]
@@ -25,15 +26,15 @@
 \graphicspath{{figures/}}
 
 % Header & footer
+\renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
-\setlength{\headheight}{30pt}
-\addtolength{\topmargin}{-18pt}
+\setlength{\headheight}{60pt}
+\addtolength{\topmargin}{-35pt}
 \pagestyle{fancy}
 \fancyheadoffset{2.5cm}
 \fancyfootoffset{2.5cm}
 \fancyhf{}
-\fancyhead[L]{\hspace*{1cm}\Huge{\rightmark}}
-%\fancyhead[R]{Abitur 2021}
+\fancyhead[L]{\hspace*{1cm}\vspace*{0.3cm}\Huge{\rightmark}}
 \fancyfoot[R]{\vspace*{-50pt}\includegraphics[keepaspectratio=true, width=\paperwidth]{welle.png}}
 \fancyfoot[L]{\vspace*{-1.3cm}\hspace*{3cm}\Huge{\thepage}}
 
@@ -63,7 +64,9 @@
 
 %\maketitle
 
+\backgroundsetup{contents={}}
 \part{titlepage}
+\backgroundsetup{contents={\includegraphics[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1,placement=top,opacity=1,position=current page.north}
 \part{tableofcontents}
 \part{introduction}
 \part{classphoto}
