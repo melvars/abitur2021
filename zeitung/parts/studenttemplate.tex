@@ -12,9 +12,13 @@
 };
 
 \def\studentinformation#1#2#3{
-    \begin{tikzpicture}[overlay]
-        \node[] at (11, -1) {\huge{Name: #1}};
-        \node[] at (11, -2) {\huge{Wohnort: #2}};
-        \node[] at (11, -3) {\huge{Geburtsdatum: #3}};
-    \end{tikzpicture}
+	\begin{tikzpicture}[overlay]
+		\node[] at (11, -1) {
+			\Large{\begin{tabular}{ l l }
+				\textbf{Name:} & #1 \\
+				\textbf{Wohnort:} & #2 \\
+				\textbf{Geburtsdatum:} & #3
+			\end{tabular}}
+		};
+	\end{tikzpicture}
 }

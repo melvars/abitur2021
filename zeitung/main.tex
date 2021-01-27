@@ -14,7 +14,7 @@
 \usepackage{fancyhdr}
 
 % Font
-\setmainfont{"[font.ttf]"}
+\setmainfont{"[tierra-nueva.otf]"}[BoldFont="[tierra-nueva-bold.otf]"]
 \sectionfont{\fontsize{20}{15}\selectfont}
 
 % GERMAN
@@ -30,11 +30,12 @@
 \fancyheadoffset{2.5cm}
 \fancyfootoffset{2.5cm}
 \fancyhf{}
-\fancyhead[L]{\hspace*{1cm}\huge{\leftmark}}
+\fancyhead[L]{\hspace*{0.5cm}\Huge{\rightmark}}
 %\fancyhead[R]{Abitur 2021}
-\lfoot{\hspace*{1cm}\huge{\thepage}}
+\lfoot{\hspace*{0.5cm}\huge{\thepage}}
 
 % Custom title command for header
+\renewcommand{\sectionmark}[1]{\markright{#1}}
 \renewcommand{\title}[1]{
 	\par\refstepcounter{section}
 	\sectionmark{#1}
@@ -44,7 +45,7 @@
 \begin{document}
 
 \title{ABI Zeitung 2021}
-\author{des RBS Ulm}
+\author{RBS Ulm TG13}
 
 % Updated: https://tex.stackexchange.com/a/7657
 % Import all tex files from a directory
