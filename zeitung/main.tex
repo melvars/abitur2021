@@ -11,6 +11,7 @@
 \usepackage{tikz,float}
 \usepackage{svg,lipsum}
 \usepackage{eso-pic}
+\usepackage{fancyhdr}
 
 % Font
 \setmainfont{"[font.ttf]"}
@@ -22,6 +23,23 @@
 
 % Figures
 \graphicspath{{figures/}}
+
+% Header & footer
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancy}
+\fancyheadoffset{2.5cm}
+\fancyfootoffset{2.5cm}
+\fancyhf{}
+\fancyhead[L]{\hspace*{1cm}\huge{\leftmark}}
+%\fancyhead[R]{Abitur 2021}
+\lfoot{\hspace*{1cm}\huge{\thepage}}
+
+% Custom title command for header
+\renewcommand{\title}[1]{
+	\par\refstepcounter{section}
+	\sectionmark{#1}
+	\addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}
+}
 
 \begin{document}
 
