@@ -171,7 +171,7 @@ function addChar(char) {
 
     inp.maxLength = 255;
 
-    btn.addEventListener("click", async e => {
+    btn.addEventListener("click", async (e) => {
         const char = inp.value;
         const body = JSON.stringify({ char });
         await fetch(`api/char/${uid}`, {

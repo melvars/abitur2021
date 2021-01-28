@@ -2,49 +2,81 @@
 
 \clearpage
 
+% Returns a default file if not found
+\providecommand\dfincludegraphics[2][]{
+	\IfFileExists{#2}
+	{
+		\includegraphics[#1]{#2}
+	}
+	{
+		%\fbox{File not found}
+	}
+}
+
 \providecommand\studentimages[1]{%
-	% Bild in Ring
-	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (2, -4) {
-			\includegraphics[keepaspectratio=true, width=200pt]{parts/students/figures/#1.jpg}
-		};
-	\end{tikzpicture}
+	\checkoddpage
 
 	% Ring
-	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (2, -4) {
-			\includegraphics[keepaspectratio=true, width=250pt]{ring.png}
-		};
-	\end{tikzpicture}
+	\def\ringx{50pt}
+	\def\ringy{250pt}
+	\def\ringwidth{250pt}
+	\def\ringimgwidth{180pt}
+	\def\ringoffset{(\ringwidth - \ringimgwidth) / 2}
+	\ifoddpage\else
+		\def\ringx{-\paperwidth - 350pt} % ringwidth + 2 * ringx
+	\fi
+	\AddToShipoutPictureBG*{
+		\AtTextUpperLeft{
+			\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
+				\dfincludegraphics[keepaspectratio=true, width=\ringimgwidth]{parts/students/figures/bornerma.jpg}
+			}
+			\put(-\ringx, -\ringy){
+				\oddflip[keepaspectratio=true, width=\ringwidth]{ring.png}
+			}
+		}
+	}
 
-	% Bild in Rahmen
-	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (14, -18.5) {
-			\includegraphics[keepaspectratio=true, width=160pt]{parts/students/figures/#1_child.jpg}
-		};
-	\end{tikzpicture}
-
-	% Rahmen
-	\begin{tikzpicture}[remember picture, overlay]
-		\node[inner sep=0pt] at (14, -18) {
-			\includegraphics[keepaspectratio=true, width=180pt]{rahmen.png}
-		};
-	\end{tikzpicture}
+	% Frame
+	\def\framex{130pt}
+	\def\framey{40pt}
+	\def\framewidth{180pt}
+	\def\frameimgwidth{160pt}
+	\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
+	\ifoddpage\else
+		\def\framex{518pt} % paperwidth - framewidth / 2
+	\fi
+	\AddToShipoutPictureBG*{
+		\AtTextLowerLeft{
+			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset){
+				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/students/figures/bornerma_child.jpg}
+			}
+			\put(\textwidth - \framex, \framey){
+				\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
+			}
+		}
+	}
 }
 
 \providecommand\studentprofile[8]{%
 	\sectionmark{Steckbrief - #1}
+	\checkoddpage
 
 	% Steckbrief Tabelle
+	\ifoddpage
+		\def\tablex{12}
+	\else
+		\def\tablex{3}
+	\fi
+	\def\tabley{-5}
 	\begin{tikzpicture}[overlay]
-		\node[text width=250pt, align=left] at (12, -4) {
+		\node[text width=250pt, align=left] at (\tablex, \tabley) {
 			\Large{\begin{tabular}{@{}ll@{}}
-				\textbf{Name:} & #1 \\
-				\textbf{Geburtstag:} & #2 \\
-				\textbf{Lieblingsfach:} & #3 \\
-				\textbf{Hobbies:} & #4 \\
-				\textbf{Lieblingsgenre:} & #5 \\
-			\end{tabular}}\\~\\
+					\textbf{Name:}           & #1 \\
+					\textbf{Geburtstag:}     & #2 \\
+					\textbf{Lieblingsfach:}  & #3 \\
+					\textbf{Hobbies:}        & #4 \\
+					\textbf{Lieblingsgenre:} & #5 \\
+				\end{tabular}}\\~\\
 			\textbf{Das werde ich am meisten vermissen:}\\#6\\~\\
 			\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\#7\\~\\
 			\textbf{Lebensmotto:}\\#8\\~\\
@@ -53,12 +85,20 @@
 }
 
 \providecommand\studenttable[2]{%
-	\vskip 9cm
-	\hspace*{-1.2cm}
+	\checkoddpage
+
+	\ifoddpage
+		\def\tablex{-1.25cm}
+	\else
+		\def\tablex{5cm}
+	\fi
+
+	\vskip 10cm
+	\hspace*{\tablex}
 	\Large{\begin{tabular}{@{}ll@{}}
-		\textbf{Erkennungsmerkmale:} & #1 \\
-		\textbf{Zukunftspläne:} & #2 \\
-	\end{tabular}}
+			\textbf{Erkennungsmerkmale:} & #1 \\
+			\textbf{Zukunftspläne:}      & #2 \\
+		\end{tabular}}
 }
 
 \providecommand\studentcomments[1]{%
