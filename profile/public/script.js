@@ -4,21 +4,28 @@ let init = true;
 
 const popup = document.querySelector(".popup");
 const popupImage = document.querySelector("#popup-img");
-const cropper = new Cropper(popupImage, { // ration 2/3
-    dragMode: 'move',
-    aspectRatio: 2 / 3,
-    autoCropArea: 0.65,
-    restore: false,
-    guides: false,
-    center: false,
-    highlight: false,
-    cropBoxMovable: false,
-    cropBoxResizable: false,
-    toggleDragModeOnDblclick: false,
-});
+const crop = () => {
+    var minAspectRatio = 0.5;
+    var maxAspectRatio = 1.5;
+    const cropper = new Cropper(document.getElementById("popup-img"), {
+        dragMode: "move",
+        aspectRatio: 2 / 3,
+        autoCropArea: 0.65,
+        restore: false,
+        guides: false,
+        center: false,
+        highlight: false,
+        cropBoxMovable: false,
+        cropBoxResizable: false,
+        toggleDragModeOnDblclick: false,
+    });
+    return cropper;
+};
 
 function updateHeading(user) {
-    document.getElementById("username").textContent = `Steckbrief: ${user.name} ${user.middlename || ""} ${user.surname}`;
+    document.getElementById("username").textContent = `Steckbrief: ${user.name} ${user.middlename || ""} ${
+        user.surname
+    }`;
 }
 
 function appendQuestions(question) {
@@ -45,18 +52,18 @@ function appendQuestions(question) {
     field.type = question.type;
     if (question.type === "file") {
         field.accept = "image/*";
-        field.addEventListener("input", e => {
+        field.addEventListener("input", (e) => {
             const file = e.target.files[0];
             popupImage.file = file;
             const reader = new FileReader();
             reader.onload = (function (aImg) {
                 return function (e) {
                     aImg.src = e.target.result;
+                    popup.style.display = "block";
+                    crop();
                 };
             })(popupImage);
             reader.readAsDataURL(file);
-            popupImage.style.display = "block !important";
-            console.log(cropper);
         });
     }
 

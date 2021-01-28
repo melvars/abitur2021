@@ -182,10 +182,10 @@ app.delete("/api/comment", async (req, res) => {
 // Char API
 app.get("/api/char/:uid", async (req, res) => {
     const uid = req.params.uid;
-    const char = await db.query(
-        "SELECT txt FROM profile_char WHERE profile_id = ? AND user_id = ?",
-        [uid, req.session.uid],
-    );
+    const char = await db.query("SELECT txt FROM profile_char WHERE profile_id = ? AND user_id = ?", [
+        uid,
+        req.session.uid,
+    ]);
     res.json(char.length > 0 ? char[0] : {});
 });
 
@@ -194,7 +194,11 @@ app.post("/api/char/:uid", async (req, res) => {
     const { char } = req.body;
     if (!char || char.length > 255) return res.json({ success: false });
     try {
-        await db.query("INSERT INTO profile_char (profile_id, user_id, txt) VALUE (?,?,?)", [uid, req.session.uid, char]);
+        await db.query("INSERT INTO profile_char (profile_id, user_id, txt) VALUE (?,?,?)", [
+            uid,
+            req.session.uid,
+            char,
+        ]);
         res.json({ success: true });
     } catch (e) {
         console.error(e);
@@ -207,7 +211,11 @@ app.put("/api/char/:uid", async (req, res) => {
     const { char } = req.body;
     if (!char || char.length > 255) return res.json({ success: false });
     try {
-        await db.query("UPDATE profile_char SET txt = ? WHERE profile_id = ? AND user_id = ?", [char, uid, req.session.uid]);
+        await db.query("UPDATE profile_char SET txt = ? WHERE profile_id = ? AND user_id = ?", [
+            char,
+            uid,
+            req.session.uid,
+        ]);
         res.json({ success: true });
     } catch (e) {
         console.error(e);

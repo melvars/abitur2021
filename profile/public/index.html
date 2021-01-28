@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
             rel="stylesheet"
             href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
             integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
             crossorigin="anonymous"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.min.js"
-            integrity="sha512-9pGiHYK23sqK5Zm0oF45sNBAX/JqbZEP7bSDHyt+nT3GddF+VFIcYNqREt0GDpmFVZI3LZ17Zu9nMMc9iktkCw=="
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css" type="text/css" media="all"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.min.css"
-          integrity="sha512-w+u2vZqMNUVngx+0GVZYM21Qm093kAexjueWOv9e9nIeYJb1iEfiHC7Y+VvmP/tviQyA5IR32mwN/5hTEJx6Ng=="
-          crossorigin="anonymous"/>
-    <title>Steckbrief</title>
-</head>
+        />
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.min.css"
+            integrity="sha512-w+u2vZqMNUVngx+0GVZYM21Qm093kAexjueWOv9e9nIeYJb1iEfiHC7Y+VvmP/tviQyA5IR32mwN/5hTEJx6Ng=="
+            crossorigin="anonymous"
+        />
+        <title>Steckbrief</title>
+    </head>
 
-<body>
-<div class="pure-menu pure-menu-horizontal">
-    <a href="/" class="pure-menu-item pure-menu-link">Home</a>
-    <a href="/auth/api/logout" class="pure-menu-item pure-menu-link">Logout</a>
-</div>
-<main>
-    <h2 id="username"></h2>
-    <form class="pure-form pure-form-stacked">
-        <fieldset>
-            <button type="submit" class="pure-button pure-button-primary">Senden!?</button>
-        </fieldset>
-    </form>
-</main>
-<div class="popup">
-    <img id="popup-img">
-</div>
-<script src="script.js"></script>
-</body>
+    <body>
+        <div class="pure-menu pure-menu-horizontal">
+            <a href="/" class="pure-menu-item pure-menu-link">Home</a>
+            <a href="/auth/api/logout" class="pure-menu-item pure-menu-link">Logout</a>
+        </div>
+        <main>
+            <h2 id="username"></h2>
+            <form class="pure-form pure-form-stacked">
+                <fieldset>
+                    <button type="submit" class="pure-button pure-button-primary">Senden</button>
+                </fieldset>
+            </form>
+        </main>
+        <div class="popup">
+            <img id="popup-img" src="https://fengyuanchen.github.io/cropperjs/images/picture.jpg" alt="Picture" />
+        </div>
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.min.js"
+            integrity="sha512-9pGiHYK23sqK5Zm0oF45sNBAX/JqbZEP7bSDHyt+nT3GddF+VFIcYNqREt0GDpmFVZI3LZ17Zu9nMMc9iktkCw=="
+            crossorigin="anonymous"
+        ></script>
+        <script src="script.js"></script>
+    </body>
 </html>
