@@ -4,3 +4,4 @@ svg-inkscape/
 parts/students/*/*.tex
 parts/students/figures/
 parts/test/
+*.otf
