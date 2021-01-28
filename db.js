@@ -214,6 +214,12 @@ class DB {
         await this.query(tables[15]);
     }
 
+    async resetTeacherPredict() {
+        const tables = await this.getTables();
+        await this.query("DROP TABLE IF EXISTS teacher_prediction");
+        await this.query(tables[16]);
+    }
+
     async regenerateUser(uid) {
         const pwd = nanoid.nanoid(8);
         const password = await bcrypt.hash(pwd, 10);
