@@ -11,7 +11,6 @@ async function addUser(userData) {
         const { user } = userData;
         const h1 = document.createElement("h1");
         h1.textContent = `${user.name} ${user.middlename || ""} ${user.surname}`;
-        h1.classList.add("hidden-chevron");
         userDiv.append(h1);
         document.querySelector("title").textContent = h1.textContent;
         return;
