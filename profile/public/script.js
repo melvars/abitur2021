@@ -1,9 +1,42 @@
 const fs = document.querySelector("fieldset");
 const form = document.querySelector("form");
 let init = true;
+let imageInit = true;
+let imageID = -1;
+
+const popup = document.querySelector(".popup");
+const popupImage = document.querySelector("#popup-img");
+const saveBtn = document.querySelector("#save-btn");
+const slider = document.querySelector("#rotation-slider");
+const controlButtons = document.querySelectorAll(".control-btns button");
+let cropper = undefined;
+
+const crop = () => {
+    cropper = new Cropper(document.getElementById("popup-img"), {
+        // Consider dataset id
+        //dragMode: "move",
+        aspectRatio: 10 / 13,
+        //autoCropArea: 0.65,
+        //restore: false,
+        //guides: false,
+        //center: false,
+        //highlight: false,
+        //cropBoxMovable: false,
+        //cropBoxResizable: false,
+        //toggleDragModeOnDblclick: false,
+    });
+};
+
+NodeList.prototype.on = function (listener, event) {
+    for (const node of this) {
+        node.addEventListener(listener, event);
+    }
+};
 
 function updateHeading(user) {
-    document.getElementById("username").textContent = `Steckbrief: ${user.name} ${user.middlename || ""} ${user.surname}`;
+    document.getElementById("username").textContent = `Steckbrief: ${user.name} ${user.middlename || ""} ${
+        user.surname
+    }`;
 }
 
 function appendQuestions(question) {
@@ -19,6 +52,7 @@ function appendQuestions(question) {
         img.src = "uploads/" + question.answer;
         img.alt = "Image";
         div.appendChild(img);
+        imageInit = false;
     }
 
     const field = document.createElement("input");
@@ -28,7 +62,21 @@ function appendQuestions(question) {
     field.value = question.answer || "";
     field.placeholder = question.question;
     field.type = question.type;
-    if (question.type === "file") field.accept = "image/*";
+    if (question.type === "file") {
+        imageID = question.id;
+        field.accept = "image/*";
+        field.addEventListener("input", (e) => {
+            const file = e.target.files[0];
+            popupImage.file = file;
+            const reader = new FileReader();
+            reader.addEventListener("load", (e) => {
+                popupImage.src = e.target.result;
+                popup.style.display = "block";
+                crop();
+            });
+            reader.readAsDataURL(file);
+        });
+    }
 
     div.appendChild(field);
     fs.insertBefore(div, fs.querySelector("button"));
@@ -36,20 +84,52 @@ function appendQuestions(question) {
 
 form.addEventListener("submit", async (evt) => {
     evt.preventDefault();
-    const url = init ? "api/add" : "api/update";
     const method = init ? "POST" : "PUT";
 
     const inputs = form.querySelectorAll("input");
-    const body = new FormData();
+    const rawBody = {};
     for (const input of inputs) {
-        if (input.type !== "file") body.append(input.name, input.value);
-        else body.append(input.name, input.files[0] ?? "dbg-image");
+        if (input.type !== "file") rawBody[input.name] = input.value;
     }
+    const body = JSON.stringify(rawBody);
 
-    const resp = await fetch(url, { method, body });
-    const res = await resp.text();
-    if (res !== "ok") alert("AHHHH");
-    else location.reload();
+    const resp = await fetch("api/answer", { method, body, headers: { "Content-Type": "application/json" } });
+    const res = await resp.json();
+    if (!res.success) alert("An error occurred");
+    else init = false;
+});
+
+saveBtn.addEventListener("click", (e) => {
+    cropper.getCroppedCanvas().toBlob(async (blob) => {
+        const url = "api/answerImage";
+        const method = imageInit ? "POST" : "PUT";
+        const body = new FormData();
+        if (imageID === -1) {
+            return;
+        }
+        body.append(imageID, blob);
+        const resp = await fetch(url, { method, body });
+        const res = await resp.json();
+        if (!res.success) {
+            alert("An error occurred");
+        } else {
+            imageInit = false;
+            popup.style.display = "none";
+            cropper.destroy();
+            document.querySelectorAll("img").forEach((elem) => {
+                if (elem.src.startsWith("http")) elem.src += "#" + new Date().getTime();
+            });
+        }
+    }, "image/jpeg");
+});
+
+slider.addEventListener("input", (e) => {
+    cropper.rotateTo(-e.target.value);
+});
+
+controlButtons.on("click", (e) => {
+    if (e.target.dataset.rot === "true") cropper.rotate(+e.target.dataset.value);
+    else cropper.rotateTo(+e.target.dataset.value);
 });
 
 fetch("/auth/api/self")

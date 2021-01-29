@@ -54,12 +54,14 @@ img {
 }
 
 #user h1,
-#comments h2 {
+#comments h2,
+#char h2 {
     cursor: pointer;
 }
 
 #user h1:hover,
-#comments h2:hover {
+#comments h2:hover,
+#char h2:hover {
     opacity: 0.8;
 }
 
@@ -131,4 +133,16 @@ img {
     width: 100%;
     height: 80%;
     margin-bottom: 12px;
+}
+
+.popup {
+    z-index: 10;
+    position: absolute;
+    display: none;
+    max-height: 600px;
+    max-width: 600px;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border: 1px solid black;
 }

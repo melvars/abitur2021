@@ -8,3 +8,4 @@ Lebensmotto/Seniorquote - text
 Lieblingsbands/-musiker/-genre - text
 Lieblingsfach - text
 Hassfach - text
+Kinderbild - file
