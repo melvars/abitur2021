@@ -11,7 +11,9 @@ function appendOption(response) {
     response.forEach((elem, i) => {
         dropdown.insertAdjacentHTML(
             "beforeend",
-            `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] + " " : ""}${elem["surname"]}</option>`,
+            `<option value="${elem["id"]}">${elem["name"]} ${elem["middlename"] ? elem["middlename"] + " " : ""}${
+                elem["surname"]
+            }</option>`,
         );
     });
 }
@@ -35,5 +37,10 @@ submit.addEventListener("click", async (e) => {
     const body = JSON.stringify({ teacher });
     const resp = await fetch("api/set", { method, body, headers: { "Content-Type": "application/json" } });
     const res = await resp.json();
-    if (res.success) method = "PUT";
+    if (res.success) {
+        method = "PUT";
+        alert("Okidoki!");
+    } else {
+        alert("Sorry, Fehler!");
+    }
 });
