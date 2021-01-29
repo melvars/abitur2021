@@ -120,9 +120,10 @@ app.put("/api/comment", async (req, res) => {
     const { pid, cid, comment } = req.body;
     if (!pid || !comment || !cid) return res.json({ success: false });
     try {
-        await db.query("UPDATE profile_comments SET comment = ? WHERE user_id = ? AND profile_id = ? AND id = ?", [
+        await db.query("UPDATE profile_comments SET comment = ? WHERE (user_id = ? OR ?) AND profile_id = ? AND id = ?", [
             comment,
             req.session.uid,
+            req.session.isAdmin,
             pid,
             cid,
         ]);
@@ -137,8 +138,9 @@ app.delete("/api/comment", async (req, res) => {
     const { pid, cid } = req.body;
     if (!pid || !cid) return res.json({ success: false });
     try {
-        await db.query("DELETE FROM profile_comments WHERE user_id = ? AND profile_id = ? AND id = ?", [
+        await db.query("DELETE FROM profile_comments WHERE (user_id = ? OR ?) AND profile_id = ? AND id = ?", [
             req.session.uid,
+            req.session.isAdmin,
             pid,
             cid,
         ]);
