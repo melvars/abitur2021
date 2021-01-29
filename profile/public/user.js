@@ -10,10 +10,10 @@ function addUser(userData) {
     const questions = userData.questions;
     const user = userData.user;
     for (const questionID in questions) {
-        if (!questions.hasOwnProperty(questionID)) continue;
+        if (!questions.hasOwnProperty(questionID) || questions[questionID].type === "file") continue;
         const question = questions[questionID];
         const div = document.createElement("div");
-        div.innerHTML = `<b>${question.question.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</b> <span>${question.answer.replace(/</g, "&lt;").replace(/>/g, "&gt;") || ""}</span>`;
+        div.innerHTML = `<b>${question.question.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</b> <span>${(question.answer || "Hitler").replace(/</g, "&lt;").replace(/>/g, "&gt;") || ""}</span>`;
         divs.push(div);
     }
     const h1 = document.createElement("h1");

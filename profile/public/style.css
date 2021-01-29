@@ -54,12 +54,14 @@ img {
 }
 
 #user h1,
-#comments h2 {
+#comments h2,
+#char h2 {
     cursor: pointer;
 }
 
 #user h1:hover,
-#comments h2:hover {
+#comments h2:hover,
+#char h2:hover {
     opacity: 0.8;
 }
 
