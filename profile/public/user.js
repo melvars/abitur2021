@@ -5,7 +5,12 @@ const charDiv = document.getElementById("char");
 
 if (uid < 1 || uid > 119) window.location.assign("./users.html"); // Well
 
-function addUser(userData) {
+async function addUser(userData) {
+    const resp = await (await fetch("/auth/api/status")).json();
+    if (!resp.admin) {
+        userDiv.style.display = "none";
+        return;
+    }
     const divs = [];
     const questions = userData.questions;
     const user = userData.user;
