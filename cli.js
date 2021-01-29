@@ -40,6 +40,12 @@ if ((idx = params.indexOf("-r")) > -1) {
                 .then(() => process.exit(0))
                 .catch(console.error);
             break;
+        case "secrets":
+            db.resetSecrets()
+                .then(() => console.info("Reset secrets!"))
+                .then(() => process.exit(0))
+                .catch(console.error);
+            break;
         case "questions":
             db.resetQuestions()
                 .then(() => console.info("Reset questions!"))
@@ -90,7 +96,6 @@ if ((idx = params.indexOf("-r")) > -1) {
                 .then(() => db.initProfiles())
                 .then(() => console.info("Updating profile!"))
                 .then(() => db.initQuestions())
-                .then(() => console.info("Updating Quotes"))
                 .then(() => process.exit(0))
                 .catch(console.error);
 

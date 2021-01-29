@@ -13,6 +13,7 @@ const profile = require("./profile");
 const admin = require("./admin");
 const questions = require("./questions");
 const prediction = require("./prediction");
+const secrets = require("./secrets");
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use("/poll", checkUser, poll);
 app.use("/profile", checkUser, profile);
 app.use("/questions", checkUser, questions);
 app.use("/prediction", checkUser, prediction);
+app.use("/secrets", checkUser, secrets);
 app.use("/admin", checkAdmin, admin); // Lel
 app.use("/auth", auth);
 

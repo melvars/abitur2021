@@ -187,3 +187,14 @@ CREATE TABLE IF NOT EXISTS teacher_prediction
   CONSTRAINT `fk_teacher_teacher` FOREIGN KEY (teacher_id) REFERENCES users (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+CREATE TABLE IF NOT EXISTS secrets
+(
+    id      INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id INTEGER      NOT NULL,
+    secret VARCHAR(255) NOT NULL,
+
+    UNIQUE KEY uk_secret (user_id, secret),
+    CONSTRAINT `fk_user_secret` FOREIGN KEY (user_id) REFERENCES users (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

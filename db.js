@@ -56,6 +56,12 @@ class DB {
         await this.query(tables[3]);
     }
 
+    async resetSecrets() {
+        const tables = await this.getTables();
+        await this.query("DROP TABLE IF EXISTS secrets");
+        await this.query(tables[17]);
+    }
+
     async resetProfiles() {
         const tables = await this.getTables();
         await this.query("DROP TABLE IF EXISTS profile_comments");
