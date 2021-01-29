@@ -12,7 +12,7 @@ function appendsecret(response) {
         const span = document.querySelector(`li span[data-id="${elem["id"]}"]`);
         if (span)
             span.addEventListener("click", (event) => {
-                if (!confirm("Bist du dir sicher, dass du das Zitat löschen willst?")) return;
+                if (!confirm("Bist du dir sicher, dass du das löschen willst?")) return;
                 fetch("api/delete/" + event.target.getAttribute("data-id"), { method: "DELETE" })
                     .then((response) => response.text())
                     .then((response) => {
