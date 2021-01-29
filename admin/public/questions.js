@@ -33,19 +33,9 @@ function render(index) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             legend: {
                 display: false,
-            },
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
-                            precision: 0,
-                        },
-                    },
-                ],
             },
         },
     });
