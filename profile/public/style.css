@@ -137,4 +137,6 @@ img {
     z-index: 10;
     position: absolute;
     display: none;
+    max-height: 600px;
+    max-width: 600px;
 }

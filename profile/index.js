@@ -38,87 +38,57 @@ app.get("/api/questions", async (req, res) => {
     res.json(questions);
 });
 
-app.post("/api/add", async (req, res) => {
-    try {
-        for (let qid in req.body) {
-            if (!req.body.hasOwnProperty(qid) || req.body[qid] === "dbg-image") continue;
-            let answer = req.body[qid].replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            try {
-                await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
-                    qid,
-                    req.session.uid,
-                    answer.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-                ]);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        for (let fid in req.files) {
-            if (!req.files.hasOwnProperty(fid)) return;
-
-            let image, imageType, imageName;
-
-            image = req.files[fid];
-            imageType = image.name.split(".").reverse()[0];
-            imageName = `${req.session.uid}_${new Date().getTime()}.${imageType}`;
-            image.mv(__dirname + "/public/uploads/" + imageName);
-            try {
-                await db.query("INSERT INTO profile_answers (question_id, user_id, answer) VALUES (?, ?, ?)", [
-                    fid,
-                    req.session.uid,
-                    imageName,
-                ]);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        res.send("ok");
-    } catch (e) {
-        console.error(e);
-        res.send("error");
-    }
+app.post("/api/answer", async (req, res) => {
+    return await answer(req, res, "INSERT INTO profile_answers (answer, question_id, user_id) VALUE (?,?,?)");
+});
+app.put("/api/answer", async (req, res) => {
+    return await answer(req, res, "UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?");
 });
 
-app.put("/api/update", async (req, res) => {
+async function answer(req, res, qs) {
     try {
-        for (let qid in req.body) {
-            if (!req.body.hasOwnProperty(qid) || req.body[qid] === "dbg-image") continue;
-            let answer = req.body[qid].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        for (const qid of req.body) {
+            if (!req.body.hasOwnProperty(qid)/* || !req.body[qid]*/) continue;
+            const answer = req.body[qid];
             try {
-                await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", [
-                    answer,
-                    qid,
-                    req.session.uid,
-                ]);
+                await db.query(qs, [answer, qid, req.session.uid]); // TODO: Frontend display sanitize
             } catch (e) {
                 console.error(e);
             }
         }
-        for (let fid in req.files) {
-            if (!req.files.hasOwnProperty(fid)) return;
-
-            let image, imageType, imageName;
-
-            image = req.files[fid];
-            imageType = image.name.split(".").reverse()[0];
-            imageName = `${req.session.uid}_${new Date().getTime()}.${imageType}`;
-            image.mv(__dirname + "/public/uploads/" + imageName);
-            try {
-                await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", [
-                    imageName,
-                    fid,
-                    req.session.uid,
-                ]);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        res.send("ok");
+        res.json({ success: true });
     } catch (e) {
         console.error(e);
-        res.send("error");
+        res.json({ success: false });
     }
+}
+
+app.post("/api/answerImage", async (req, res) => {
+    return await answerImage(req, res, "INSERT INTO profile_answers (answer, question_id, user_id) VALUE (?,?,?)");
 });
+app.put("/api/answerImage", async (req, res) => {
+    return await answerImage(req, res, "UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?");
+});
+
+async function answerImage(req, res, qs) {
+    try {
+        for (const fid in req.files) {
+            if (!req.files.hasOwnProperty(fid)) continue;
+            const image = req.files[fid];
+            const name = `${req.session.uid}_${new Date().getTime()}.jpg`;
+            try {
+                await image.mv(`${__dirname}/public/uploads/${name}`);
+                await db.query(qs, [name, fid, req.session.uid]);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        res.json({ success: true });
+    } catch (e) {
+        console.error(e);
+        res.json({ success: false });
+    }
+}
 
 // Comments API
 app.get("/api/comments/:uid", async (req, res) => {

@@ -34,6 +34,14 @@
         </main>
         <div class="popup">
             <img id="popup-img" src="https://fengyuanchen.github.io/cropperjs/images/picture.jpg" alt="Picture" />
+            <button class="pure-button pure-button-primary" id="save-btn">Übernehmen</button>
+            <label for="rotation-slider">Drehen</label>
+            <input id="rotation-slider" type="range" min="-180" max="180" value="0">
+            <div class="control-btns">
+                <button class="pure-button pure-button-primary" id="rot45" data-value="-45" data-rot="true">45</button>
+                <button class="pure-button pure-button-primary" id="nrot45" data-value="45" data-rot="true">-45</button>
+                <button class="pure-button pure-button-primary" id="norm" data-value="0" data-rot="false">0</button>
+            </div>
         </div>
 
         <script
