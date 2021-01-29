@@ -15,6 +15,12 @@ function checkAdmin(req, res, next) {
     else return res.redirect("/auth");
 }
 
+function checkSuperAdmin(req, res, next) {
+    if (req.session.loggedIn && req.session.isAdmin && req.session.isSuperAdmin) next();
+    else if (req.session.loggedIn) return res.redirect("/");
+    else return res.redirect("/auth");
+}
+
 app.use(
     "/",
     (req, res, next) => {
@@ -39,6 +45,8 @@ app.post("/api/login", async (req, res) => {
         console.log("LOGIN: " + user.id);
         req.session.loggedIn = true;
         req.session.isAdmin = user.is_admin;
+        // Hardcoding ftw lol
+        req.session.isSuperAdmin = username == "bornerma" || username == "krönnela" ? user.is_admin : false;
         req.session.uid = user.id;
         req.session.cid = user.class_id;
     }
@@ -93,14 +101,19 @@ app.get("/api/list", checkUser, async (req, res) => {
 });
 
 app.get("/api/status", (req, res) => {
-    res.json({ loggedIn: req.session.loggedIn, admin: req.session.isAdmin });
+    res.json({
+        loggedIn: req.session.loggedIn,
+        admin: req.session.isAdmin,
+        superAdmin: req.session.isSuperAdmin || false,
+    });
 });
 
 app.get("/api/self", checkUser, async (req, res) => {
     try {
         const user = await db.query(
             "SELECT id, username, name, middlename, surname, class_id, type_id, is_admin FROM users WHERE id = ?",
-            [req.session.uid]);
+            [req.session.uid],
+        );
         res.json(user[0]);
     } catch (e) {
         console.error(e);

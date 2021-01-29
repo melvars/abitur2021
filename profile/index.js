@@ -95,7 +95,7 @@ app.get("/api/comments/:uid", async (req, res) => {
     const uid = req.params.uid;
     const comments = await db.query(
         "SELECT *, (user_id = ? OR ?) AS owner FROM profile_comments WHERE profile_id = ?",
-        [req.session.uid, req.session.isAdmin, uid],
+        [req.session.uid, req.session.isSuperAdmin || false, uid],
     );
     res.json(comments);
 });
@@ -120,13 +120,10 @@ app.put("/api/comment", async (req, res) => {
     const { pid, cid, comment } = req.body;
     if (!pid || !comment || !cid) return res.json({ success: false });
     try {
-        await db.query("UPDATE profile_comments SET comment = ? WHERE (user_id = ? OR ?) AND profile_id = ? AND id = ?", [
-            comment,
-            req.session.uid,
-            req.session.isAdmin,
-            pid,
-            cid,
-        ]);
+        await db.query(
+            "UPDATE profile_comments SET comment = ? WHERE (user_id = ? OR ?) AND profile_id = ? AND id = ?",
+            [comment, req.session.uid, req.session.isSuperAdmin || false, pid, cid],
+        );
         res.json({ success: true });
     } catch (e) {
         console.error(e);
@@ -140,7 +137,7 @@ app.delete("/api/comment", async (req, res) => {
     try {
         await db.query("DELETE FROM profile_comments WHERE (user_id = ? OR ?) AND profile_id = ? AND id = ?", [
             req.session.uid,
-            req.session.isAdmin,
+            req.session.isSuperAdmin || false,
             pid,
             cid,
         ]);

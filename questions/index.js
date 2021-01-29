@@ -16,7 +16,9 @@ app.get("/api/question/:id", checkUser, async (req, res) => {
                 [question.id, req.session.uid],
             );
             question.answer = answers.length > 0 ? answers[0].option_id : undefined;
-            question.options = await db.query("SELECT id, answer_option FROM question_options WHERE question_id = ?", [question.id]);
+            question.options = await db.query("SELECT id, answer_option FROM question_options WHERE question_id = ?", [
+                question.id,
+            ]);
             res.json(question);
         } else {
             res.json({});
@@ -57,11 +59,14 @@ async function answer(req, res, qu) {
     const { question, answer } = req.body;
     const fail = { success: false };
     try {
-        const possibleAnswers = await db.query(`SELECT qo.id
+        const possibleAnswers = await db.query(
+            `SELECT qo.id
                                                 FROM question_questions qq
                                                          INNER JOIN question_options qo on qq.id = qo.question_id
-                                                WHERE qq.id = ?`, [question]);
-        if (possibleAnswers.find(value => +value.id === +answer) === undefined) return res.json(fail); // Answer not for question
+                                                WHERE qq.id = ?`,
+            [question],
+        );
+        if (possibleAnswers.find((value) => +value.id === +answer) === undefined) return res.json(fail); // Answer not for question
         await db.query(qu, [answer, question, req.session.uid]);
         res.json({ success: true });
     } catch (e) {
