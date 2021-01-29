@@ -12,17 +12,18 @@ const controlButtons = document.querySelectorAll(".control-btns button");
 let cropper = undefined;
 
 const crop = () => {
-    cropper = new Cropper(document.getElementById("popup-img"), { // Consider dataset id
-        dragMode: "move",
+    cropper = new Cropper(document.getElementById("popup-img"), {
+        // Consider dataset id
+        //dragMode: "move",
         aspectRatio: 10 / 13,
-        autoCropArea: 0.65,
-        restore: false,
-        guides: false,
-        center: false,
-        highlight: false,
-        cropBoxMovable: false,
-        cropBoxResizable: false,
-        toggleDragModeOnDblclick: false,
+        //autoCropArea: 0.65,
+        //restore: false,
+        //guides: false,
+        //center: false,
+        //highlight: false,
+        //cropBoxMovable: false,
+        //cropBoxResizable: false,
+        //toggleDragModeOnDblclick: false,
     });
 };
 
@@ -86,7 +87,7 @@ form.addEventListener("submit", async (evt) => {
     const method = init ? "POST" : "PUT";
 
     const inputs = form.querySelectorAll("input");
-    const rawBody = {}
+    const rawBody = {};
     for (const input of inputs) {
         if (input.type !== "file") rawBody[input.name] = input.value;
     }
@@ -94,25 +95,32 @@ form.addEventListener("submit", async (evt) => {
 
     const resp = await fetch("api/answer", { method, body, headers: { "Content-Type": "application/json" } });
     const res = await resp.json();
-    if (!res.success) alert("AHHHH");
+    if (!res.success) alert("An error occurred");
     else init = false;
 });
 
 saveBtn.addEventListener("click", (e) => {
-    cropper.getCroppedCanvas()
-        .toBlob(async (blob) => {
-            const url = "api/answerImage";
-            const method = imageInit ? "POST" : "PUT";
-            const body = new FormData();
-            if (imageID === -1) {
-                return;
-            }
-            body.append(imageID, blob);
-            const resp = await fetch(url, { method, body });
-            const res = await resp.json();
-            if (!res.success) alert("AHHH");
-            else imageInit = false;
-        }, "image/jpeg");
+    cropper.getCroppedCanvas().toBlob(async (blob) => {
+        const url = "api/answerImage";
+        const method = imageInit ? "POST" : "PUT";
+        const body = new FormData();
+        if (imageID === -1) {
+            return;
+        }
+        body.append(imageID, blob);
+        const resp = await fetch(url, { method, body });
+        const res = await resp.json();
+        if (!res.success) {
+            alert("An error occurred");
+        } else {
+            imageInit = false;
+            popup.style.display = "none";
+            cropper.destroy();
+            document.querySelectorAll("img").forEach((elem) => {
+                if (elem.src.startsWith("http")) elem.src += "#" + new Date().getTime();
+            });
+        }
+    }, "image/jpeg");
 });
 
 slider.addEventListener("input", (e) => {

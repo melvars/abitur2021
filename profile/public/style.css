@@ -141,4 +141,8 @@ img {
     display: none;
     max-height: 600px;
     max-width: 600px;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border: 1px solid black;
 }
