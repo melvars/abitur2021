@@ -13,7 +13,7 @@ function addUser(userData) {
         if (!questions.hasOwnProperty(questionID)) continue;
         const question = questions[questionID];
         const div = document.createElement("div");
-        div.innerHTML = `<b>${question.question}</b> <span>${question.answer || ""}</span>`;
+        div.innerHTML = `<b>${question.question.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</b> <span>${question.answer.replace(/</g, "&lt;").replace(/>/g, "&gt;") || ""}</span>`;
         divs.push(div);
     }
     const h1 = document.createElement("h1");

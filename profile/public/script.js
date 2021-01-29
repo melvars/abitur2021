@@ -92,18 +92,17 @@ form.addEventListener("submit", async (evt) => {
     }
     const body = JSON.stringify(rawBody);
 
-    const resp = await fetch("api/answer", { method, body });
+    const resp = await fetch("api/answer", { method, body, headers: { "Content-Type": "application/json" } });
     const res = await resp.json();
     if (!res.success) alert("AHHHH");
     else init = false;
-    // else location.reload(); // BUT WHY?
 });
 
 saveBtn.addEventListener("click", (e) => {
     cropper.getCroppedCanvas()
         .toBlob(async (blob) => {
             const url = "api/answerImage";
-            const method = imageInit ? "POST" : "PUT"; // Separate image init
+            const method = imageInit ? "POST" : "PUT";
             const body = new FormData();
             if (imageID === -1) {
                 return;

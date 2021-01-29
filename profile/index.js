@@ -47,11 +47,11 @@ app.put("/api/answer", async (req, res) => {
 
 async function answer(req, res, qs) {
     try {
-        for (const qid of req.body) {
-            if (!req.body.hasOwnProperty(qid)/* || !req.body[qid]*/) continue;
+        for (const qid in req.body) {
+            if (!req.body.hasOwnProperty(qid)) continue;
             const answer = req.body[qid];
             try {
-                await db.query(qs, [answer, qid, req.session.uid]); // TODO: Frontend display sanitize
+                await db.query(qs, [answer, qid, req.session.uid]);
             } catch (e) {
                 console.error(e);
             }
