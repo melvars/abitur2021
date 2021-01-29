@@ -145,3 +145,13 @@ img {
     transform: translateX(-50%) translateY(-50%);
     border: 1px solid black;
 }
+
+#char button {
+    width: fit-content;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+}
+
+#student-list b {
+    cursor: pointer;
+}
