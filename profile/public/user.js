@@ -164,6 +164,7 @@ function addChar(char) {
     });
     const inp = document.createElement("input");
     const btn = document.createElement("button");
+    btn.classList.add("pure-button", "pure-button-primary");
     btn.textContent = "Senden";
 
     if (char.hasOwnProperty("txt")) {
@@ -181,6 +182,7 @@ function addChar(char) {
             headers: { "Content-Type": "application/json" },
             body,
         });
+        alert("Okidoki, danke!");
     });
     const div = document.createElement("div");
     div.style.display = "flex";

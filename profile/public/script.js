@@ -62,6 +62,7 @@ function appendQuestions(question) {
     field.value = question.answer || "";
     field.placeholder = question.question;
     field.type = question.type;
+    field.maxLength = 100;
     if (question.type === "file") {
         imageID = question.id;
         field.accept = "image/*";
@@ -95,8 +96,12 @@ form.addEventListener("submit", async (evt) => {
 
     const resp = await fetch("api/answer", { method, body, headers: { "Content-Type": "application/json" } });
     const res = await resp.json();
-    if (!res.success) alert("An error occurred");
-    else init = false;
+    if (!res.success) {
+        alert("An error occurred");
+    } else {
+        init = false;
+        alert("Okidoki, danke!");
+    }
 });
 
 saveBtn.addEventListener("click", (e) => {

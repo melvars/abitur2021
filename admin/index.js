@@ -74,4 +74,11 @@ app.get("/api/participation", checkAdmin, async (req, res) => {
     res.json(participation);
 });
 
+app.get("/api/prediction", checkAdmin, async (req, res) => {
+    const prediction = await db.query(
+        "SELECT u.name uname, u.middlename umid, u.surname usur, t.name tname, t.middlename tmid, t.surname tsur FROM users u INNER JOIN teacher_prediction p ON u.id = p.user_id INNER JOIN users t ON t.id = p.teacher_id",
+    );
+    res.json(prediction);
+});
+
 module.exports = app;
