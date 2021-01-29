@@ -33,5 +33,7 @@ fetch("/auth/api/list?class=teacher")
 submit.addEventListener("click", async (e) => {
     const teacher = dropdown.value;
     const body = JSON.stringify({ teacher });
-    await fetch("api/set", { method, body, headers: { "Content-Type": "application/json" } });
+    const resp = await fetch("api/set", { method, body, headers: { "Content-Type": "application/json" } });
+    const res = await resp.json();
+    if (res.success) method = "PUT";
 });
