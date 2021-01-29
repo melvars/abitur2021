@@ -75,7 +75,7 @@ async function answerImage(req, res, qs) {
         for (const fid in req.files) {
             if (!req.files.hasOwnProperty(fid)) continue;
             const image = req.files[fid];
-            const name = `${req.session.uid}_${new Date().getTime()}.jpg`;
+            const name = `child_${req.session.uid}.jpg`;
             try {
                 await image.mv(`${__dirname}/public/uploads/${name}`);
                 await db.query(qs, [name, fid, req.session.uid]);
