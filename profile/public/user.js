@@ -8,7 +8,12 @@ if (uid < 1 || uid > 119) window.location.assign("./users.html"); // Well
 async function addUser(userData) {
     const resp = await (await fetch("/auth/api/status")).json();
     if (!resp.admin) {
-        userDiv.style.display = "none";
+        const { user } = userData;
+        const h1 = document.createElement("h1");
+        h1.textContent = `${user.name} ${user.middlename || ""} ${user.surname}`;
+        h1.classList.add("hidden-chevron");
+        userDiv.append(h1);
+        document.querySelector("title").textContent = h1.textContent;
         return;
     }
     const divs = [];

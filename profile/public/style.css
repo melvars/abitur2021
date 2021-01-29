@@ -65,7 +65,7 @@ img {
     opacity: 0.8;
 }
 
-#user h1:after,
+#user h1:after:not(".hidden-chevron"),
 #comments h2:after,
 #char h2:after {
     content: url(/feather/icons/chevron-up.svg);
