@@ -45,6 +45,7 @@ app.use("/prediction", checkUser, prediction);
 app.use("/secrets", checkUser, secrets);
 app.use("/admin", checkAdmin, admin); // Lel
 app.use("/auth", auth);
+app.get("*", (req, res) => res.redirect("/"));
 
 app.get("/images", checkUser, async (req, res) => {
     const links = (await fs.readFile(__dirname + "/images.txt", "utf8")).split("\n");
