@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/", express.static(__dirname + "/overview/public"));
-app.use("/mottovote", checkUser, mottovote);
+//app.use("/mottovote", checkUser, mottovote);
 app.use("/quotes", checkUser, quotes);
 app.use("/poll", checkUser, poll);
 app.use("/profile", checkUser, profile);
@@ -49,6 +49,10 @@ app.use("/auth", auth);
 app.get("/images", checkUser, async (req, res) => {
     const links = (await fs.readFile(__dirname + "/images.txt", "utf8")).split("\n");
     res.redirect(links[req.session.cid - 1]);
+});
+
+app.get("/zeitung", checkAdmin, (req, res) => {
+	res.sendFile(__dirname + "/zeitung.pdf");
 });
 
 app.get("*", (req, res) => res.redirect("/"));
