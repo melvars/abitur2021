@@ -24,28 +24,58 @@ queryForm.addEventListener("submit", async e => {
     });
     const res = await resp.json();
     while (queryResponse.children.length > 0) queryResponse.removeChild(queryResponse.children[0]);
-    if (res.success && res.response.length > 0) {
-        const keys = Object.keys(res.response[0]);
+    if (res.success) { // SELECT response
+        if (Array.isArray(res.response) && res.response.length > 0) {
+            const keys = Object.keys(res.response[0]);
+            const head = document.createElement("thead");
+            for (const key of keys) {
+                const th = document.createElement("th");
+                th.textContent = key;
+                head.append(th);
+            }
+            for (const row of res.response) {
+                const tr = document.createElement("tr");
+                for (const colI in row) {
+                    if (!row.hasOwnProperty(colI)) continue;
+                    const td = document.createElement("td");
+                    td.textContent = row[colI];
+                    tr.append(td);
+                }
+                queryResponse.append(tr);
+            }
+            queryResponse.append(head);
+        } else { // other requests
+            const keys = Object.keys(res.response);
+            const head = document.createElement("thead");
+            for (const key of keys) {
+                const th = document.createElement("th");
+                th.textContent = key;
+                head.append(th);
+            }
+            const tr = document.createElement("tr");
+            for (const colI in res.response) {
+                if (!res.response.hasOwnProperty(colI)) continue;
+                const td = document.createElement("td");
+                td.textContent = res.response[colI];
+                tr.append(td);
+            }
+            queryResponse.append(head, tr);
+        }
+    } else if (!res.success && res.message) { // Error handling
+        const keys = Object.keys(res.message);
         const head = document.createElement("thead");
         for (const key of keys) {
             const th = document.createElement("th");
             th.textContent = key;
             head.append(th);
         }
-        for (const row of res.response) {
-            const tr = document.createElement("tr");
-            for (const colI in row) {
-                if (!row.hasOwnProperty(colI)) continue;
-                const td = document.createElement("td");
-                td.textContent = row[colI];
-                tr.append(td);
-            }
-            queryResponse.append(tr);
+        const tr = document.createElement("tr");
+        for (const colI in res.message) {
+            if (!res.message.hasOwnProperty(colI)) continue;
+            const td = document.createElement("td");
+            td.textContent = res.message[colI];
+            tr.append(td);
         }
-        queryResponse.append(head);
-    } else if (!res.success && res.message) {
-        const span = document.createElement("span");
-        span.textContent = JSON.stringify(res.message);
-        queryResponse.append(span);
+        queryResponse.append(head, tr);
     }
 });
