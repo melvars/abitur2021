@@ -127,4 +127,4 @@ app.get("/api/self", checkUser, async (req, res) => {
     }
 });
 
-module.exports = { auth: app, checkUser, checkAdmin };
+module.exports = { auth: app, checkUser, checkAdmin, checkSuperAdmin };

@@ -5,8 +5,8 @@ const session = require("express-session");
 const fs = require("fs").promises;
 require("log-timestamp");
 
-const { auth, checkUser, checkAdmin } = require("./auth");
-const mottovote = require("./mottovote");
+const { auth, checkUser, checkAdmin, checkSuperAdmin } = require("./auth");
+// const mottovote = require("./mottovote");
 const quotes = require("./quotes");
 const poll = require("./poll");
 const profile = require("./profile");
@@ -14,6 +14,7 @@ const admin = require("./admin");
 const questions = require("./questions");
 const prediction = require("./prediction");
 const secrets = require("./secrets");
+const superAdmin = require("./superadmin");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/questions", checkUser, questions);
 app.use("/prediction", checkUser, prediction);
 app.use("/secrets", checkUser, secrets);
 app.use("/admin", checkAdmin, admin); // Lel
+app.use("/super", checkSuperAdmin, superAdmin);
 app.use("/auth", auth);
 
 app.get("/images", checkUser, async (req, res) => {
