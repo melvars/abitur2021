@@ -3,6 +3,8 @@ const userDiv = document.getElementById("user");
 const commentsDiv = document.getElementById("comments");
 const charDiv = document.getElementById("char");
 
+let charMethod = "POST";
+
 if (uid < 1 || uid > 119) window.location.assign("./users.html"); // Well
 
 async function addUser(userData) {
@@ -160,7 +162,6 @@ async function addComments(comments) {
 }
 
 function addChar(char) {
-    let method = "POST";
     const h2 = document.createElement("h2");
     h2.textContent = "Erkennungsmerkmal";
     h2.addEventListener("click", (evt) => {
@@ -177,7 +178,7 @@ function addChar(char) {
     btn.textContent = "Senden";
 
     if (char.hasOwnProperty("txt")) {
-        method = "PUT";
+        charMethod = "PUT";
         inp.value = char.txt;
     }
 
@@ -186,11 +187,13 @@ function addChar(char) {
     btn.addEventListener("click", async (e) => {
         const char = inp.value;
         const body = JSON.stringify({ char });
-        await fetch(`api/char/${uid}`, {
-            method,
+        const resp = await fetch(`api/char/${uid}`, {
+            method: charMethod,
             headers: { "Content-Type": "application/json" },
             body,
         });
+        const res = await resp.json();
+        if (res.success) charMethod = "PUT";
         alert("Okidoki, danke!");
     });
     const div = document.createElement("div");
