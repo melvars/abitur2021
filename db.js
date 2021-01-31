@@ -237,7 +237,10 @@ class DB {
         const users = await this.query(
             "SELECT u.id, u.username, u.name, u.middlename, u.surname, c.name class, t.name type FROM users u INNER JOIN class c ON u.class_id = c.id INNER JOIN types t ON u.type_id = t.id WHERE t.name = 'pupil'",
         );
-        return { users };
+        const profile = await this.query(
+            "SELECT q.question, a.answer, a.user_id FROM profile_questions q INNER JOIN profile_answers a ON a.question_id = q.id",
+        );
+        return { users, profile };
     }
 
     async query(query, params) {

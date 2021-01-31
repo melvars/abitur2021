@@ -64,14 +64,31 @@ if ((idx = params.indexOf("-r")) > -1) {
             break;
     }
 } else if ((idx = params.indexOf("-d")) > -1) {
-    // TODO: More dumping
+    // TODO: Erkennungsmerkmale, Wohnort??
+    // WARNING: UGLY!
+
+    let hay;
+    const answer = (needle) => {
+        const e = hay.find((e) => e.question === needle);
+        if (e && e.answer && e.answer.length > 1) return e.answer;
+        else return "nichts";
+    };
+
     db.dump().then((data) => {
         data.users.forEach((user) => {
-            const textex = `\\student\n\\studentimages{${user.id}}\n\\studentprofile{${user.name} ${
-                user.middlename || ""
-            } ${
-                user.surname
-            }}{18.12.2002}{Mathematik}{Wirtschaft}{Schlafen}{Canadian Pop}{Herr Schwarz}{Gehirn}{Cogito ergo sum}\n\\studenttable{Meistens wunderhübsch}{Essen}\n\\studentcomments{}`;
+            hay = data.profile.filter((e) => e.user_id === user.id);
+            const name = `${user.name} ${user.middlename || ""} ${user.surname}`;
+            const birthday = answer("Geburtsdatum");
+            const favsub = answer("Lieblingsfach");
+            const hatesub = answer("Hassfach");
+            const hobbies = answer("Hobbies");
+            const music = answer("Lieblingsbands/-musiker/-genre");
+            const missing = answer("Am meisten werde ich vermissen");
+            const motivation = answer("Ohne das hätte ich die Oberstufe nicht geschafft");
+            const quote = answer("Lebensmotto/Seniorquote");
+            const future = answer("Zukunftspläne");
+            let textex = `\\student\\studentimages{${user.id}}\\studentprofile{${name}}{${birthday}}{${favsub}}{${hatesub}}{${hobbies}}{${music}}{${missing}}{${motivation}}{${quote}}\\studenttable{TODO?}{${future}}\\studentcomments{}`;
+            textex = textex.replace(/(\r\n|\n|\r)/gm, "").replace(/&/g, "\\&");
             fs.writeFile(
                 __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
                 textex,
