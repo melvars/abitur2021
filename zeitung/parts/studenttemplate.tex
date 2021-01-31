@@ -68,15 +68,16 @@
 		\def\tablex{3}
 	\fi
 	\def\tabley{-5}
+	\def\tablewidth{6cm}
 	\begin{tikzpicture}[overlay]
 		\node[text width=250pt, align=left] at (\tablex, \tabley) {
 			\Large{\begin{tabular}{@{}ll@{}}
-					\textbf{Name:}           & #1 \\
-					\textbf{Geburtstag:}     & #2 \\
-					\textbf{Lieblingsfach:}  & #3 \\
-					\textbf{Hassfach:}       & #4 \\
-					\textbf{Hobbies:}        & #5 \\
-					\textbf{Lieblingsgenre:} & #6 \\
+					\textbf{Name:}           & \multicolumn{1}{p{\tablewidth}}{#1} \\
+					\textbf{Geburtstag:}     & \multicolumn{1}{p{\tablewidth}}{#2} \\
+					\textbf{Lieblingsfach:}  & \multicolumn{1}{p{\tablewidth}}{#3} \\
+					\textbf{Hassfach:}       & \multicolumn{1}{p{\tablewidth}}{#4} \\
+					\textbf{Hobbies:}        & \multicolumn{1}{p{\tablewidth}}{#5} \\
+					\textbf{Lieblingsgenre:} & \multicolumn{1}{p{\tablewidth}}{#6} \\
 				\end{tabular}}\\~\\
 			\textbf{Das werde ich am meisten vermissen:}\\#7\\~\\
 			\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\#8\\~\\
@@ -93,12 +94,13 @@
 	\else
 		\def\tablex{5cm}
 	\fi
+	\def\tablewidth{\textwidth}
 
 	\vskip 10cm
 	\hspace*{\tablex}
 	\Large{\begin{tabular}{@{}ll@{}}
-			\textbf{Erkennungsmerkmale:} & #1 \\
-			\textbf{Zukunftspläne:}      & #2 \\
+			%\textbf{Erkennungsmerkmale:} & \multicolumn{1}{p{\tablewidth}}{#1} \\
+			\textbf{Zukunftspläne:} & \multicolumn{1}{p{\tablewidth}}{#2} \\
 		\end{tabular}}
 }
 
