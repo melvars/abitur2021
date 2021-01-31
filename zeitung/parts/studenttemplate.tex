@@ -47,8 +47,8 @@
 	\fi
 	\AddToShipoutPictureBG*{
 		\AtTextLowerLeft{
-			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset){
-				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/students/figures/bornerma_child.jpg}
+			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset + 8pt){
+				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/students/figures/child_#1.jpg}
 			}
 			\put(\textwidth - \framex, \framey){
 				\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
@@ -57,7 +57,7 @@
 	}
 }
 
-\providecommand\studentprofile[8]{%
+\providecommand\studentprofile[9]{%
 	\sectionmark{Steckbrief - #1}
 	\checkoddpage
 
@@ -74,12 +74,13 @@
 					\textbf{Name:}           & #1 \\
 					\textbf{Geburtstag:}     & #2 \\
 					\textbf{Lieblingsfach:}  & #3 \\
-					\textbf{Hobbies:}        & #4 \\
-					\textbf{Lieblingsgenre:} & #5 \\
+					\textbf{Hassfach:}       & #4 \\
+					\textbf{Hobbies:}        & #5 \\
+					\textbf{Lieblingsgenre:} & #6 \\
 				\end{tabular}}\\~\\
-			\textbf{Das werde ich am meisten vermissen:}\\#6\\~\\
-			\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\#7\\~\\
-			\textbf{Lebensmotto:}\\#8\\~\\
+			\textbf{Das werde ich am meisten vermissen:}\\#7\\~\\
+			\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\#8\\~\\
+			\textbf{Lebensmotto:}\\#9\\~\\
 		};
 	\end{tikzpicture}
 }

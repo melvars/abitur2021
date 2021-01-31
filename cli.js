@@ -67,11 +67,11 @@ if ((idx = params.indexOf("-r")) > -1) {
     // TODO: More dumping
     db.dump().then((data) => {
         data.users.forEach((user) => {
-            const textex = `\\student\n\\studentimages{${user.username}}\n\\studentprofile{${user.name} ${
+            const textex = `\\student\n\\studentimages{${user.id}}\n\\studentprofile{${user.name} ${
                 user.middlename || ""
             } ${
                 user.surname
-            }}{18.12.2002}{Mathematik}{Schlafen}{Canadian Pop}{Herr Schwarz}{Gehirn}{Cogito ergo sum}\n\\studenttable{Meistens wunderhübsch}{Essen}\n\\studentcomments{}`;
+            }}{18.12.2002}{Mathematik}{Wirtschaft}{Schlafen}{Canadian Pop}{Herr Schwarz}{Gehirn}{Cogito ergo sum}\n\\studenttable{Meistens wunderhübsch}{Essen}\n\\studentcomments{}`;
             fs.writeFile(
                 __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
                 textex,
