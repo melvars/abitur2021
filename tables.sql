@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS ranking_questions
     question VARCHAR(255) NOT NULL,
     type_id  INTEGER      NOT NULL,
 
-    UNIQUE KEY uk_question (question, type_id),
+    UNIQUE KEY uk_ranking_question (question, type_id),
     CONSTRAINT `fk_type_question` FOREIGN KEY (type_id) REFERENCES types (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS ranking_answers
     user_id     INTEGER NOT NULL, -- Submitter
     answer_id   INTEGER NOT NULL, -- Selected pupil
 
-    UNIQUE KEY uk_answer (question_id, user_id),
+    UNIQUE KEY uk_ranking_answer (question_id, user_id),
     CONSTRAINT `fk_question_answer` FOREIGN KEY (question_id) REFERENCES users (id),
     CONSTRAINT `fk_user_answer1` FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT `fk_user_answer2` FOREIGN KEY (answer_id) REFERENCES users (id)
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS profile_answers
     user_id     INTEGER NOT NULL,
     answer      TEXT    NULL, -- Consider VARCHAR
 
-    UNIQUE KEY uk_answer (question_id, user_id),
+    UNIQUE KEY uk_profile_answer (question_id, user_id),
     CONSTRAINT `fk_profile_user` FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT `fk_profile_question` FOREIGN KEY (question_id) REFERENCES profile_questions (id)
 ) ENGINE = InnoDB
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS question_answers
     user_id     INTEGER NOT NULL,
     option_id   INTEGER NOT NULL,
 
-    UNIQUE KEY uk_answer (question_id, user_id),
+    UNIQUE KEY uk_question_answer (question_id, user_id),
     CONSTRAINT `fk_question_user` FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT `fk_question_question` FOREIGN KEY (question_id) REFERENCES question_questions (id),
     CONSTRAINT `fk_question_answer2` FOREIGN KEY (option_id) REFERENCES question_options (id)
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS profile_char
     user_id    INTEGER     NOT NULL, -- user who submitted
     txt        VARCHAR(255) NOT NULL,
 
-    UNIQUE KEY uk_answer (profile_id, user_id),
+    UNIQUE KEY uk_profile_char (profile_id, user_id),
     CONSTRAINT `fk_char_user` FOREIGN KEY (profile_id) REFERENCES users (id),
     CONSTRAINT `fk_char_user2` FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE = InnoDB
