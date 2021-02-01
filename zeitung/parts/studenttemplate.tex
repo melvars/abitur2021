@@ -1,6 +1,7 @@
 % Student template
 
 \clearpage
+\checkoddpage
 
 % Returns a default file if not found
 \providecommand\dfincludegraphics[2][]{
@@ -13,99 +14,86 @@
 	}
 }
 
-\providecommand\studentimages[1]{%
-	\checkoddpage
-
-	% Ring
-	\def\ringx{50pt}
-	\def\ringy{250pt}
-	\def\ringwidth{250pt}
-	\def\ringimgwidth{180pt}
-	\def\ringoffset{(\ringwidth - \ringimgwidth) / 2}
-	\ifoddpage\else
-		\def\ringx{-\paperwidth - 350pt} % ringwidth + 2 * ringx
-	\fi
-	\AddToShipoutPictureBG*{
-		\AtTextUpperLeft{
-			\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
-				\dfincludegraphics[keepaspectratio=true, width=\ringimgwidth]{parts/students/figures/bornerma.jpg}
-			}
-			\put(-\ringx, -\ringy){
-				\oddflip[keepaspectratio=true, width=\ringwidth]{ring.png}
-			}
+% Ring
+\def\ringx{50pt}
+\def\ringy{250pt}
+\def\ringwidth{250pt}
+\def\ringimgwidth{180pt}
+\def\ringoffset{(\ringwidth - \ringimgwidth) / 2}
+\ifoddpage\else
+	\def\ringx{-\paperwidth - 350pt} % ringwidth + 2 * ringx
+\fi
+\AddToShipoutPictureBG*{
+	\AtTextUpperLeft{
+		\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
+			\dfincludegraphics[keepaspectratio=true, width=\ringimgwidth]{parts/students/figures/bornerma.jpg}
 		}
-	}
-
-	% Frame
-	\def\framex{130pt}
-	\def\framey{40pt}
-	\def\framewidth{180pt}
-	\def\frameimgwidth{160pt}
-	\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
-	\ifoddpage\else
-		\def\framex{518pt} % paperwidth - framewidth / 2
-	\fi
-	\AddToShipoutPictureBG*{
-		\AtTextLowerLeft{
-			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset + 8pt){
-				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/students/figures/child_#1.jpg}
-			}
-			\put(\textwidth - \framex, \framey){
-				\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
-			}
+		\put(-\ringx, -\ringy){
+			\oddflip[keepaspectratio=true, width=\ringwidth]{ring.png}
 		}
 	}
 }
 
-\providecommand\studentprofile[9]{%
-	\sectionmark{Steckbrief - #1}
-	\checkoddpage
-
-	% Steckbrief Tabelle
-	\ifoddpage
-		\def\tablex{12}
-	\else
-		\def\tablex{3}
-	\fi
-	\def\tabley{-5}
-	\def\tablewidth{6cm}
-	\begin{tikzpicture}[overlay]
-		\node[text width=250pt, align=left] at (\tablex, \tabley) {
-			\Large{\begin{tabular}{@{}ll@{}}
-					\textbf{Name:}           & \multicolumn{1}{p{\tablewidth}}{#1} \\
-					\textbf{Geburtstag:}     & \multicolumn{1}{p{\tablewidth}}{#2} \\
-					\textbf{Lieblingsfach:}  & \multicolumn{1}{p{\tablewidth}}{#3} \\
-					\textbf{Hassfach:}       & \multicolumn{1}{p{\tablewidth}}{#4} \\
-					\textbf{Hobbies:}        & \multicolumn{1}{p{\tablewidth}}{#5} \\
-					\textbf{Lieblingsgenre:} & \multicolumn{1}{p{\tablewidth}}{#6} \\
-				\end{tabular}}\\~\\
-			\textbf{Das werde ich am meisten vermissen:}\\#7\\~\\
-			\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\#8\\~\\
-			\textbf{Lebensmotto:}\\#9\\~\\
-		};
-	\end{tikzpicture}
+% Frame
+\def\framex{130pt}
+\def\framey{40pt}
+\def\framewidth{180pt}
+\def\frameimgwidth{160pt}
+\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
+\ifoddpage\else
+	\def\framex{518pt} % paperwidth - framewidth / 2
+\fi
+\AddToShipoutPictureBG*{
+	\AtTextLowerLeft{
+		\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset + 8pt){
+			\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/students/figures/child_\stdid.jpg}
+		}
+		\put(\textwidth - \framex, \framey){
+			\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
+		}
+	}
 }
 
-\providecommand\studenttable[2]{%
-	\checkoddpage
+\sectionmark{Steckbrief - \stdname}
 
-	\ifoddpage
-		\def\tablex{-1.25cm}
-	\else
-		\def\tablex{5cm}
-	\fi
-	\def\tablewidth{\textwidth}
+% Steckbrief Tabelle
+\ifoddpage
+	\def\tablex{12}
+\else
+	\def\tablex{3}
+\fi
+\def\tabley{-5}
+\def\tablewidth{6cm}
+\begin{tikzpicture}[overlay]
+	\node[text width=250pt, align=left] at (\tablex, \tabley) {
+		\Large{\begin{tabular}{@{}ll@{}}
+				\textbf{Name:}          & \stdname                                      \\
+				\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\stdbirthday} \\
+				\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\stdfavsub}   \\
+				\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\stdhatesub}  \\
+				\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\stdhobbies}  \\
+				\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\stdmusic}    \\
+			\end{tabular}}\\~\\
+		\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\~\\
+		\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\~\\
+		\textbf{Lebensmotto:}\\\stdquote\\~\\
+	};
+\end{tikzpicture}
 
-	\vskip 10cm
-	\hspace*{\tablex}
-	\Large{\begin{tabular}{@{}ll@{}}
-			%\textbf{Erkennungsmerkmale:} & \multicolumn{1}{p{\tablewidth}}{#1} \\
-			\textbf{Zukunftspläne:} & \multicolumn{1}{p{\tablewidth}}{#2} \\
-		\end{tabular}}
-}
+\ifoddpage
+	\def\tablex{-1.25cm}
+\else
+	\def\tablex{5cm}
+\fi
+\def\tablewidth{\textwidth}
 
-\providecommand\studentcomments[1]{%
-	\begin{figure}[H]
-		\hspace*{-2.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
-	\end{figure}
-}
+\vskip 10cm
+\hspace*{\tablex}
+\Large{\begin{tabular}{@{}ll@{}}
+		%\textbf{Erkennungsmerkmale:} & \multicolumn{1}{p{\tablewidth}}{\stdidk} \\
+		\textbf{Zukunftspläne:} & \multicolumn{1}{p{\tablewidth}}{\stdfuture} \\
+	\end{tabular}}
+
+\begin{figure}[H]
+	\hspace*{-2.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
+\end{figure}

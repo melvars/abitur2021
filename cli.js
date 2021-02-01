@@ -77,17 +77,27 @@ if ((idx = params.indexOf("-r")) > -1) {
     db.dump().then((data) => {
         data.users.forEach((user) => {
             hay = data.profile.filter((e) => e.user_id === user.id);
-            const name = `${user.name} ${user.middlename || ""} ${user.surname}`;
-            const birthday = answer("Geburtsdatum");
-            const favsub = answer("Lieblingsfach");
-            const hatesub = answer("Hassfach");
-            const hobbies = answer("Hobbies");
-            const music = answer("Lieblingsbands/-musiker/-genre");
-            const missing = answer("Am meisten werde ich vermissen");
-            const motivation = answer("Ohne das hätte ich die Oberstufe nicht geschafft");
-            const quote = answer("Lebensmotto/Seniorquote");
-            const future = answer("Zukunftspläne");
-            let textex = `\\student\\studentimages{${user.id}}\\studentprofile{${name}}{${birthday}}{${favsub}}{${hatesub}}{${hobbies}}{${music}}{${missing}}{${motivation}}{${quote}}\\studenttable{TODO?}{${future}}\\studentcomments{}`;
+            const obj = {
+                userid: user.id,
+                name: `${user.name} ${user.middlename || ""} ${user.surname}`,
+                birthday: answer("Geburtsdatum"),
+                favsub: answer("Lieblingsfach"),
+                hatesub: answer("Hassfach"),
+                hobbies: answer("Hobbies"),
+                music: answer("Lieblingsbands/-musiker/-genre"),
+                missing: answer("Am meisten werde ich vermissen"),
+                motivation: answer("Ohne das hätte ich die Oberstufe nicht geschafft"),
+                quote: answer("Lebensmotto/Seniorquote"),
+                future: answer("Zukunftspläne"),
+            };
+
+            // 5head
+            let textex = "";
+            Object.keys(obj).forEach((elem) => {
+                textex += `\\def\\std${elem}{${obj[elem]}}`;
+            });
+            textex += "\\student";
+
             textex = textex.replace(/(\r\n|\n|\r)/gm, "").replace(/&/g, "\\&");
             fs.writeFile(
                 __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
