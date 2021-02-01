@@ -151,7 +151,7 @@ if ((idx = params.indexOf("-r")) > -1) {
     const uid = params[idx + 1];
     if (!uid) process.exit(1);
     db.regenerateUser(uid)
-        .then(() => console.info("Regenerating user with id " + uid))
+        .then((pwd) => console.info(`Regenerating user with id ${uid}: ${pwd}`))
         .then(() => process.exit(0))
         .catch(console.error);
 } else {

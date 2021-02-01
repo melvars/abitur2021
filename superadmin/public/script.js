@@ -1,6 +1,10 @@
 const pullButton = document.getElementById("pull-button");
 const pullResponse = document.getElementById("pull-response");
 
+const resetInput = document.getElementById("reset-input");
+const resetButton = document.getElementById("reset-button");
+const resetResponse = document.getElementById("reset-response");
+
 const queryForm = document.getElementById("query-form");
 const queryResponse = document.getElementById("query-response");
 
@@ -12,6 +16,25 @@ pullButton.addEventListener("click", async e => {
     } else {
         console.log(res.error);
         pullResponse.textContent = res.stderr;//.replace(/\n/g, "\n\r");
+    }
+});
+
+resetButton.addEventListener("click", async e => {
+    const uid = resetInput.value;
+    const body = JSON.stringify({ uid });
+    const method = "POST";
+    const resp = await fetch("api/reset", { method, body, headers: { "Content-Type": "application/json" } });
+    const res = await resp.json();
+    while (resetResponse.children.length > 0) resetResponse.removeChild(resetResponse.children[0]);
+    if (res.success) {
+        const b = document.createElement("b");
+        b.textContent = `${res.uid}: `;
+        const span = document.createElement("span");
+        span.textContent = res.pwd;
+        resetResponse.append(b, span);
+    } else {
+        console.log(res);
+        resetResponse.textContent = JSON.stringify(res.e);
     }
 });
 

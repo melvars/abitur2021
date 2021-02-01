@@ -27,4 +27,16 @@ app.get("/api/pull", checkSuperAdmin, (req, res) => {
     });
 });
 
+app.post("/api/reset", checkSuperAdmin, async (req, res) => {
+    const { uid } = req.body;
+    if (!uid) return res.json({ success: false });
+    try {
+        const pwd = await db.regenerateUser(uid);
+        return res.json({ success: true, uid, pwd });
+    } catch (e) {
+        console.error(e);
+        return res.json({ success: false, e });
+    }
+});
+
 module.exports = app;

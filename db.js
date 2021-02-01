@@ -230,7 +230,7 @@ class DB {
         const pwd = nanoid.nanoid(8);
         const password = await bcrypt.hash(pwd, 10);
         await this.query("UPDATE users SET password = ? WHERE id = ?", [password, uid]);
-        console.log(`New password for ${uid}: ${pwd}`);
+        return pwd;
     }
 
     async dump() {
