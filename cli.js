@@ -78,7 +78,7 @@ if ((idx = params.indexOf("-r")) > -1) {
         data.users.forEach((user) => {
             hay = data.profile.filter((e) => e.user_id === user.id);
             const obj = {
-                userid: user.id,
+                id: user.id - 1, // Why tf tho
                 name: `${user.name} ${user.middlename || ""} ${user.surname}`,
                 birthday: answer("Geburtsdatum"),
                 favsub: answer("Lieblingsfach"),
