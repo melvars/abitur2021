@@ -50,10 +50,21 @@ async function answer(req, res, qs) {
         for (const qid in req.body) {
             if (!req.body.hasOwnProperty(qid)) continue;
             const answer = req.body[qid];
+            const params = [answer, qid, req.session.uid];
             try {
-                await db.query(qs, [answer, qid, req.session.uid]);
+                await db.query(qs, params);
             } catch (e) {
-                console.error(e);
+                if (e.code === "ER_DUP_ENTRY") { // Fix strange POST behaviour
+                    try {
+                        await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", params);
+                    } catch (e) {
+                        console.error(e);
+                        return res.json({ success: false });
+                    }
+                } else {
+                    console.error(e);
+                    return res.json({ success: false });
+                }
             }
         }
         res.json({ success: true });
@@ -76,11 +87,22 @@ async function answerImage(req, res, qs) {
             if (!req.files.hasOwnProperty(fid)) continue;
             const image = req.files[fid];
             const name = `child_${req.session.uid}.jpg`;
+            const params = [name, fid, req.session.uid];
             try {
-                await image.mv(`${__dirname}/public/uploads/${name}`);
-                await db.query(qs, [name, fid, req.session.uid]);
+                await image.mv(`${__dirname}/public/uploads/${name}`); // Overwrite anyway - tbh we don't need update stmt
+                await db.query(qs, params);
             } catch (e) {
-                console.error(e);
+                if (e.code === "ER_DUP_ENTRY") { // Fix strange POST behaviour
+                    try {
+                        await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", params);
+                    } catch (e) {
+                        console.error(e);
+                        return res.json({ success: false });
+                    }
+                } else {
+                    console.error(e);
+                    return res.json({ success: false });
+                }
             }
         }
         res.json({ success: true });
