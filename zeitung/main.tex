@@ -8,9 +8,10 @@
 \usepackage{fontspec,xunicode,xltxtra}
 \usepackage{afterpage}
 \usepackage{sectsty}
-\usepackage{tikz,float}
+\usepackage{float}
 \usepackage{kantlipsum,lipsum}
 \usepackage{eso-pic}
+\usepackage{ragged2e}
 \usepackage{fancyhdr}
 \usepackage{background}
 \usepackage{changepage}
@@ -43,7 +44,7 @@
 \fancyheadoffset{2.5cm}
 \fancyfootoffset{2.5cm}
 \fancyhf{}
-\fancyhead[L]{\hspace*{1cm}\vspace*{0.3cm}\Huge{\rightmark}}
+\fancyhead[L]{\hspace*{1cm}\vspace*{0.7cm}\Huge{\rightmark}}
 \fancyfoot[R]{\vspace*{-15pt}\oddflip[keepaspectratio=true, width=\paperwidth]{welle.png}}
 \fancyfoot[L]{\checkoddpage\vspace*{-1.3cm}\hspace*{\ifoddpage 3cm \else 17.5cm \fi}\Huge{\thepage}}
 
@@ -75,7 +76,7 @@
 
 \backgroundsetup{contents={}}
 \part{titlepage}
-\backgroundsetup{contents={\oddflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position=current page.north}
+\backgroundsetup{contents={\oddflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position={0.5\textwidth, 3.3cm}}
 \part{tableofcontents}
 \part{introduction}
 \part{classphoto}

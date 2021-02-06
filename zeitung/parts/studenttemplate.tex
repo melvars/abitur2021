@@ -38,7 +38,7 @@
 
 % Frame
 \def\framex{130pt}
-\def\framey{40pt}
+\def\framey{20pt}
 \def\framewidth{180pt}
 \def\frameimgwidth{160pt}
 \def\frameoffset{(\framewidth - \frameimgwidth) / 2}
@@ -58,41 +58,27 @@
 
 % Steckbrief Tabelle
 \ifoddpage
-	\def\tablex{12}
+	\def\tablex{0.5\linewidth}
 \else
-	\def\tablex{3}
+	\def\tablex{-1cm}
 \fi
-\def\tabley{-5}
-\def\tablewidth{6cm}
-\begin{tikzpicture}[overlay]
-	\node[text width=250pt, align=left] at (\tablex, \tabley) {
-		\Large{\begin{tabular}{@{}ll@{}}
-				\textbf{Name:}          & \stdname                                      \\
-				\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\stdbirthday} \\
-				\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\stdfavsub}   \\
-				\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\stdhatesub}  \\
-				\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\stdhobbies}  \\
-				\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\stdmusic}    \\
-			\end{tabular}}\\~\\
-		\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\~\\
-		\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\~\\
-		\textbf{Lebensmotto:}\\\stdquote\\~\\
-	};
-\end{tikzpicture}
+\def\tablewidth{0.6\linewidth}
 
-\ifoddpage
-	\def\tablex{-1.25cm}
-\else
-	\def\tablex{5cm}
-\fi
-\def\tablewidth{\textwidth}
-
-\vskip 10cm
-\hspace*{\tablex}
-\Large{\begin{tabular}{@{}ll@{}}
-		%\textbf{Erkennungsmerkmale:} & \multicolumn{1}{p{\tablewidth}}{\stdidk} \\
-		\textbf{Zukunftspläne:} & \multicolumn{1}{p{\tablewidth}}{\stdfuture} \\
-	\end{tabular}}
+\hspace*{\tablex}\Large\begin{minipage}{\tablewidth}
+	\begin{tabular}{@{}ll@{}}
+		\textbf{Name:}          & \stdname                                                  \\
+		\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
+		\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdfavsub}   \\
+		\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhatesub}  \\
+		\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhobbies}  \\
+		\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdmusic}    \\
+	\end{tabular}\\~\\
+	\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\~\\
+	\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\~\\
+	\textbf{Lebensmotto:}\\\stdquote\\~\\
+	\textbf{Zukunftspläne:}\\\stdfuture\\~\\
+	%\textbf{Erkennungsmerkmale:}\\\stdidk\\~\\
+\end{minipage}
 
 \begin{figure}[H]
 	\hspace*{-2.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
