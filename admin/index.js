@@ -76,7 +76,7 @@ app.get("/api/participation", checkAdmin, async (req, res) => {
 
 app.get("/api/prediction", checkAdmin, async (req, res) => {
     const prediction = await db.query(
-        "SELECT u.name uname, u.middlename umid, u.surname usur, t.name tname, t.middlename tmid, t.surname tsur FROM users u INNER JOIN teacher_prediction p ON u.id = p.user_id INNER JOIN users t ON t.id = p.teacher_id",
+        "SELECT u.name uname, u.middlename umid, u.surname usur, t.id tid, t.name tname, t.surname tsur, c.name class FROM users u INNER JOIN teacher_prediction p ON u.id = p.user_id INNER JOIN users t ON t.id = p.teacher_id INNER JOIN class c ON c.id = u.class_id",
     );
     res.json(prediction);
 });
