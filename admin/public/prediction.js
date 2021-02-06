@@ -12,8 +12,10 @@ fetch("api/prediction")
                 const div = document.createElement("div");
                 div.dataset.teacher = `${d.tid}`;
                 const h3 = document.createElement("h3");
-                const email = `${san(d.tname)}.${san(d.tsur)}@rbs-ulm.de`;
-                h3.textContent = `${d.tname} ${d.tsur}: ${email}`;
+                const a = document.createElement("a");
+                a.href = `mailto:${san(d.tname)}.${san(d.tsur)}@rbs-ulm.de`;
+                a.textContent = `${d.tname} ${d.tsur}`;
+                h3.append(a);
                 const ul = document.createElement("ul");
                 addLI(d, ul);
                 div.append(h3, ul);
