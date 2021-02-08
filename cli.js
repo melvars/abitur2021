@@ -84,7 +84,7 @@ if ((idx = params.indexOf("-r")) > -1) {
     };
 
     db.dump().then((data) => {
-        data.users.forEach((user) => {
+        data.users.forEach(async (user) => {
             hay = data.profile.filter((e) => e.user_id === user.id);
             const comments = user.comments;
             const chars = user.chars;
@@ -134,6 +134,11 @@ if ((idx = params.indexOf("-r")) > -1) {
                 }
                 textex += "\\end{tabularx}\\renewcommand{\\arraystretch}{1}";
             }
+
+            await fs.writeFile(
+                __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
+                textex,
+            );
         });
     });
     console.log("Probably finished?");
