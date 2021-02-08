@@ -234,14 +234,17 @@ class DB {
     }
 
     async dump() {
+        // Users
         const users = await this.query(
             "SELECT u.id, u.username, u.name, u.middlename, u.surname, c.name class, t.name type FROM users u INNER JOIN class c ON u.class_id = c.id INNER JOIN types t ON u.type_id = t.id WHERE t.name = 'pupil'",
         );
 
+        // Profile
         const profile = await this.query(
             "SELECT q.question, a.answer, a.user_id FROM profile_questions q INNER JOIN profile_answers a ON a.question_id = q.id",
         );
 
+        // Questions (percentage)
         const rawQuestions = await this.query(
             "SELECT q.id, q.question question, o.answer_option option, COUNT(a.user_id) count FROM question_questions q INNER JOIN question_options o ON q.id = o.question_id INNER JOIN question_answers a ON o.id = a.option_id GROUP BY o.id",
         );
@@ -251,13 +254,23 @@ class DB {
             questions[e.id - 1].push(e);
         });
 
+        // Ranking
+        const ranking = await this.query(
+            "SELECT q.id, question, t.name type FROM ranking_questions q INNER JOIN types t ON type_id = t.id ORDER BY q.id",
+        );
+        const answers = await this.query(
+            "SELECT question_id, u.name, u.middlename, u.surname, c.name class, count(*) count FROM ranking_questions q INNER JOIN ranking_answers a ON q.id = a.question_id INNER JOIN users u ON answer_id = u.id INNER JOIN class c ON u.class_id = c.id GROUP BY question_id, answer_id ORDER BY count DESC",
+        );
+        ranking.forEach((question) => (question.answers = []));
+        answers.forEach((answer) => ranking.filter((q) => q.id === answer.question_id)[0].answers.push(answer));
+
+        // Comments and characteristics
         for (const user of users) {
             user.comments = await this.query("SELECT comment from profile_comments where profile_id=" + user.id);
             user.chars = await this.query("SELECT txt from profile_char where profile_id=" + user.id);
-            //user["comments"].forEach((comment) => console.log("Kommentar: " + comment.comment));
         }
 
-        return { users, profile, questions };
+        return { users, profile, questions, ranking };
     }
 
     async query(query, params) {

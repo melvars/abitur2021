@@ -1,7 +1,6 @@
 build/
 *.log
 svg-inkscape/
-parts/students/*/*.tex
-parts/students/figures/
-parts/test/
+parts/generated/**/*.tex
+parts/generated/students/figures/
 *.otf

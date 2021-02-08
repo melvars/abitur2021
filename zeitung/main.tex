@@ -1,13 +1,12 @@
 \documentclass[a4paper, 13pt]{article}
 
 % Packages
-\usepackage[a4paper, inner=2.5cm, outer=2.5cm, top=2.5cm, bottom=2.5cm, bindingoffset=0cm]{geometry}
+\usepackage[a4paper, inner=1.5cm, outer=1.5cm, top=1.5cm, bottom=3cm, bindingoffset=0cm]{geometry}
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{fontspec,xunicode,xltxtra}
 \usepackage{afterpage}
-\usepackage{sectsty}
 \usepackage{float}
 \usepackage{kantlipsum,lipsum}
 \usepackage{eso-pic}
@@ -20,7 +19,6 @@
 
 % Font
 \setmainfont{"[tierra-nueva.otf]"}[BoldFont="[tierra-nueva-bold.otf]"]
-\sectionfont{\fontsize{20}{15}\selectfont}
 
 % GERMAN
 \usepackage[ngerman=ngerman-x-latest]{hyphsubst}
@@ -47,12 +45,12 @@
 \setlength{\headheight}{60pt}
 \addtolength{\topmargin}{-35pt}
 \pagestyle{fancy}
-\fancyheadoffset{2.5cm}
-\fancyfootoffset{2.5cm}
+\fancyheadoffset{1.5cm}
+\fancyfootoffset{1.5cm}
 \fancyhf{}
-\fancyhead[L]{\hspace*{1cm}\vspace*{0.7cm}\Huge{\rightmark}}
-\fancyfoot[R]{\vspace*{-15pt}\oddflip[keepaspectratio=true, width=\paperwidth]{welle.png}}
-\fancyfoot[L]{\checkoddpage\vspace*{-1.3cm}\hspace*{\ifoddpage 3cm \else 17.5cm \fi}\Huge{\thepage}}
+\fancyhead[L]{\hspace*{1cm}\vspace*{-0.3cm}\Huge{\rightmark}}
+\fancyfoot[R]{\vspace*{0cm}\oddflip[keepaspectratio=true, width=\paperwidth]{welle.png}}
+\fancyfoot[L]{\checkoddpage\vspace*{-0.7cm}\hspace*{\ifoddpage 3cm \else 17.5cm \fi}\Huge{\thepage}}
 
 % Custom title command for header
 \renewcommand{\sectionmark}[1]{\markright{#1}}
@@ -61,6 +59,9 @@
 	\sectionmark{#1}
 	\addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}
 }
+
+% I don't like paragraph indentation
+\setlength{\parindent}{0pt}
 
 \begin{document}
 
@@ -77,13 +78,14 @@
 
 \def\part#1{\input{parts/#1.tex}\newpage}
 \def\student{\input{parts/studenttemplate.tex}}
-\def\stat#1{\input{parts/stats/#1.tex}}
+\def\ranking{\input{parts/rankingtemplate.tex}}
+\def\generated#1{\input{parts/generated/#1.tex}}
 
 %\maketitle
 
 \backgroundsetup{contents={}}
 \part{titlepage}
-\backgroundsetup{contents={\oddflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position={0.5\textwidth, 3.3cm}}
+\backgroundsetup{contents={\oddflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position={0.4\textwidth, 3.3cm}}
 \part{tableofcontents}
 \part{introduction}
 \part{classphoto}
@@ -92,7 +94,7 @@
 \part{teacherranking}
 \part{secrets}
 \part{classoverview}
-%\part{studentprofiles}
+\part{studentprofiles}
 \part{studentranking}
 \part{citations}
 \part{photos}

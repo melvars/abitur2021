@@ -83,6 +83,7 @@ if ((idx = params.indexOf("-r")) > -1) {
         else return "nichts";
     };
 
+    // Be aware, I'm a longtime rhyme primer
     db.dump().then((data) => {
         data.users.forEach(async (user) => {
             hay = data.profile.filter((e) => e.user_id === user.id);
@@ -112,7 +113,7 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             textex += "\\student\n\n";
 
-            // Characteristics
+            // Characteristics olympics kinetics acoustics
             if (chars && chars.length > 0) {
                 chars.forEach((char, ind) => {
                     textex += `\\studentchar{${sanitize(char.txt)}`;
@@ -123,7 +124,7 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             textex += "\\divider";
 
-            // Ugly inline comments
+            // Comments contents intents indents events
             if (comments && comments.length > 0) {
                 textex +=
                     "\n\n\\renewcommand{\\arraystretch}{1.5}\\hspace*{\\commentsx}\\begin{tabularx}{\\commentswidth}{*{2}{>{\\RaggedRight\\arraybackslash}X}}";
@@ -136,11 +137,11 @@ if ((idx = params.indexOf("-r")) > -1) {
             }
 
             await fs.writeFile(
-                __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
+                __dirname + "/zeitung/parts/generated/students/" + user.class + "/" + user.username + ".tex",
                 textex,
             );
 
-            // Fat stats hats mad lads
+            // Stats chats hats cats rats
             textex = "";
             const questions = [...new Set(data.questions.map((a) => a[0].id))];
             const statrad = 2.5;
@@ -166,7 +167,25 @@ if ((idx = params.indexOf("-r")) > -1) {
                 }
             });
 
-            await fs.writeFile(__dirname + "/zeitung/parts/stats/perc.tex", textex);
+            await fs.writeFile(__dirname + "/zeitung/parts/generated/stats/perc.tex", textex);
+
+            // Teacher ranking pranking banking yanking
+            textex = "\\ranking\n";
+            const teacher_ranking = data.ranking.filter((e) => e.type === "teacher");
+            teacher_ranking.forEach((e) => {
+                textex += `\\rankingquestion{${e.question}}\n`;
+                textex += "\\rankinganswersstart\n";
+                const a = e.answers;
+                for (let i = 0; i < 3; i++) {
+                    textex += `\\rankinganswer{${a[i].name} ${a[i].surname}}{${a[i].count}}\n`;
+                }
+                textex += "\\rankinganswersstop\n";
+            });
+
+            await fs.writeFile(__dirname + "/zeitung/parts/generated/ranking/teacher.tex", textex);
+
+            // Quotes boats coats floats goats oats
+            textex = "";
         });
     });
     console.log("Probably finished?");
