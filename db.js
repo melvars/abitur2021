@@ -237,9 +237,19 @@ class DB {
         const users = await this.query(
             "SELECT u.id, u.username, u.name, u.middlename, u.surname, c.name class, t.name type FROM users u INNER JOIN class c ON u.class_id = c.id INNER JOIN types t ON u.type_id = t.id WHERE t.name = 'pupil'",
         );
+
         const profile = await this.query(
             "SELECT q.question, a.answer, a.user_id FROM profile_questions q INNER JOIN profile_answers a ON a.question_id = q.id",
         );
+
+        const rawQuestions = await this.query(
+            "SELECT q.id, q.question question, o.answer_option option, COUNT(a.user_id) count FROM question_questions q INNER JOIN question_options o ON q.id = o.question_id INNER JOIN question_answers a ON o.id = a.option_id GROUP BY o.id",
+        );
+        const questions = [];
+        rawQuestions.forEach((e) => {
+            if (!questions[e.id - 1]) questions[e.id - 1] = [];
+            questions[e.id - 1].push(e);
+        });
 
         for (const user of users) {
             user.comments = await this.query("SELECT comment from profile_comments where profile_id=" + user.id);
@@ -247,7 +257,7 @@ class DB {
             //user["comments"].forEach((comment) => console.log("Kommentar: " + comment.comment));
         }
 
-        return { users, profile };
+        return { users, profile, questions };
     }
 
     async query(query, params) {

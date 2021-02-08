@@ -139,6 +139,34 @@ if ((idx = params.indexOf("-r")) > -1) {
                 __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
                 textex,
             );
+
+            // Fat stats hats mad lads
+            textex = "";
+            const questions = [...new Set(data.questions.map((a) => a[0].id))];
+            const statrad = 2.5;
+            const statxinc = 8,
+                statyinc = 6;
+            let statx = 0,
+                staty = 0;
+            questions.forEach((q) => {
+                const options = data.questions[q - 1].sort((a, b) => b.count - a.count);
+                textex += `\\node at (${statx}, ${staty + statrad / 2 + 1.5}) {${options[0].question}};`;
+                textex += `\\pie[hide number, sum=auto, text=inside, pos={${statx},${staty}}, radius=${statrad}]{`;
+                options.forEach((option, ind) => {
+                    textex += `${option.count}/${sanitize(option.option)}`;
+                    if (options[ind + 1]) textex += ", ";
+                });
+                textex += "}\n";
+
+                if (statx == statxinc) {
+                    staty += statyinc;
+                    statx = 0;
+                } else {
+                    statx = statxinc;
+                }
+            });
+
+            await fs.writeFile(__dirname + "/zeitung/parts/stats/perc.tex", textex);
         });
     });
     console.log("Probably finished?");

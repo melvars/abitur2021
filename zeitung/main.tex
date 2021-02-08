@@ -16,6 +16,7 @@
 \usepackage{background}
 \usepackage{changepage}
 \usepackage{tabularx}
+\usepackage{pgf-pie}
 
 % Font
 \setmainfont{"[tierra-nueva.otf]"}[BoldFont="[tierra-nueva-bold.otf]"]
@@ -76,6 +77,7 @@
 
 \def\part#1{\input{parts/#1.tex}\newpage}
 \def\student{\input{parts/studenttemplate.tex}}
+\def\stat#1{\input{parts/stats/#1.tex}}
 
 %\maketitle
 
@@ -90,7 +92,7 @@
 \part{teacherranking}
 \part{secrets}
 \part{classoverview}
-\part{studentprofiles}
+%\part{studentprofiles}
 \part{studentranking}
 \part{citations}
 \part{photos}
