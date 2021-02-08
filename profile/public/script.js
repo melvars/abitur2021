@@ -58,7 +58,7 @@ function appendQuestions(question) {
     const field = document.createElement("input");
     field.id = "id_" + question.id;
     field.name = question.id;
-    if (question.answer !== undefined) init = false;
+    if (question.answer !== undefined && question.type !== "file") init = false;
     field.value = question.answer || "";
     field.placeholder = question.question;
     field.type = question.type;
