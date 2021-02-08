@@ -170,17 +170,28 @@ if ((idx = params.indexOf("-r")) > -1) {
             await fs.writeFile(__dirname + "/zeitung/parts/generated/stats/perc.tex", textex);
 
             // Teacher ranking pranking banking yanking
-            textex = "\\ranking\n";
+            const rankingStart = "\\begin{tabularx}{\\textwidth}{*{3}{>{\\RaggedRight\\arraybackslash}X}}\n";
+            const rankingEnd = "\\end{tabularx}\n";
+            textex = "\\ranking" + rankingStart;
             const teacher_ranking = data.ranking.filter((e) => e.type === "teacher");
-            teacher_ranking.forEach((e) => {
+            teacher_ranking.forEach((e, ind) => {
+                textex += "\\begin{itemize}\n";
                 textex += `\\rankingquestion{${e.question}}\n`;
-                textex += "\\rankinganswersstart\n";
                 const a = e.answers;
                 for (let i = 0; i < 3; i++) {
                     textex += `\\rankinganswer{${a[i].name} ${a[i].surname}}{${a[i].count}}\n`;
                 }
-                textex += "\\rankinganswersstop\n";
+                textex += "\\end{itemize}";
+
+                if (ind == 17) {
+                    textex += "\\clearpage";
+                    textex += rankingEnd + rankingStart;
+                } else {
+                    if ((ind + 1) % 3 == 0) textex += "\\\\\n";
+                    else textex += "&\n";
+                }
             });
+            textex += rankingEnd;
 
             await fs.writeFile(__dirname + "/zeitung/parts/generated/ranking/teacher.tex", textex);
 
