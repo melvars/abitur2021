@@ -243,6 +243,7 @@ class DB {
 
         for (const user of users) {
             user.comments = await this.query("SELECT comment from profile_comments where profile_id=" + user.id);
+            user.chars = await this.query("SELECT txt from profile_char where profile_id=" + user.id);
             //user["comments"].forEach((comment) => console.log("Kommentar: " + comment.comment));
         }
 

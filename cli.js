@@ -71,7 +71,9 @@ if ((idx = params.indexOf("-r")) > -1) {
         text
             .replace(/(\r\n|\n|\r)/gm, "")
             .replace(/\\/g, "\\\\")
-            .replace(/&/g, "\\&");
+            .replace(/&/g, "\\&")
+            .replace(/_/g, "\\_")
+            .replace(/~/g, "\\~");
 
     let hay;
     const answer = (needle) => {
@@ -84,6 +86,7 @@ if ((idx = params.indexOf("-r")) > -1) {
         data.users.forEach((user) => {
             hay = data.profile.filter((e) => e.user_id === user.id);
             const comments = user.comments;
+            const chars = user.chars;
             const obj = {
                 id: user.id - 1, // Why tf tho
                 name: `${user.name} ${user.middlename || ""} ${user.surname}`,
@@ -98,12 +101,26 @@ if ((idx = params.indexOf("-r")) > -1) {
                 future: answer("Zukunftspläne"),
             };
 
+            obj.birthday = new Date(obj.birthday == "nichts" ? "1.1.2000" : obj.birthday).toLocaleDateString("de");
+
             // 5head
             let textex = "";
             Object.keys(obj).forEach((elem) => {
                 textex += `\\def\\std${elem}{${obj[elem]}}`;
             });
-            textex += "\\student";
+
+            textex += "\\student\n\n";
+
+            // Characteristics
+            if (chars && chars.length > 0) {
+                chars.forEach((char, ind) => {
+                    textex += `\\studentchar{${sanitize(char.txt)}`;
+                    if (chars[ind + 1]) textex += " \\textbar";
+                    textex += "}";
+                });
+            }
+
+            textex += "\\divider";
 
             // Ugly inline comments
             if (comments && comments.length > 0) {
