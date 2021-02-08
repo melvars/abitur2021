@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require("dotenv").config();
 const db = require("./db");
-const fs = require("fs");
+const fs = require("fs").promises;
 
 const params = process.argv.slice(2);
 
@@ -73,7 +73,8 @@ if ((idx = params.indexOf("-r")) > -1) {
             .replace(/\\/g, "\\\\")
             .replace(/&/g, "\\&")
             .replace(/_/g, "\\_")
-            .replace(/\^/g, "\\^");
+            .replace(/\^/g, "\\^")
+            .replace(/~/g, "\\textasciitilde");
 
     let hay;
     const answer = (needle) => {
@@ -133,17 +134,10 @@ if ((idx = params.indexOf("-r")) > -1) {
                 }
                 textex += "\\end{tabularx}\\renewcommand{\\arraystretch}{1}";
             }
-
-            fs.writeFile(
-                __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
-                textex,
-                (err) => {
-                    if (err) console.error(err);
-                },
-            );
         });
     });
-    console.log("Probably finished.. Async?");
+    console.log("Probably finished?");
+    // process.exit(0);
 } else if ((idx = params.indexOf("-U")) > -1) {
     // Update management (e.g.: add new poll options)
     const param = params[idx + 1];
