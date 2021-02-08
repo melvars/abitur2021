@@ -73,7 +73,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             .replace(/\\/g, "\\\\")
             .replace(/&/g, "\\&")
             .replace(/_/g, "\\_")
-            .replace(/~/g, "\\~");
+            .replace(/^/g, "\\^");
 
     let hay;
     const answer = (needle) => {
