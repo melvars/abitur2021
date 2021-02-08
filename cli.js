@@ -74,7 +74,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             .replace(/&/g, "\\&")
             .replace(/_/g, "\\_")
             .replace(/\^/g, "\\^")
-            .replace(/~/g, "\\textasciitilde");
+            .replace(/~/g, "$\\mathtt{\\sim}$");
 
     let hay;
     const answer = (needle) => {
