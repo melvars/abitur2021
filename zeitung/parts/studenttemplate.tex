@@ -64,7 +64,7 @@
 \fi
 \def\tablewidth{0.6\linewidth}
 
-\hspace*{\tablex}\Large\begin{minipage}{\tablewidth}
+\hspace*{\tablex}\large\begin{minipage}{\tablewidth}
 	\begin{tabular}{@{}ll@{}}
 		\textbf{Name:}          & \stdname                                                  \\
 		\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
@@ -83,3 +83,11 @@
 \begin{figure}[H]
 	\hspace*{-2.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
 \end{figure}
+
+% Comments
+\def\commentswidth{0.7\linewidth}
+\ifoddpage
+	\def\commentsx{-1cm}
+\else
+	\def\commentsx{\framewidth}
+\fi

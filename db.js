@@ -240,6 +240,12 @@ class DB {
         const profile = await this.query(
             "SELECT q.question, a.answer, a.user_id FROM profile_questions q INNER JOIN profile_answers a ON a.question_id = q.id",
         );
+
+        for (const user of users) {
+            user.comments = await this.query("SELECT comment from profile_comments where profile_id=" + user.id);
+            //user["comments"].forEach((comment) => console.log("Kommentar: " + comment.comment));
+        }
+
         return { users, profile };
     }
 

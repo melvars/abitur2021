@@ -67,16 +67,23 @@ if ((idx = params.indexOf("-r")) > -1) {
     // TODO: Erkennungsmerkmale, Wohnort??
     // WARNING: UGLY!
 
+    const sanitize = (text) =>
+        text
+            .replace(/(\r\n|\n|\r)/gm, "")
+            .replace(/\\/g, "\\\\")
+            .replace(/&/g, "\\&");
+
     let hay;
     const answer = (needle) => {
         const e = hay.find((e) => e.question === needle);
-        if (e && e.answer && e.answer.length > 1) return e.answer;
+        if (e && e.answer && e.answer.length > 1) return sanitize(e.answer);
         else return "nichts";
     };
 
     db.dump().then((data) => {
         data.users.forEach((user) => {
             hay = data.profile.filter((e) => e.user_id === user.id);
+            const comments = user.comments;
             const obj = {
                 id: user.id - 1, // Why tf tho
                 name: `${user.name} ${user.middlename || ""} ${user.surname}`,
@@ -98,7 +105,18 @@ if ((idx = params.indexOf("-r")) > -1) {
             });
             textex += "\\student";
 
-            textex = textex.replace(/(\r\n|\n|\r)/gm, "").replace(/&/g, "\\&");
+            // Ugly inline comments
+            if (comments && comments.length > 0) {
+                textex +=
+                    "\n\n\\renewcommand{\\arraystretch}{1.5}\\hspace*{\\commentsx}\\begin{tabularx}{\\commentswidth}{*{2}{>{\\RaggedRight\\arraybackslash}X}}";
+                for (let i = 0; i < comments.length; i += 2) {
+                    const first = comments[i].comment;
+                    const second = comments[i + 1] ? comments[i + 1].comment : " ";
+                    textex += `${sanitize(first)} & ${sanitize(second)} \\\\`;
+                }
+                textex += "\\end{tabularx}\\renewcommand{\\arraystretch}{1}";
+            }
+
             fs.writeFile(
                 __dirname + "/zeitung/parts/students/" + user.class + "/" + user.username + ".tex",
                 textex,
