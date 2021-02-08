@@ -175,8 +175,8 @@ if ((idx = params.indexOf("-r")) > -1) {
             textex = "\\ranking" + rankingStart;
             const teacher_ranking = data.ranking.filter((e) => e.type === "teacher");
             teacher_ranking.forEach((e, ind) => {
-                textex += "\\begin{enumerate}\n";
                 textex += `\\rankingquestion{${e.question}}\n`;
+                textex += "\\begin{enumerate}\n";
                 const a = e.answers;
                 for (let i = 0; i < 3; i++) {
                     textex += `\\rankinganswer{${a[i].name} ${a[i].surname}}{${a[i].count}}\n`;
