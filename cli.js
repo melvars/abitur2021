@@ -118,13 +118,15 @@ if ((idx = params.indexOf("-r")) > -1) {
             textex += "\\student\n\n";
 
             // Characteristics olympics kinetics acoustics
+            textex += "\\begin{center}\\begin{minipage}{0.75\\paperwidth}\\begin{center}\n";
             if (chars && chars.length > 0) {
                 chars.forEach((char, ind) => {
                     textex += `\\studentchar{${sanitize(char.txt)}`;
-                    if (chars[ind + 1]) textex += " \\textbar";
+                    if (chars[ind + 1]) textex += "  $\\circ$";
                     textex += "}";
                 });
             }
+            textex += "\\end{center}\\end{minipage}\\end{center}\n";
 
             textex += "\\divider";
 

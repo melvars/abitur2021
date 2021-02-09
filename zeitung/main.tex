@@ -19,6 +19,7 @@
 % Font % TODO: Colored emojis? (very hard)
 \setmainfont[Path=./fonts/]{tierra-nueva.otf}[BoldFont=tierra-nueva-bold.otf]
 \newfontfamily\emojifont[Path=./fonts/]{twitter-emoji.ttf}
+\newfontfamily\cartamarina[Path=./fonts/]{carta-marina.otf}
 %\newfontfamily\emojifont[Path=./fonts/]{emoji-one-color.otf}
 %\def\emojifont{\font\Emoj={./fonts/emoji-one-color.otf:mode=node;colr=yes;}\Emoj }
 
@@ -50,7 +51,7 @@
 \fancyheadoffset{1.5cm}
 \fancyfootoffset{1.5cm}
 \fancyhf{}
-\fancyhead[L]{\hspace*{1cm}\vspace*{-0.3cm}\Huge{\rightmark}}
+\fancyhead[L]{\hspace*{1cm}\vspace*{0cm}{\cartamarina\Huge{\rightmark}}}
 \fancyfoot[R]{\vspace*{0cm}\oddflip[keepaspectratio=true, width=\paperwidth]{welle.png}}
 \fancyfoot[L]{\checkoddpage\vspace*{-0.7cm}\hspace*{\ifoddpage 3cm \else 17.5cm \fi}\Huge{\thepage}}
 
