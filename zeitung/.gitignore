@@ -3,4 +3,4 @@ build/
 svg-inkscape/
 parts/generated/**/*.tex
 parts/generated/students/figures/
-*.otf
+fonts/*

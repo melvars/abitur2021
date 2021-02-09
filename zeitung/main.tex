@@ -6,7 +6,6 @@
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{fontspec,xunicode,xltxtra}
-\usepackage{afterpage}
 \usepackage{float}
 \usepackage{kantlipsum,lipsum}
 \usepackage{eso-pic}
@@ -17,8 +16,11 @@
 \usepackage{tabularx}
 \usepackage{pgf-pie}
 
-% Font
-\setmainfont{"[tierra-nueva.otf]"}[BoldFont="[tierra-nueva-bold.otf]"]
+% Font % TODO: Colored emojis? (very hard)
+\setmainfont[Path=./fonts/]{tierra-nueva.otf}[BoldFont=tierra-nueva-bold.otf]
+\newfontfamily\emojifont[Path=./fonts/]{twitter-emoji.ttf}
+%\newfontfamily\emojifont[Path=./fonts/]{emoji-one-color.otf}
+%\def\emojifont{\font\Emoj={./fonts/emoji-one-color.otf:mode=node;colr=yes;}\Emoj }
 
 % GERMAN
 \usepackage[ngerman=ngerman-x-latest]{hyphsubst}
