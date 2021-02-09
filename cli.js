@@ -197,6 +197,16 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             // Quotes boats coats floats goats oats
             textex = "";
+            textex += `\\subsection*{${data.quotes[0].class}}\n`
+            data.quotes.forEach((quote, i) => {
+                if (i > 1 && quote.class !== data.quotes[i-1].class) textex += `\\subsection*{${quote.class}}\n`;
+                textex += `\\textbf{${quote.name} ${quote.middlename || ""} ${quote.surname}}: ${quote.quote}\\newline \n`.replace(/ +/, " ").replace(/%/g, "\\%");
+           
+            });
+            await fs.writeFile(
+                __dirname + "/zeitung/parts/generated/quotes/quotes.tex",
+                textex,
+            );
         });
     });
     console.log("Probably finished?");

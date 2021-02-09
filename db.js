@@ -270,7 +270,11 @@ class DB {
             user.chars = await this.query("SELECT txt from profile_char where profile_id=" + user.id);
         }
 
-        return { users, profile, questions, ranking };
+        const quotes = await this.query(
+            "SELECT q.id, a.name, a.middlename, a.surname, q.quote, c.name class FROM quotes q INNER JOIN users a ON q.author_id = a.id INNER JOIN class c ON a.class_id = c.id ORDER BY c.id, a.surname, a.name, a.middlename",
+        );
+
+        return { users, profile, questions, ranking, quotes };
     }
 
     async query(query, params) {
