@@ -54,9 +54,13 @@ async function answer(req, res, qs) {
             try {
                 await db.query(qs, params);
             } catch (e) {
-                if (e.code === "ER_DUP_ENTRY") { // Fix strange POST behaviour
+                if (e.code === "ER_DUP_ENTRY") {
+                    // Fix strange POST behaviour
                     try {
-                        await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", params);
+                        await db.query(
+                            "UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?",
+                            params,
+                        );
                     } catch (e) {
                         console.error(e);
                         return res.json({ success: false });
@@ -92,9 +96,13 @@ async function answerImage(req, res, qs) {
                 await image.mv(`${__dirname}/public/uploads/${name}`); // Overwrite anyway - tbh we don't need update stmt
                 await db.query(qs, params);
             } catch (e) {
-                if (e.code === "ER_DUP_ENTRY") { // Fix strange POST behaviour
+                if (e.code === "ER_DUP_ENTRY") {
+                    // Fix strange POST behaviour
                     try {
-                        await db.query("UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?", params);
+                        await db.query(
+                            "UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?",
+                            params,
+                        );
                     } catch (e) {
                         console.error(e);
                         return res.json({ success: false });
@@ -116,10 +124,21 @@ async function answerImage(req, res, qs) {
 app.get("/api/comments/:uid", async (req, res) => {
     const uid = req.params.uid;
     const comments = await db.query(
-        "SELECT *, (user_id = ? OR ?) AS owner FROM profile_comments WHERE profile_id = ?",
+        "SELECT c.id, c.profile_id, c.comment, u.name, u.middlename, u.surname, (user_id = ? OR ?) owner FROM profile_comments c INNER JOIN users u ON user_id=u.id WHERE profile_id = ?",
         [req.session.uid, req.session.isSuperAdmin || false, uid],
     );
-    res.json(comments);
+    const ret = [];
+    comments.forEach((c) => {
+        ret.push({
+            id: c.id,
+            profile_id: c.profile_id,
+            user:
+                req.session.isSuperAdmin || false ? { name: c.name, middlename: c.middlename, surname: c.surname } : {},
+            comment: c.comment,
+            owner: c.owner,
+        });
+    });
+    res.json(ret);
 });
 
 app.post("/api/comment", async (req, res) => {

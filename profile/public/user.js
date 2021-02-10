@@ -60,6 +60,11 @@ async function addComments(comments) {
         div.dataset.id = comment.id;
         const span = document.createElement("span");
         span.textContent = comment.comment;
+        if ("user" in comment && Object.keys(comment.user).length > 0) {
+            span.innerHTML += ` <small>- ${comment.user.name} ${comment.user.middlename || ""} ${
+                comment.user.surname
+            }</small>`;
+        }
         div.append(span);
 
         if (comment.owner) {
