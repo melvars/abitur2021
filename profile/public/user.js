@@ -190,6 +190,11 @@ function addChar(char) {
     inp.maxLength = 255;
 
     btn.addEventListener("click", async (e) => {
+        if (inp.value.length < 3) {
+            alert("Bitte gebe dir etwas mehr Mühe. Der Text sollte schon etwas länger sein.");
+            return;
+        }
+
         const char = inp.value;
         const body = JSON.stringify({ char });
         const resp = await fetch(`api/char/${uid}`, {
@@ -198,8 +203,12 @@ function addChar(char) {
             body,
         });
         const res = await resp.json();
-        if (res.success) charMethod = "PUT";
-        alert("Okidoki, danke!");
+        if (res.success) {
+            charMethod = "PUT";
+            alert("Okidoki, danke!");
+        } else {
+            alert("Fehler, sorry");
+        }
     });
     const div = document.createElement("div");
     div.style.display = "flex";
