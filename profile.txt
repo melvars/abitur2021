@@ -9,3 +9,4 @@ Lieblingsbands/-musiker/-genre - text
 Lieblingsfach - text
 Hassfach - text
 Kinderbild - file
+QR-Code Text (z.B. Social Media Links, random Text, whatever) - text
