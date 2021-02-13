@@ -90,9 +90,11 @@ if ((idx = params.indexOf("-r")) > -1) {
     // Be aware, I'm a longtime rhyme primer
     db.dump().then((data) => {
         data.users.forEach(async (user) => {
-            hay = data.profile.filter((e) => e.user_id === user.id);
+            const curr = data.profile.filter((e) => e.user_id === user.id);
+            const next = data.profile.filter((e) => e.user_id === user.id - 1);
             const comments = user.comments;
             const chars = user.chars;
+            hay = curr;
             const obj = {
                 id: user.id - 1, // Why tf tho
                 name: `${user.name} ${user.middlename || ""} ${user.surname}`,
@@ -108,6 +110,12 @@ if ((idx = params.indexOf("-r")) > -1) {
             };
 
             obj.birthday = new Date(obj.birthday == "nichts" ? "1.1.2000" : obj.birthday).toLocaleDateString("de");
+
+            // QR-Code.. DON'T ASK
+            hay = next;
+            obj.qrcode = answer("QR-Code Text (z.B. Social Media Links, random Text, whatever)");
+            if (obj.qrcode === "nichts") obj.qrcode = "";
+            hay = curr;
 
             // 5head
             let textex = "";

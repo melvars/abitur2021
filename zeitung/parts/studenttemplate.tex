@@ -25,7 +25,20 @@
 \ifoddpage\else
 	\def\ringx{-\paperwidth - 325pt} % ringwidth + 2 * ringx % Nope, idk anymore
 \fi
-\AddToShipoutPictureBG*{
+
+% Frame and QR-Code
+\def\framex{160pt}
+\def\framey{20pt}
+\def\framewidth{180pt}
+\def\frameimgwidth{160pt}
+\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
+\def\qrcodex{90pt}
+\ifoddpage\else
+	\def\framex{540pt} % paperwidth - framewidth / 2 % Nope, idk anymore
+	\def\qrcodex{470pt}
+\fi
+
+\AddToShipoutPictureFG*{
 	\AtTextUpperLeft{
 		\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
 			\dfincludegraphics[keepaspectratio=true, width=\ringimgwidth]{parts/generated/students/figures/bornerma.jpg}
@@ -34,24 +47,17 @@
 			\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
 		}
 	}
-}
-
-% Frame
-\def\framex{160pt}
-\def\framey{20pt}
-\def\framewidth{180pt}
-\def\frameimgwidth{160pt}
-\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
-\ifoddpage\else
-	\def\framex{540pt} % paperwidth - framewidth / 2 % Nope, idk anymore
-\fi
-\AddToShipoutPictureBG*{
 	\AtTextLowerLeft{
 		\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset + 8pt){
 			\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/generated/students/figures/child_\stdid.jpg}
 		}
 		\put(\textwidth - \framex, \framey){
 			\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
+		}
+		\put(\textwidth - \qrcodex, \framey - 25pt){
+			\ifdefempty{\stdqrcode}{}{
+				\qrcode[nolink, height=0.7in]{\stdqrcode}
+			}
 		}
 	}
 }
