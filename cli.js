@@ -113,7 +113,7 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             // QR-Code.. DON'T ASK
             hay = next;
-            obj.qrcode = answer("QR-Code Text (z.B. Social Media Links, random Text, whatever)");
+            obj.qrcode = answer("QR-Code Text (z.B. Social Media Links, random Text, whatever)").replace(/ /g, "\\ ");
             if (obj.qrcode === "nichts") obj.qrcode = "";
             hay = curr;
 
