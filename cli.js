@@ -213,7 +213,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             await fs.writeFile(__dirname + "/zeitung/parts/generated/ranking/teacher.tex", textex);
 
             // Quotes boats coats floats goats oats // TODO: Fix teacher quotes
-            textex = `\\def\\quoteclass{TGI13.1}\n\\quotepage`;
+            textex = `\\def\\quoteclass{TGM13.1}\n\\quotepage`;
             let i = 0;
             for (const quote of data.quotes) {
                 if (i > 1 && quote.class !== data.quotes[i - 1].class) {
