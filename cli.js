@@ -71,6 +71,7 @@ if ((idx = params.indexOf("-r")) > -1) {
         text
             .replace(/(\r\n|\n|\r)/gm, "")
             .replace(/\\/g, "\\\\")
+            .replace(/%/g, "\\%")
             .replace(/&/g, "\\&")
             .replace(/_/g, "\\_")
             .replace(/\^/g, "\\^")
@@ -88,8 +89,8 @@ if ((idx = params.indexOf("-r")) > -1) {
     };
 
     // Be aware, I'm a longtime rhyme primer
-    db.dump().then((data) => {
-        data.users.forEach(async (user) => {
+    db.dump().then(async (data) => {
+        await data.users.forEach(async (user) => {
             const curr = data.profile.filter((e) => e.user_id === user.id);
             const next = data.profile.filter((e) => e.user_id === user.id - 1);
             const comments = user.comments;
@@ -154,9 +155,11 @@ if ((idx = params.indexOf("-r")) > -1) {
                 __dirname + "/zeitung/parts/generated/students/" + user.class + "/" + user.username + ".tex",
                 textex,
             );
+        });
 
+        await (async () => {
             // Stats chats hats cats rats
-            textex = "";
+            let textex = "";
             const questions = [...new Set(data.questions.map((a) => a[0].id))];
             const statrad = 2.5;
             const statxinc = 8,
@@ -188,7 +191,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             const rankingEnd = "\\end{tabularx}\n";
             textex = "\\ranking" + rankingStart;
             const teacher_ranking = data.ranking.filter((e) => e.type === "teacher");
-            teacher_ranking.forEach((e, ind) => {
+            await teacher_ranking.forEach((e, ind) => {
                 textex += `\\rankingquestion{${e.question}}\n`;
                 textex += "\\begin{enumerate}\n";
                 const a = e.answers;
@@ -209,22 +212,26 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             await fs.writeFile(__dirname + "/zeitung/parts/generated/ranking/teacher.tex", textex);
 
-            // Quotes boats coats floats goats oats
-            textex = "";
-            textex += `\\subsection*{${data.quotes[0].class}}\n`;
-            data.quotes.forEach((quote, i) => {
-                if (i > 1 && quote.class !== data.quotes[i - 1].class) textex += `\\subsection*{${quote.class}}\n`;
-                textex += `\\textbf{${quote.name} ${quote.middlename || ""} ${quote.surname}}: ${
-                    quote.quote
-                }\\newline \n`
-                    .replace(/ +/, " ")
-                    .replace(/%/g, "\\%");
-            });
-            await fs.writeFile(__dirname + "/zeitung/parts/generated/quotes/quotes.tex", textex);
-        });
+            // Quotes boats coats floats goats oats // TODO: Fix teacher quotes
+            textex = `\\def\\quoteclass{TGI13.1}\n\\quotepage`;
+            let i = 0;
+            for (const quote of data.quotes) {
+                if (i > 1 && quote.class !== data.quotes[i - 1].class) {
+                    await fs.writeFile(
+                        __dirname + `/zeitung/parts/generated/quotes/${data.quotes[i - 1].class}.tex`,
+                        textex,
+                    );
+                    textex = `\\def\\quoteclass{${quote.class}}\n\\quotepage`;
+                }
+                textex += `\\quoteadd{${quote.name} ${quote.middlename || ""} ${quote.surname}}{${sanitize(
+                    quote.quote,
+                )}}\n`;
+                i++;
+            }
+        })();
+
+        console.log("Probably finished?");
     });
-    console.log("Probably finished?");
-    // process.exit(0);
 } else if ((idx = params.indexOf("-U")) > -1) {
     // Update management (e.g.: add new poll options)
     const param = params[idx + 1];
