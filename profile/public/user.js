@@ -168,7 +168,7 @@ async function addComments(comments) {
 
 function addChar(char) {
     const h2 = document.createElement("h2");
-    h2.textContent = "Erkennungsmerkmal";
+    h2.textContent = "Erkennungsmerkmal (bitte nur eins)";
     h2.addEventListener("click", (evt) => {
         const divs = evt.target.parentElement.querySelectorAll("div");
         divs.forEach(
