@@ -2,15 +2,17 @@
 \kant[1-3]
 \newpage
 
-\inputall{parts/generated/students/TGI13.1}
-\generated{quotes/TGI13.1}
-\inputall{parts/generated/students/TGI13.2}
-\generated{quotes/TGI13.2}
-\inputall{parts/generated/students/TGM13.1}
-\generated{quotes/TGM13.1}
-\inputall{parts/generated/students/TGM13.2}
-\generated{quotes/TGM13.2}
-\inputall{parts/generated/students/TGTM13.1}
-\generated{quotes/TGTM13.1}
+\providecommand\studentprofile[1]{
+	\inputall{parts/generated/students/#1}
+	\generated{quotes/#1}
+	\title{Ranking - #1}
+	\generated{ranking/#1}
+}
+
+\studentprofile{TGI13.1}
+\studentprofile{TGI13.2}
+\studentprofile{TGM13.1}
+\studentprofile{TGM13.2}
+\studentprofile{TGTM13.1}
 
 %\generated{quotes/teacher}

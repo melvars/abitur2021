@@ -88,6 +88,8 @@ if ((idx = params.indexOf("-r")) > -1) {
         else return "nichts";
     };
 
+    const classes = ["teacher", "TGM13.1", "TGM13.2", "TGTM13.1", "TGI13.1", "TGI13.2"];
+
     // Be aware, I'm a longtime rhyme primer
     db.dump().then(async (data) => {
         await data.users.forEach(async (user) => {
@@ -166,7 +168,7 @@ if ((idx = params.indexOf("-r")) > -1) {
                 statyinc = 6;
             let statx = 0,
                 staty = 0;
-            questions.forEach((q) => {
+            await questions.forEach((q) => {
                 const options = data.questions[q - 1].sort((a, b) => b.count - a.count);
                 textex += `\\node at (${statx}, ${staty + statrad / 2 + 1.5}) {${options[0].question}};`;
                 textex += `\\pie[hide number, sum=auto, text=inside, pos={${statx},${staty}}, radius=${statrad}]{`;
@@ -186,31 +188,41 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             await fs.writeFile(__dirname + "/zeitung/parts/generated/stats/perc.tex", textex);
 
-            // Teacher ranking pranking banking yanking
-            const rankingStart = "\\begin{tabularx}{\\textwidth}{*{3}{>{\\RaggedRight\\arraybackslash}X}}\n";
+            // Ranking pranking banking yanking // Confusion ftw - don't ask :P
+            const rankingStart =
+                "\\ranking\n\\begin{tabularx}{\\textwidth}{*{3}{>{\\RaggedRight\\arraybackslash}X}}\n\n";
             const rankingEnd = "\\end{tabularx}\n";
-            textex = "\\ranking" + rankingStart;
-            const teacher_ranking = data.ranking.filter((e) => e.type === "teacher");
-            await teacher_ranking.forEach((e, ind) => {
-                textex += `\\rankingquestion{${e.question}}\n`;
-                textex += "\\begin{enumerate}\n";
-                const a = e.answers;
-                for (let i = 0; i < 3; i++) {
-                    textex += `\\rankinganswer{${a[i].name} ${a[i].surname}}{${a[i].count}}\n`;
-                }
-                textex += "\\end{enumerate}";
+            const rankingtex = ["", "", "", "", "", ""];
+            data.ranking.forEach((q) => {
+                const answers = ["", "", "", "", "", ""];
 
-                if (ind == 17) {
-                    textex += "\\clearpage";
-                    textex += rankingEnd + rankingStart;
-                } else {
-                    if ((ind + 1) % 3 == 0) textex += "\\\\\n";
-                    else textex += "&\n";
-                }
+                q.answers.forEach((a) => {
+                    answers[classes.indexOf(a.class)] += `\\rankinganswer{${a.name} ${a.middlename || ""} ${
+                        a.surname
+                    }}{${a.count}}\n`;
+                });
+
+                answers.forEach((elem, ind) => {
+                    if ((q.type != "teacher" || ind == 0) && (q.type == "teacher" || ind != 0)) {
+                        rankingtex[ind] += `\\rankingquestion{${q.question}}\n\\begin{enumerate}\n${answers[ind]
+                            .split("\n")
+                            .slice(0, 3)
+                            .join("\n")}\n\\end{enumerate}`;
+
+                        // This is 10head
+                        const cntamp = rankingtex[ind].split("&").length - 1;
+                        const cntslash = rankingtex[ind].split("\\\\\n").length;
+                        if ((cntamp + cntslash) % 3 == 0) rankingtex[ind] += "\\\\\n";
+                        else rankingtex[ind] += "&\n";
+                    }
+                });
             });
-            textex += rankingEnd;
-
-            await fs.writeFile(__dirname + "/zeitung/parts/generated/ranking/teacher.tex", textex);
+            await rankingtex.forEach(async (tex, ind) => {
+                await fs.writeFile(
+                    __dirname + `/zeitung/parts/generated/ranking/${classes[ind]}.tex`,
+                    rankingStart + tex + rankingEnd,
+                );
+            });
 
             // Quotes boats coats floats goats oats // TODO: Fix teacher quotes
             textex = `\\def\\quoteclass{TGM13.1}\n\\quotepage`;
