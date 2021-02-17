@@ -143,7 +143,7 @@ app.get("/api/comments/:uid", async (req, res) => {
 
 app.post("/api/comment", async (req, res) => {
     const { pid, comment } = req.body;
-    if (!pid || !comment) return res.json({ success: false });
+    if (!pid || !comment || comment.length > 280) return res.json({ success: false });
     try {
         await db.query("INSERT INTO profile_comments (user_id, profile_id, comment) VALUES (?,?,?)", [
             req.session.uid,
@@ -159,7 +159,7 @@ app.post("/api/comment", async (req, res) => {
 
 app.put("/api/comment", async (req, res) => {
     const { pid, cid, comment } = req.body;
-    if (!pid || !comment || !cid) return res.json({ success: false });
+    if (!pid || !comment || !cid || comment.length > 280) return res.json({ success: false });
     try {
         await db.query(
             "UPDATE profile_comments SET comment = ? WHERE (user_id = ? OR ?) AND profile_id = ? AND id = ?",

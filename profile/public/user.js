@@ -96,8 +96,9 @@ async function addComments(comments) {
 
                 const inputDiv = document.createElement("div");
                 const input = document.createElement("textarea");
-                input.placeholder = "Dein Kommentar...";
+                input.placeholder = "Dein Kommentar (max. 280 Zeichen)";
                 input.value = comment.comment;
+                input.maxLength = 280;
                 const submit = document.createElement("input");
                 submit.type = "submit";
                 submit.value = "Speichern";
@@ -139,7 +140,8 @@ async function addComments(comments) {
     add.addEventListener("click", (evt) => {
         const div = document.createElement("div");
         const input = document.createElement("textarea");
-        input.placeholder = "Dein Kommentar...";
+        input.placeholder = "Dein Kommentar (max. 280 Zeichen)";
+        input.maxLength = 280;
         const submit = document.createElement("input");
         submit.type = "submit";
         submit.value = "Hinzufügen";
