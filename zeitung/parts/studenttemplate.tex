@@ -65,10 +65,10 @@
 % Steckbrief Tabelle
 \ifoddpage
 	\def\tablex{0.5\linewidth}
-	\def\tablewidth{0.6\linewidth}
+	\def\tablewidth{0.55\linewidth} % Left side
 \else
 	\def\tablex{-0cm}
-	\def\tablewidth{0.55\linewidth}
+	\def\tablewidth{0.55\linewidth} % Right side
 \fi
 
 \hspace*{\tablex}\large\begin{minipage}{\tablewidth}
@@ -95,7 +95,11 @@
 % Divider
 \providecommand\divider{
 	\begin{figure}[H]
-		\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
+		\ifoddpage
+			\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
+		\else
+			\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle_r.png}
+		\fi
 	\end{figure}
 }
 
