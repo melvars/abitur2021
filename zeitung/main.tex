@@ -55,7 +55,15 @@
 \fancyhf{}
 \fancyhead[L]{\hspace*{1cm}\vspace*{0cm}{\cartamarina\Huge{\rightmark}}}
 \fancyfoot[R]{\vspace*{-0.8cm}\oddflip[keepaspectratio=true, width=\paperwidth]{welle.png}}
-\fancyfoot[L]{\checkoddpage\vspace*{-0.6cm}\hspace*{\ifoddpage 1.5cm \else 18.6cm \fi}\huge{\thepage}}
+\fancyfoot[L]{
+	% Hacky but works :)
+	\checkoddpage
+	\begin{textblock*}{1cm}(\ifoddpage 1.4cm \else 18.6cm \fi, \paperheight-2.1cm)
+		\begin{center}
+			\huge{\thepage}
+		\end{center}
+	\end{textblock*}
+}
 
 % Custom title command for header
 \renewcommand{\sectionmark}[1]{\markright{#1}}
