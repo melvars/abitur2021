@@ -75,8 +75,6 @@ app.put("/api/answer/:type", checkUser, async (req, res) => {
     return await answer(req, res, "UPDATE ranking_answers SET answer_id = ? WHERE question_id = ? AND user_id = ?");
 });
 
-// TODO: Puzzle bar
-
 async function answer(req, res, qu) {
     const type = req.params.type;
     const types = ["pupil", "teacher"];

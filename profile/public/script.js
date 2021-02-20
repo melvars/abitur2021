@@ -38,7 +38,7 @@ function appendQuestions(question) {
         const img = document.createElement("img");
         img.src = "uploads/" + question.answer;
         img.alt = "Image";
-        div.appendChild(img); // TODO: Max size
+        div.appendChild(img);
     }
 
     const field = document.createElement("input");
@@ -104,6 +104,7 @@ saveBtn.addEventListener("click", (e) => {
         } else {
             popup.style.display = "none";
             cropper.destroy();
+            alert("Okidoki, danke!");
             document.querySelectorAll("img").forEach((elem) => {
                 if (elem.src.startsWith("http")) elem.src += "#" + new Date().getTime();
             });
