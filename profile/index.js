@@ -35,6 +35,13 @@ app.get("/api/questions", async (req, res) => {
         const qid = questions.findIndex((question) => question.id === answer.question_id);
         if (qid >= 0) questions[qid].answer = answer.answer;
     }
+
+    const ratios = await db.query("SELECT question_id, x, y FROM profile_image_ratios");
+    for (const { question_id, x, y } of ratios) {
+        const qid = questions.findIndex((question) => question.id === question_id);
+        if (qid >= 0) questions[qid].ratio = { x, y };
+    }
+
     res.json(questions);
 });
 
@@ -78,45 +85,32 @@ async function answer(req, res, qs) {
     }
 }
 
-app.post("/api/answerImage", async (req, res) => {
-    return await answerImage(req, res, "INSERT INTO profile_answers (answer, question_id, user_id) VALUE (?,?,?)");
-});
-app.put("/api/answerImage", async (req, res) => {
-    return await answerImage(req, res, "UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?");
-});
+app.post("/api/answerImage", async (req, res) => await answerImage(req, res));
 
-async function answerImage(req, res, qs) {
+async function answerImage(req, res) {
     try {
         for (const fid in req.files) {
             if (!req.files.hasOwnProperty(fid)) continue;
             const image = req.files[fid];
-            const name = `child_${req.session.uid}.jpg`;
+            const name = `${fid}_${req.session.uid}.jpg`;
             const params = [name, fid, req.session.uid];
             try {
-                await image.mv(`${__dirname}/public/uploads/${name}`); // Overwrite anyway - tbh we don't need update stmt
-                await db.query(qs, params);
+                await image.mv(`${__dirname}/public/uploads/${name}`); // Overwrite anyway
+                await db.query("INSERT INTO profile_answers (answer, question_id, user_id) VALUE (?,?,?)", params);
             } catch (e) {
                 if (e.code === "ER_DUP_ENTRY") {
-                    // Fix strange POST behaviour
-                    try {
-                        await db.query(
-                            "UPDATE profile_answers SET answer = ? WHERE question_id = ? AND user_id = ?",
-                            params,
-                        );
-                    } catch (e) {
-                        console.error(e);
-                        return res.json({ success: false });
-                    }
+                    console.log("Image already in db!");
+                    return res.json({ success: true });
                 } else {
                     console.error(e);
                     return res.json({ success: false });
                 }
             }
         }
-        res.json({ success: true });
+        return res.json({ success: true });
     } catch (e) {
         console.error(e);
-        res.json({ success: false });
+        return res.json({ success: false });
     }
 }
 

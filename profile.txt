@@ -8,5 +8,6 @@ Lebensmotto/Seniorquote - text
 Lieblingsbands/-musiker/-genre - text
 Lieblingsfach - text
 Hassfach - text
-Kinderbild - file
+Kinderbild - file - 10/13
 QR-Code Text (z.B. Social Media Links, random Text, whatever) - text
+Aktuelles Bild - file - 1/1
