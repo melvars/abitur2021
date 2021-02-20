@@ -99,7 +99,6 @@ async function answerImage(req, res) {
                 await db.query("INSERT INTO profile_answers (answer, question_id, user_id) VALUE (?,?,?)", params);
             } catch (e) {
                 if (e.code === "ER_DUP_ENTRY") {
-                    console.log("Image already in db!");
                     return res.json({ success: true });
                 } else {
                     console.error(e);
