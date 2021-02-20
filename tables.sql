@@ -198,3 +198,14 @@ CREATE TABLE IF NOT EXISTS secrets
     CONSTRAINT `fk_user_secret` FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+CREATE TABLE IF NOT EXISTS profile_image_ratios
+(
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  question_id INTEGER NOT NULL UNIQUE,
+  x INTEGER NOT NULL,
+  y INTEGER NOT NULL,
+
+  CONSTRAINT `fk_profile_image_question` FOREIGN KEY (question_id) REFERENCES profile_questions (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

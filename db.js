@@ -66,12 +66,14 @@ class DB {
         const tables = await this.getTables();
         await this.query("DROP TABLE IF EXISTS profile_comments");
         await this.query("DROP TABLE IF EXISTS profile_answers");
+        await this.query("DROP TABLE IF EXISTS profile_image_ratios");
         await this.query("DROP TABLE IF EXISTS profile_questions");
         await this.query("DROP TABLE IF EXISTS profile_input_types");
         await this.query(tables[8]);
         await this.query(tables[9]);
         await this.query(tables[10]);
         await this.query(tables[11]);
+        await this.query(tables[18]);
         await this.initProfiles();
     }
 
@@ -81,7 +83,7 @@ class DB {
             try {
                 await this.query("INSERT INTO profile_input_types (type) VALUES (?)", type);
             } catch (e) {
-                continue;
+                console.log(e);
             }
         }
 
@@ -89,11 +91,25 @@ class DB {
         const questions = data.split("\n");
         for (const question of questions) {
             if (question) {
-                const [q, type] = question.split(" - ");
-                await this.query("INSERT INTO profile_questions (question, question_type) VALUE (?, ?)", [
-                    q,
-                    types.indexOf(type) + 1,
-                ]).catch(() => console.log("Profile question already exists!"));
+                const [q, type, ...parameters] = question.split(" - ");
+                let insertId;
+                try {
+                    insertId = (await this.query("INSERT INTO profile_questions (question, question_type) VALUE (?, ?)", [
+                        q,
+                        types.indexOf(type) + 1,
+                    ])).insertId;
+                } catch (e) {
+                    console.log("Profile question already exists!");
+                }
+                if (type === "image") {
+                    const [x, y] = parameters[0].split("/").map(v => parseInt(v));
+                    console.log(insertId, x, y);
+                    try {
+                        await this.query("INSERT INTO profile_image_ratios (question_id, x, y) VALUE (?,?,?)", [insertId, x, y]);
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }
             }
         }
     }
