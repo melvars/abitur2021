@@ -100,7 +100,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             const chars = user.chars;
             hay = curr;
             const obj = {
-                id: user.id, // Why tf tho
+                id: user.id,
                 name: `${user.name} ${user.middlename || ""} ${user.surname}`,
                 birthday: answer("Geburtsdatum"),
                 favsub: answer("Lieblingsfach"),
@@ -115,7 +115,7 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             obj.birthday = new Date(obj.birthday == "nichts" ? "1.1.2000" : obj.birthday).toLocaleDateString("de");
 
-            // QR-Code.. DON'T ASK
+            // QR-Code.. DON'T ASK TODO: Fix for last student?
             hay = next;
             obj.qrcode = answer("QR-Code Text (z.B. Social Media Links, random Text, whatever)").replace(/ /g, "\\ ");
             if (obj.qrcode === "nichts") obj.qrcode = "";

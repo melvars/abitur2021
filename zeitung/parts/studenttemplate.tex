@@ -42,7 +42,12 @@
 	\AddToShipoutPictureBG*{
 		\AtTextUpperLeft{
 			\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
-				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/generated/students/figures/36_#1.jpg}
+				\def\imgpath{parts/generated/students/figures/36_#1.jpg}
+				\IfFileExists{\imgpath}{}
+				{
+					\def\imgpath{placeholder/#1.jpg}
+				}
+				\includegraphics[keepaspectratio=true, width=\frameimgwidth]{\imgpath}
 			}
 			\put(-\ringx, -\ringy){
 				\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
@@ -57,7 +62,7 @@
 			}
 			\put(\textwidth - \qrcodex, \framey - 25pt){
 				\ifdefempty{\stdqrcode}{}{
-					\qrcode[nolink, height=0.7in]{#2}
+					\qrcode[nolink, height=0.7in]{\stdqrcode}
 				}
 			}
 		}
