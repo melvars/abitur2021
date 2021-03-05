@@ -100,7 +100,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             const chars = user.chars;
             hay = curr;
             const obj = {
-                id: user.id - 1, // Why tf tho
+                id: user.id, // Why tf tho
                 name: `${user.name} ${user.middlename || ""} ${user.surname}`,
                 birthday: answer("Geburtsdatum"),
                 favsub: answer("Lieblingsfach"),
@@ -127,7 +127,7 @@ if ((idx = params.indexOf("-r")) > -1) {
                 textex += `\\def\\std${elem}{${obj[elem]}}`;
             });
 
-            textex += "\\student\n\n";
+            textex += `\\student\\studentbackground{${obj.id}}{${obj.qrcode}}\n\n`;
 
             // Characteristics olympics kinetics acoustics
             textex += "\\begin{center}\\begin{minipage}{0.75\\paperwidth}\\begin{center}\n";

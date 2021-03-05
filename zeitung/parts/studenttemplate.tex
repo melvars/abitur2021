@@ -16,47 +16,49 @@
 	}
 }
 
-% Ring
-\def\ringx{20pt}
-\def\ringy{250pt}
-\def\ringwidth{250pt}
-\def\ringimgwidth{180pt}
-\def\ringoffset{(\ringwidth - \ringimgwidth) / 2}
-\ifoddpage\else
-	\def\ringx{-\paperwidth - 325pt} % ringwidth + 2 * ringx % Nope, idk anymore
-\fi
+\providecommand\studentbackground[2]{
+	% Ring
+	\def\ringx{20pt}
+	\def\ringy{250pt}
+	\def\ringwidth{250pt}
+	\def\ringimgwidth{180pt}
+	\def\ringoffset{(\ringwidth - \ringimgwidth) / 2}
+	\ifoddpage\else
+		\def\ringx{-\paperwidth - 325pt} % ringwidth + 2 * ringx % Nope, idk anymore
+	\fi
 
-% Frame and QR-Code
-\def\framex{160pt}
-\def\framey{20pt}
-\def\framewidth{180pt}
-\def\frameimgwidth{160pt}
-\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
-\def\qrcodex{90pt}
-\ifoddpage\else
-	\def\framex{540pt} % paperwidth - framewidth / 2 % Nope, idk anymore
-	\def\qrcodex{470pt}
-\fi
+	% Frame and QR-Code
+	\def\framex{160pt}
+	\def\framey{20pt}
+	\def\framewidth{180pt}
+	\def\frameimgwidth{160pt}
+	\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
+	\def\qrcodex{90pt}
+	\ifoddpage\else
+		\def\framex{540pt} % paperwidth - framewidth / 2 % Nope, idk anymore
+		\def\qrcodex{470pt}
+	\fi
 
-\AddToShipoutPictureFG*{
-	\AtTextUpperLeft{
-		\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
-			\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/generated/students/figures/36_\stdid.jpg}
+	\AddToShipoutPictureBG*{
+		\AtTextUpperLeft{
+			\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
+				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/generated/students/figures/36_#1.jpg}
+			}
+			\put(-\ringx, -\ringy){
+				\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
+			}
 		}
-		\put(-\ringx, -\ringy){
-			\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
-		}
-	}
-	\AtTextLowerLeft{
-		\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset + 8pt){
-			\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/generated/students/figures/11_\stdid.jpg}
-		}
-		\put(\textwidth - \framex, \framey){
-			\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
-		}
-		\put(\textwidth - \qrcodex, \framey - 25pt){
-			\ifdefempty{\stdqrcode}{}{
-				\qrcode[nolink, height=0.7in]{\stdqrcode}
+		\AtTextLowerLeft{
+			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset + 8pt){
+				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/generated/students/figures/11_#1.jpg}
+			}
+			\put(\textwidth - \framex, \framey){
+				\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
+			}
+			\put(\textwidth - \qrcodex, \framey - 25pt){
+				\ifdefempty{\stdqrcode}{}{
+					\qrcode[nolink, height=0.7in]{#2}
+				}
 			}
 		}
 	}
