@@ -16,6 +16,7 @@
 \usepackage{tabularx}
 \usepackage{pgf-pie,qrcode}
 \usepackage{etoolbox}
+\usepackage{pdfpages}
 \usepackage[absolute,overlay]{textpos}
 
 % Font % TODO: Colored emojis? (very hard)
@@ -42,6 +43,23 @@
 	\ifoddpage\includegraphics[#1]{#2}
 	\else\scalebox{-1}[1]{\includegraphics[#1]{#2}}
 	\fi
+}
+
+\newcommand\disableheader{
+	\backgroundsetup{contents={}}
+}
+
+\newcommand\enableheader{
+	\backgroundsetup{contents={\oddflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position={0.4\textwidth, 3.3cm}}
+}
+
+% Advertisements
+\newcommand\advert[1]{
+	\newpage
+	\disableheader
+	\thispagestyle{empty}
+	\includepdf[noautoscale=true,width=\paperwidth]{parts/advertisements/#1.pdf}
+	\enableheader
 }
 
 % Header & footer
@@ -97,9 +115,10 @@
 
 %\maketitle
 
-\backgroundsetup{contents={}}
+\disableheader
 \part{titlepage}
-\backgroundsetup{contents={\oddflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position={0.4\textwidth, 3.3cm}}
+\enableheader
+\advert{asb}
 \part{tableofcontents}
 \part{introduction}
 \part{classphoto}
@@ -108,14 +127,15 @@
 \part{teacherranking}
 \part{secrets}
 \part{classoverview}
+\advert{ihk}
 \part{studentprofiles}
 \part{studentranking}
+\advert{uni-ulm}
 \part{photos}
 \part{trips}
 \part{courseoverview}
 \part{committeeoverview}
 \part{conclusion}
-\part{advertisements}
 \part{imprint}
 
 \end{document}
