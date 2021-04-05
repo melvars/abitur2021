@@ -36,7 +36,7 @@ function appendQuestions(question) {
 
     if (question.type === "file" && question.answer) {
         const img = document.createElement("img");
-        img.src = "uploads/" + question.answer;
+        img.src = "uploads/" + question.answer + "#" + new Date().getTime();
         img.alt = "Image";
         div.appendChild(img);
     }
