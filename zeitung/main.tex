@@ -17,6 +17,7 @@
 \usepackage{pgf-pie,qrcode}
 \usepackage{etoolbox}
 \usepackage{pdfpages}
+\usepackage{forloop}
 \usepackage[absolute,overlay]{textpos}
 
 % Font % TODO: Colored emojis? (very hard)
@@ -36,6 +37,8 @@
 
 % Figures
 \graphicspath{{figures/}}
+\newcounter{bottlecnt} % Bottle counter
+\newcounter{bottlemax} % Bottle loop end
 
 % Flip image if odd
 \newcommand\oddflip[2][]{

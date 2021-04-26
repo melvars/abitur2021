@@ -64,8 +64,8 @@ if ((idx = params.indexOf("-r")) > -1) {
             break;
     }
 } else if ((idx = params.indexOf("-d")) > -1) {
-    // TODO: Erkennungsmerkmale, Wohnort??
-    // WARNING: UGLY!
+    // WARNING: UGLY AND INEFFICIENT!
+    // Coding rule: Everything is acceptable if the total execution time doesn't exceed 5s
 
     const sanitize = (text) =>
         text
@@ -195,20 +195,28 @@ if ((idx = params.indexOf("-r")) > -1) {
             const rankingEnd = "\\end{tabularx}\n";
             const rankingtex = ["", "", "", "", "", ""];
             data.ranking.forEach((q) => {
-                const answers = ["", "", "", "", "", ""];
+                const answers = [[], [], [], [], [], []];
 
                 q.answers.forEach((a) => {
-                    answers[classes.indexOf(a.class)] += `\\rankinganswer{${a.name} ${a.middlename || ""} ${
-                        a.surname
-                    }}{${a.count}}\n`;
+                    answers[classes.indexOf(a.class)].push({
+                        name: `${a.name} ${a.middlename || ""} ${a.surname}`,
+                        count: a.count,
+                    });
                 });
 
                 answers.forEach((elem, ind) => {
                     if ((q.type != "teacher" || ind == 0) && (q.type == "teacher" || ind != 0)) {
-                        rankingtex[ind] += `\\rankingquestion{${q.question}}\n\\begin{enumerate}\n${answers[ind]
-                            .split("\n")
-                            .slice(0, 3)
-                            .join("\n")}\n\\end{enumerate}`;
+                        const relevant = elem.slice(0, 3);
+                        const total_votes = relevant.reduce((a, b) => a + b.count, 0);
+                        let catted = "";
+                        relevant.forEach((e) => {
+                            let fitted = Math.ceil((e.count / total_votes) * 3); // 3 is max bottle count
+                            fitted = fitted == 0 ? 1 : fitted > 3 ? 3 : fitted; // Adjust float errors
+                            catted += `\\rankinganswer{${e.name}}{${fitted}}\n`;
+                        });
+                        rankingtex[
+                            ind
+                        ] += `\\rankingquestion{${q.question}}\n\\begin{enumerate}\n${catted}\\end{enumerate}`;
 
                         // This is 10head
                         const cntamp = rankingtex[ind].split("&").length - 1;
