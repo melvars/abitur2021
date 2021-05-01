@@ -199,7 +199,7 @@ if ((idx = params.indexOf("-r")) > -1) {
 
                 q.answers.forEach((a) => {
                     answers[classes.indexOf(a.class)].push({
-                        name: `${a.name} ${a.middlename || ""} ${a.surname}`,
+                        name: `${a.name} ${a.surname}`,
                         count: a.count,
                     });
                 });
@@ -216,7 +216,7 @@ if ((idx = params.indexOf("-r")) > -1) {
                         });
                         rankingtex[
                             ind
-                        ] += `\\rankingquestion{${q.question}}\n\\begin{enumerate}\n${catted}\\end{enumerate}`;
+                        ] += `\\rankingquestion{${q.question}}\n\\begin{itemize}\n${catted}\\end{itemize}`;
 
                         // This is 10head
                         const cntamp = rankingtex[ind].split("&").length - 1;
