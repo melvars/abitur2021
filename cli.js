@@ -149,7 +149,8 @@ if ((idx = params.indexOf("-r")) > -1) {
                 for (let i = 0; i < comments.length; i += 2) {
                     const first = comments[i].comment;
                     const second = comments[i + 1] ? comments[i + 1].comment : " ";
-                    textex += `${sanitize(first)} & ${sanitize(second)} \\\\`;
+                    textex += `${sanitize(first)} & ${sanitize(second)} \\\\\n`;
+                    if (i + 2 < comments.length) textex += " \\specialrule{.03em}{0em}{0em}\n";
                 }
                 textex += "\\end{tabularx}\\renewcommand{\\arraystretch}{1}";
             }
@@ -234,7 +235,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             });
 
             // Quotes boats coats floats goats oats // TODO: Fix teacher quotes
-            textex = `\\def\\quoteclass{TGM13.1}\n\\quotepage`;
+            textex = "\\def\\quoteclass{TGM13.1}\n\\quotepage";
             let i = 0;
             for (const quote of data.quotes) {
                 if (i > 1 && quote.class !== data.quotes[i - 1].class) {
@@ -249,6 +250,15 @@ if ((idx = params.indexOf("-r")) > -1) {
                 )}}\n`;
                 i++;
             }
+
+            // Final spinal vinyl
+            textex = "\\begin{tabular}{l l l}\n\n";
+            await data.users.forEach(async (user, ind) => {
+                textex += `{\\large ${user.name} ${user.middlename || ""} ${user.surname}}`;
+                textex += ((ind + 1) % 3 == 0 ? "\\\\" : "&") + "\n";
+            });
+            textex += "\\end{tabular}\n";
+            await fs.writeFile(__dirname + "/zeitung/parts/generated/final.tex", textex);
         })();
 
         console.log("Probably finished?");
