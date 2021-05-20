@@ -67,6 +67,14 @@
 	\enableheader
 }
 
+\newcommand\adverthalf[1]{
+	\newpage
+	\disableheader
+	\thispagestyle{empty}
+	\includepdf[noautoscale=true,angle=90,width=\paperwidth]{parts/advertisements/#1.pdf}
+	\enableheader
+}
+
 % Header & footer
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -126,6 +134,7 @@
 \advert{asb}
 \part{tableofcontents}
 \part{introduction}
+\adverthalf{gardena}
 \part{classphoto}
 \part{questionnaire}
 \part{teacherprofiles}
