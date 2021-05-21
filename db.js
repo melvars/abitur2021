@@ -94,18 +94,24 @@ class DB {
                 const [q, type, ...parameters] = question.split(" - ");
                 let insertId;
                 try {
-                    insertId = (await this.query("INSERT INTO profile_questions (question, question_type) VALUE (?, ?)", [
-                        q,
-                        types.indexOf(type) + 1,
-                    ])).insertId;
+                    insertId = (
+                        await this.query("INSERT INTO profile_questions (question, question_type) VALUE (?, ?)", [
+                            q,
+                            types.indexOf(type) + 1,
+                        ])
+                    ).insertId;
                 } catch (e) {
                     console.log("Profile question already exists!");
                 }
                 if (type === "image") {
-                    const [x, y] = parameters[0].split("/").map(v => parseInt(v));
+                    const [x, y] = parameters[0].split("/").map((v) => parseInt(v));
                     console.log(insertId, x, y);
                     try {
-                        await this.query("INSERT INTO profile_image_ratios (question_id, x, y) VALUE (?,?,?)", [insertId, x, y]);
+                        await this.query("INSERT INTO profile_image_ratios (question_id, x, y) VALUE (?,?,?)", [
+                            insertId,
+                            x,
+                            y,
+                        ]);
                     } catch (e) {
                         console.log(e);
                     }
@@ -282,7 +288,9 @@ class DB {
 
         // Comments and characteristics
         for (const user of users) {
-            user.comments = await this.query("SELECT comment from profile_comments where profile_id=" + user.id);
+            user.comments = await this.query(
+                `SELECT comment from profile_comments where profile_id=${user.id} order by CHAR_LENGTH(comment)`,
+            );
             user.chars = await this.query("SELECT txt from profile_char where profile_id=" + user.id);
         }
 
