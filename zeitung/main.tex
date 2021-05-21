@@ -75,6 +75,16 @@
 	\enableheader
 }
 
+% Class page
+\newcommand\classoverview[1]{
+	\newpage
+	\disableheader
+	\thispagestyle{empty}
+	\includepdf[noautoscale=true,width=\paperwidth]{parts/overview/#1.pdf}
+	\enableheader
+}
+
+
 % Header & footer
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -140,7 +150,6 @@
 \part{teacherprofiles}
 \part{teacherranking}
 \part{secrets}
-\part{classoverview}
 \advert{ihk}
 \part{studentprofiles}
 \advert{uni-ulm}

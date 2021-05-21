@@ -1,7 +1,7 @@
 build/
 *.log
+*.pdf
 svg-inkscape/
 parts/generated/**/*.tex
 parts/generated/students/figures/
-parts/advertisements/
 fonts/*
