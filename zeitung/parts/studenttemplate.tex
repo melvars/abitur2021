@@ -61,8 +61,9 @@
 				\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
 			}
 			\put(\textwidth - \qrcodex, \framey - 25pt){
+				\def\stdqrcode{#2}
 				\ifdefempty{\stdqrcode}{}{
-					\qrcode[nolink, height=0.7in]{\stdqrcode}
+					\qrcode[nolink, height=0.7in]{#2}
 				}
 			}
 		}

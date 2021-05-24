@@ -82,6 +82,9 @@ if ((idx = params.indexOf("-r")) > -1) {
             )
             .replace(/~/g, "$\\mathtt{\\sim}$");
 
+    // Quotes in QR codes destroy everything
+    const sanitizeQR = (text) => text.replace(/"/g, "").replace(/ /g, "\\ ");
+
     let hay;
     const answer = (needle) => {
         const e = hay.find((e) => e.question === needle);
@@ -94,11 +97,9 @@ if ((idx = params.indexOf("-r")) > -1) {
     // Be aware, I'm a longtime rhyme primer
     db.dump().then(async (data) => {
         await data.users.forEach(async (user) => {
-            const curr = data.profile.filter((e) => e.user_id === user.id);
-            const next = data.profile.filter((e) => e.user_id === user.id - 1);
+            hay = data.profile.filter((e) => e.user_id === user.id);
             const comments = user.comments;
             const chars = user.chars;
-            hay = curr;
             const obj = {
                 id: user.id,
                 name: `${user.name} ${user.middlename || ""} ${user.surname}`,
@@ -115,17 +116,15 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             obj.birthday = new Date(obj.birthday == "nichts" ? "1.1.2000" : obj.birthday).toLocaleDateString("de");
 
-            // QR-Code.. DON'T ASK TODO: Fix for last student?
-            hay = next;
-            obj.qrcode = answer("QR-Code Text (z.B. Social Media Links, random Text, whatever)").replace(/ /g, "\\ ");
+            // QR-Code
+            obj.qrcode = sanitizeQR(answer("QR-Code Text (z.B. Social Media Links, random Text, whatever)"));
             if (obj.qrcode === "nichts") obj.qrcode = "";
-            hay = curr;
 
             // 5head
             let textex = "";
-            Object.keys(obj).forEach((elem) => {
+            for (elem of Object.keys(obj)) {
                 textex += `\\def\\std${elem}{${obj[elem]}}`;
-            });
+            }
 
             textex += `\\student\\studentbackground{${obj.id}}{${obj.qrcode}}\n\n`;
 
