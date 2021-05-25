@@ -80,24 +80,26 @@
 \fi
 
 \hspace*{\tablex}\large\begin{minipage}{\tablewidth}
-	\begin{tabular}{@{}ll@{}}
-		\textbf{Name:}          & \stdname                                                  \\
-		\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
-		\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdfavsub}   \\
-		\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhatesub}  \\
-		\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhobbies}  \\
-		\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdmusic}    \\
-	\end{tabular}\\~\\
-	\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\~\\
-	\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\~\\
-	\textbf{Lebensmotto:}\\\stdquote\\~\\
-	\textbf{Zukunftspläne:}\\\stdfuture\\~\\
-	%\textbf{Erkennungsmerkmale:}\\\stdidk\\~\\
+	\begin{small}
+		\begin{tabular}{@{}ll@{}}
+			\textbf{Name:}          & \stdname                                                  \\
+			\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
+			\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdfavsub}   \\
+			\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhatesub}  \\
+			\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhobbies}  \\
+			\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdmusic}    \\
+		\end{tabular}\\~\\
+		\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\~\\
+		\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\~\\
+		\textbf{Lebensmotto:}\\\stdquote\\~\\
+		\textbf{Zukunftspläne:}\\\stdfuture\\~\\
+		%\textbf{Erkennungsmerkmale:}\\\stdidk\\~\\
+	\end{small}
 \end{minipage}
 
 % Characteristics
 \providecommand\studentchar[1]{
-	\textbf{#1}
+	{\small \textbf{#1}}
 }
 
 % Divider
