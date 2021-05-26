@@ -6,6 +6,7 @@ node_*
 *.log
 *.env
 *.csv
+progs.json
 users.json
 profile/public/uploads/**/*
 

@@ -96,9 +96,10 @@ if ((idx = params.indexOf("-r")) > -1) {
 
     // Be aware, I'm a longtime rhyme primer
     db.dump().then(async (data) => {
+        const y10progs = JSON.parse(await fs.readFile(__dirname + "/progs.json", "utf8"));
         await data.users.forEach(async (user) => {
             hay = data.profile.filter((e) => e.user_id === user.id);
-            const comments = user.comments;
+            let comments = user.comments;
             const chars = user.chars;
             const obj = {
                 id: user.id,
@@ -140,6 +141,8 @@ if ((idx = params.indexOf("-r")) > -1) {
             textex += "\\end{center}\\end{minipage}\\end{center}\n";
 
             textex += "\\divider";
+            if (y10progs[user.id] && y10progs[user.id].length > 0)
+                comments = [...comments, ...y10progs[user.id].map((comment) => ({ comment }))];
 
             // Comments contents intents indents events
             if (comments && comments.length > 0) {
