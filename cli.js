@@ -253,6 +253,16 @@ if ((idx = params.indexOf("-r")) > -1) {
                 i++;
             }
 
+            // SECRET!!
+            textex = "\\begin{tabularx}{\\textwidth}{*{3}{>{\\RaggedRight\\arraybackslash}X}}\n\n";
+            await data.secrets.forEach(async (secret, ind) => {
+                textex += `{\\small ${secret.secret}}`;
+                textex += ((ind + 1) % 3 == 0 ? "\\\\" : "&") + "\n";
+                if ((ind + 1) % 3 == 0) textex += "\\specialrule{.03em}{0em}{0em}\n";
+            });
+            textex += "\\end{tabularx}\n";
+            await fs.writeFile(__dirname + "/zeitung/parts/generated/secrets.tex", textex);
+
             // Final spinal vinyl
             textex = "\\begin{tabular}{l l l}\n\n";
             await data.users.forEach(async (user, ind) => {

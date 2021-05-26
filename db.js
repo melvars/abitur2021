@@ -298,7 +298,9 @@ class DB {
             "SELECT q.id, a.name, a.middlename, a.surname, q.quote, c.name class FROM quotes q INNER JOIN users a ON q.author_id = a.id INNER JOIN class c ON a.class_id = c.id ORDER BY c.id, a.surname, a.name, a.middlename",
         );
 
-        return { users, profile, questions, ranking, quotes };
+        const secrets = await this.query("SELECT id, secret FROM secrets ORDER BY CHAR_LENGTH(secret)");
+
+        return { users, profile, questions, ranking, quotes, secrets };
     }
 
     async query(query, params) {
