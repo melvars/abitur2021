@@ -66,6 +66,9 @@
 					\qrcode[nolink, height=0.7in]{#2}
 				}
 			}
+			\put(\textwidth - \qrcodex, 250pt){
+				\oddflip[keepaspectratio=true, height=2cm]{vorderseite.png}
+			}
 		}
 	}
 }
@@ -79,8 +82,9 @@
 	\def\tablewidth{0.55\linewidth} % Right side
 \fi
 
-\hspace*{\tablex}\large\begin{minipage}{\tablewidth}
-	\begin{small}
+\hspace*{\tablex}\vspace*{1.4cm}\begin{minipage}{\tablewidth}
+	\vspace*{.5cm}
+	\begin{normalsize}
 		\begin{tabular}{@{}ll@{}}
 			\textbf{Name:}          & \stdname                                                  \\
 			\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
@@ -88,18 +92,17 @@
 			\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhatesub}  \\
 			\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhobbies}  \\
 			\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdmusic}    \\
-		\end{tabular}\\~\\
-		\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\~\\
-		\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\~\\
-		\textbf{Lebensmotto:}\\\stdquote\\~\\
+		\end{tabular}\\
+		\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\
+		\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\
+		\textbf{Lebensmotto:}\\\stdquote\\
 		\textbf{Zukunftspläne:}\\\stdfuture\\~\\
-		%\textbf{Erkennungsmerkmale:}\\\stdidk\\~\\
-	\end{small}
+	\end{normalsize}
 \end{minipage}
 
 % Characteristics
 \providecommand\studentchar[1]{
-	{\small \textbf{#1}}
+	{\normalsize \textbf{#1}}
 }
 
 % Divider
