@@ -150,6 +150,11 @@ if ((idx = params.indexOf("-r")) > -1) {
                     "\n\n\\begin{small}\\renewcommand{\\arraystretch}{1.5}\\hspace*{\\commentsx}\\begin{tabularx}{\\commentswidth}{*{2}{>{\\RaggedRight\\arraybackslash}X}}";
                 for (let i = 0; i < comments.length; i += 2) {
                     const first = comments[i].comment;
+                    if (comments[i] && !comments[i + 1]) {
+                        textex += `\\multicolumn{2}{p{\\commentswidth}}{\\RaggedRight{${sanitize(first)}}}`;
+                        break;
+                    }
+
                     const second = comments[i + 1] ? comments[i + 1].comment : " ";
                     textex += `${sanitize(first)} & ${sanitize(second)} \\\\\n`;
                     if (i + 2 < comments.length) textex += " \\specialrule{.03em}{0em}{0em}\n";
