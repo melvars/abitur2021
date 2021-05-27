@@ -198,9 +198,8 @@ if ((idx = params.indexOf("-r")) > -1) {
             await fs.writeFile(__dirname + "/zeitung/parts/generated/stats/perc.tex", textex);
 
             // Ranking pranking banking yanking // Confusion ftw - don't ask :P
-            const rankingStart =
-                "\\ranking\n\\begin{tabularx}{\\textwidth}{*{3}{>{\\RaggedRight\\arraybackslash}X}}\n\n";
-            const rankingEnd = "\\end{tabularx}\n";
+            const rankingStart = "\\ranking\n\\begin{longtable}{R R R}\n\n";
+            const rankingEnd = "\\end{longtable}\n";
             const rankingtex = ["", "", "", "", "", ""];
             data.ranking.forEach((q) => {
                 const answers = [[], [], [], [], [], []];
@@ -217,14 +216,16 @@ if ((idx = params.indexOf("-r")) > -1) {
                         const relevant = elem.slice(0, 3);
                         const total_votes = relevant.reduce((a, b) => a + b.count, 0);
                         let catted = "";
-                        relevant.forEach((e) => {
+                        relevant.forEach((e, eind) => {
                             let fitted = Math.ceil((e.count / total_votes) * 3); // 3 is max bottle count
                             fitted = fitted == 0 ? 1 : fitted > 3 ? 3 : fitted; // Adjust float errors
-                            catted += `\\rankinganswer{${e.name}}{${fitted}}\n`;
+                            catted += `${e.name} @ \\rankingbottles{${fitted}}`;
+                            if (eind < 2) catted += "BLABLAB\n";
+                            else catted += "\n\\vspace*{0.5cm}";
                         });
                         rankingtex[
                             ind
-                        ] += `\\rankingquestion{${q.question}}\n\\begin{itemize}\n${catted}\\end{itemize}`;
+                        ] += `\\rankingquestion{${q.question}}\n\\begin{tabular}{l l}\n${catted}\\end{tabular}`;
 
                         // This is 10head
                         const cntamp = rankingtex[ind].split("&").length - 1;
@@ -237,11 +238,11 @@ if ((idx = params.indexOf("-r")) > -1) {
             await rankingtex.forEach(async (tex, ind) => {
                 await fs.writeFile(
                     __dirname + `/zeitung/parts/generated/ranking/${classes[ind]}.tex`,
-                    rankingStart + tex + rankingEnd,
+                    rankingStart + tex.replace(/@/g, "&").replace(/BLABLAB/g, "\\\\") + rankingEnd,
                 );
             });
 
-            // Quotes boats coats floats goats oats // TODO: Fix teacher quotes
+            // Quotes boats coats floats goats oats
             textex = "\\def\\quoteclass{TGM13.1}\n\\quotepage";
             let i = 0;
             for (const quote of data.quotes) {
@@ -257,15 +258,17 @@ if ((idx = params.indexOf("-r")) > -1) {
                 )}}\n`;
                 i++;
             }
+            // Lol
+            await fs.writeFile(__dirname + `/zeitung/parts/generated/quotes/teacher.tex`, textex);
 
             // SECRET!!
-            textex = "\\begin{tabularx}{\\textwidth}{*{3}{>{\\RaggedRight\\arraybackslash}X}}\n\n";
+            textex = "\\begin{longtable}{R R R}\n\n";
             await data.secrets.forEach(async (secret, ind) => {
                 textex += `{\\small ${secret.secret}}`;
                 textex += ((ind + 1) % 3 == 0 ? "\\\\" : "&") + "\n";
                 if ((ind + 1) % 3 == 0) textex += "\\specialrule{.03em}{0em}{0em}\n";
             });
-            textex += "\\end{tabularx}\n";
+            textex += "\\end{longtable}\n";
             await fs.writeFile(__dirname + "/zeitung/parts/generated/secrets.tex", textex);
 
             // Final spinal vinyl

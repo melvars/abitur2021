@@ -1,13 +1,12 @@
 \providecommand\rankingquestion[1]{
-	\noindent\textbf{#1}
+	\textbf{#1}
 }
 
-\providecommand\rankinganswer[2]{
-	\item[] #1
-		\setcounter{bottlecnt}{0}
-		\setcounter{bottlemax}{#2}
-		\stepcounter{bottlemax} % There is no <= in forloop
-		\forloop{bottlecnt}{1}{\value{bottlecnt} < \value{bottlemax}}{
-			\includegraphics[scale=.027]{flasche.png}
-		}
+\providecommand\rankingbottles[1]{
+	\setcounter{bottlecnt}{0}
+	\setcounter{bottlemax}{#1}
+	\stepcounter{bottlemax} % There is no <= in forloop
+	\forloop{bottlecnt}{1}{\value{bottlecnt} < \value{bottlemax}}{
+		\includegraphics[scale=.027]{flasche.png}
+	}
 }
