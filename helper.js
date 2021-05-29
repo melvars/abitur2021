@@ -23,8 +23,8 @@ async function ssvToObj(ssv) {
     const obj = {};
     const lines = ssv.split("\n").slice(1, -1);
     for (const line of lines) {
-        const [t, u, c] = line.split(";");
-        const str = `${t} zur 10-Jahres Prognose: ${c}`;
+        const [t, u, c, p] = line.split(";");
+        const str = p === "t" ? `${c} ~ ${t}` : `${t} zur 10-Jahres Prognose: ${c}`;
         if (obj.hasOwnProperty(u)) obj[u].push(str);
         else obj[u] = [str];
     }
