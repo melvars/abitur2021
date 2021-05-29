@@ -168,131 +168,129 @@ if ((idx = params.indexOf("-r")) > -1) {
             );
         });
 
-        await (async () => {
-            // Stats chats hats cats rats
-            let textex = "";
-            const questions = [...new Set(data.questions.map((a) => a[0].id))];
-            const statrad = 2.5;
-            const statxinc = 8,
-                statyinc = 6;
-            let statx = 0,
-                staty = 0;
-            await questions.forEach((q) => {
-                const options = data.questions[q - 1].sort((a, b) => b.count - a.count);
-                textex += `\\node at (${statx}, ${staty + statrad / 2 + 1.5}) {${options[0].question}};`;
-                textex += `\\pie[hide number, sum=auto, text=inside, pos={${statx},${staty}}, radius=${statrad}]{`;
-                options.forEach((option, ind) => {
-                    textex += `${option.count}/${sanitize(option.option)}`;
-                    if (options[ind + 1]) textex += ", ";
-                });
-                textex += "}\n";
-
-                if (statx == statxinc) {
-                    staty += statyinc;
-                    statx = 0;
-                } else {
-                    statx = statxinc;
-                }
+        // Stats chats hats cats rats
+        let textex = "";
+        const questions = [...new Set(data.questions.map((a) => a[0].id))];
+        const statrad = 2.5;
+        const statxinc = 8,
+            statyinc = 6;
+        let statx = 0,
+            staty = 0;
+        await questions.forEach((q) => {
+            const options = data.questions[q - 1].sort((a, b) => b.count - a.count);
+            textex += `\\node at (${statx}, ${staty + statrad / 2 + 1.5}) {${options[0].question}};`;
+            textex += `\\pie[hide number, sum=auto, text=inside, pos={${statx},${staty}}, radius=${statrad}]{`;
+            options.forEach((option, ind) => {
+                textex += `${option.count}/${sanitize(option.option)}`;
+                if (options[ind + 1]) textex += ", ";
             });
+            textex += "}\n";
 
-            await fs.writeFile(__dirname + "/zeitung/parts/generated/stats/perc.tex", textex);
-
-            // Ranking pranking banking yanking // Confusion ftw - don't ask :P
-            const rankingStart = "\\ranking\n\\begin{longtable}{R R R}\n\n";
-            const rankingEnd = "\\end{longtable}\n";
-            const rankingtex = ["", "", "", "", "", ""];
-            data.ranking.forEach((q) => {
-                const answers = [[], [], [], [], [], []];
-
-                q.answers.forEach((a) => {
-                    answers[classes.indexOf(a.class)].push({
-                        name: `${a.name} ${a.surname}`,
-                        count: a.count,
-                    });
-                });
-
-                answers.forEach((elem, ind) => {
-                    if ((q.type != "teacher" || ind == 0) && (q.type == "teacher" || ind != 0)) {
-                        const relevant = elem.slice(0, 3);
-                        const total_votes = relevant.reduce((a, b) => a + b.count, 0);
-                        let catted = "";
-                        relevant.forEach((e, eind) => {
-                            let fitted = Math.ceil((e.count / total_votes) * 3); // 3 is max bottle count
-                            fitted = fitted == 0 ? 1 : fitted > 3 ? 3 : fitted; // Adjust float errors
-                            catted += `${e.name} @ \\rankingbottles{${fitted}}`;
-                            if (eind < 2) catted += "BLABLAB\n";
-                            else catted += "\n\\vspace*{0.5cm}";
-                        });
-                        rankingtex[
-                            ind
-                        ] += `\\rankingquestion{${q.question}}\n\\begin{tabular}{l l}\n${catted}\\end{tabular}`;
-
-                        // This is 10head
-                        const cntamp = rankingtex[ind].split("&").length - 1;
-                        const cntslash = rankingtex[ind].split("\\\\\n").length;
-                        if ((cntamp + cntslash) % 3 == 0) rankingtex[ind] += "\\\\\n";
-                        else rankingtex[ind] += "&\n";
-                    }
-                });
-            });
-            await rankingtex.forEach(async (tex, ind) => {
-                await fs.writeFile(
-                    __dirname + `/zeitung/parts/generated/ranking/${classes[ind]}.tex`,
-                    rankingStart + tex.replace(/@/g, "&").replace(/BLABLAB/g, "\\\\") + rankingEnd,
-                );
-            });
-
-            // Quotes boats coats floats goats oats
-            textex = "\\def\\quoteclass{TGM13.1}\n\\quotepage";
-            let i = 0;
-            for (const quote of data.quotes) {
-                if (i > 1 && quote.class !== data.quotes[i - 1].class) {
-                    await fs.writeFile(
-                        __dirname + `/zeitung/parts/generated/quotes/${data.quotes[i - 1].class}.tex`,
-                        textex,
-                    );
-                    textex = `\\def\\quoteclass{${quote.class}}\n\\quotepage`;
-                }
-                textex += `\\quoteadd{${quote.name} ${quote.middlename || ""} ${quote.surname}}{${sanitize(
-                    quote.quote,
-                )}}\n`;
-                i++;
+            if (statx == statxinc) {
+                staty += statyinc;
+                statx = 0;
+            } else {
+                statx = statxinc;
             }
-            // Lol
-            await fs.writeFile(__dirname + `/zeitung/parts/generated/quotes/teacher.tex`, textex);
+        });
 
-            // SECRET!!
-            textex = "\\begin{longtable}{R R R}\n\n";
-            await data.secrets.forEach(async (secret, ind) => {
-                textex += `{\\small ${secret.secret}}`;
-                textex += ((ind + 1) % 3 == 0 ? "\\\\" : "&") + "\n";
-                if ((ind + 1) % 3 == 0) textex += "\\specialrule{.03em}{0em}{0em}\n";
+        await fs.writeFile(__dirname + "/zeitung/parts/generated/stats/perc.tex", textex);
+
+        // Ranking pranking banking yanking // Confusion ftw - don't ask :P
+        const rankingStart = "\\ranking\n\\begin{longtable}{R R R}\n\n";
+        const rankingEnd = "\\end{longtable}\n";
+        const rankingtex = ["", "", "", "", "", ""];
+        data.ranking.forEach((q) => {
+            const answers = [[], [], [], [], [], []];
+
+            q.answers.forEach((a) => {
+                answers[classes.indexOf(a.class)].push({
+                    name: `${a.name} ${a.surname}`,
+                    count: a.count,
+                });
             });
-            textex += "\\end{longtable}\n";
-            await fs.writeFile(__dirname + "/zeitung/parts/generated/secrets.tex", textex);
 
-            // Final spinal vinyl
-            textex = "\\begin{tabular}{l l l}\n\n";
-            await data.users.forEach(async (user, ind) => {
-                textex += `{\\large ${user.name} ${user.middlename || ""} ${user.surname}}`;
-                textex += ((ind + 1) % 3 == 0 ? "\\\\" : "&") + "\n";
+            answers.forEach((elem, ind) => {
+                if ((q.type != "teacher" || ind == 0) && (q.type == "teacher" || ind != 0)) {
+                    const relevant = elem.slice(0, 3);
+                    const total_votes = relevant.reduce((a, b) => a + b.count, 0);
+                    let catted = "";
+                    relevant.forEach((e, eind) => {
+                        let fitted = Math.ceil((e.count / total_votes) * 3); // 3 is max bottle count
+                        fitted = fitted == 0 ? 1 : fitted > 3 ? 3 : fitted; // Adjust float errors
+                        catted += `${e.name} @ \\rankingbottles{${fitted}}`;
+                        if (eind < 2) catted += "BLABLAB\n";
+                        else catted += "\n\\vspace*{0.5cm}";
+                    });
+                    rankingtex[
+                        ind
+                    ] += `\\rankingquestion{${q.question}}\n\\begin{tabular}{l l}\n${catted}\\end{tabular}`;
+
+                    // This is 10head
+                    const cntamp = rankingtex[ind].split("&").length - 1;
+                    const cntslash = rankingtex[ind].split("\\\\\n").length;
+                    if ((cntamp + cntslash) % 3 == 0) rankingtex[ind] += "\\\\\n";
+                    else rankingtex[ind] += "&\n";
+                }
             });
-            textex += "\\end{tabular}\n";
-            await fs.writeFile(__dirname + "/zeitung/parts/generated/final.tex", textex);
-        })();
+        });
+        await rankingtex.forEach(async (tex, ind) => {
+            await fs.writeFile(
+                __dirname + `/zeitung/parts/generated/ranking/${classes[ind]}.tex`,
+                rankingStart + tex.replace(/@/g, "&").replace(/BLABLAB/g, "\\\\") + rankingEnd,
+            );
+        });
 
+        // Quotes boats coats floats goats oats
+        textex = "\\def\\quoteclass{TGM13.1}\n\\quotepage";
+        let i = 0;
+        for (const quote of data.quotes) {
+            if (i > 1 && quote.class !== data.quotes[i - 1].class) {
+                await fs.writeFile(
+                    __dirname + `/zeitung/parts/generated/quotes/${data.quotes[i - 1].class}.tex`,
+                    textex,
+                );
+                textex = `\\def\\quoteclass{${quote.class}}\n\\quotepage`;
+            }
+            textex += `\\quoteadd{${quote.name} ${quote.middlename || ""} ${quote.surname}}{${sanitize(
+                quote.quote,
+            )}}\n`;
+            i++;
+        }
+        // Lol
+        await fs.writeFile(__dirname + "/zeitung/parts/generated/quotes/teacher.tex", textex);
+
+        // SECRET!!
+        textex = "\\begin{longtable}{R R R}\n\n";
+        await data.secrets.forEach(async (secret, ind) => {
+            textex += `{\\small ${secret.secret}}`;
+            textex += ((ind + 1) % 3 == 0 ? "\\\\" : "&") + "\n";
+            if ((ind + 1) % 3 == 0) textex += "\\specialrule{.03em}{0em}{0em}\n";
+        });
+        textex += "\\end{longtable}\n";
+        await fs.writeFile(__dirname + "/zeitung/parts/generated/secrets.tex", textex);
+
+        // Final spinal vinyl
+        textex = "\\begin{tabular}{l l l}\n\n";
+        await data.users.forEach(async (user, ind) => {
+            textex += `{\\large ${user.name} ${user.middlename || ""} ${user.surname}}`;
+            textex += ((ind + 1) % 3 == 0 ? "\\\\" : "&") + "\n";
+        });
+        textex += "\\end{tabular}\n";
+        await fs.writeFile(__dirname + "/zeitung/parts/generated/final.tex", textex);
+
+        textex = "";
         const profs = (await fs.readFile(__dirname + "/stecks.csv", "utf8")).split("\n").slice(1, -1);
         let flip = 1;
-        let textex = "";
-        let pageX = 0;
+        let pageY = 0;
         for (const prof of profs) {
             const [t, a, p, s] = prof.split(";").map(sanitize);
-            textex += `\\def\\stdname{${t}}\\def\\stdabi{${a}}\\def\\stdprof{${p}}\\def\\stdsecret{${s}}\\def\\stdnum{${flip}}\\def\\stdx{${pageX}}\\teacherprofile\n`;
+            textex += `\\def\\profname{${t}}\\def\\profabi{${a}}\\def\\profprof{${p}}\\def\\profsecret{${s}}\\def\\profnum{${flip}}\\def\\profx{${pageY}}\\teacherprofile\n`;
             if (flip % 3 === 0) {
-                textex += "\\clearpage\n"
+                textex += "\\clearpage\n";
             }
             flip++;
-            pageX += 6;
+            pageY += 6;
         }
         await fs.writeFile(__dirname + "/zeitung/parts/generated/teacherprofiles.tex", textex, "utf8");
 

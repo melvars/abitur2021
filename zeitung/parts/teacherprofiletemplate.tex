@@ -1,17 +1,16 @@
-\ifodd\stdnum
-	\def\tablex{0.5\linewidth}
-	\def\tablewidth{0.55\linewidth} % Left side
-\else
-	\def\tablex{-0cm}
-	\def\tablewidth{0.55\linewidth} % Right side
-\fi
+\begin{minipage}[t][0.28\textheight][t]{\linewidth}
+	\begin{minipage}[c]{0.6\textwidth}
+		\textbf{Name:}\\ \profname\\
+		\textbf{Abi:}\\ \profabi\\
+		\textbf{Beruf:}\\ \profprof\\
+		\textbf{Geheimnis:}\\ \profsecret\\
+	\end{minipage}\hfill
 
-\hspace*{\tablex}\vspace*{1.4cm}\begin{minipage}{\tablewidth}
-	\vspace*{.5cm}
-	\begin{normalsize}
-		\textbf{Name:}\\ \stdname\\
-		\textbf{Abi:}\\ \stdabi\\
-		\textbf{Beruf:}\\ \stdprof\\
-		\textbf{Geheimnis:}\\ \stdsecret\\
-	 \end{normalsize}
+	\begin{minipage}[c]{2.5cm}
+		\includegraphics[keepaspectratio=true, width=2cm]{rahmen.png}
+	\end{minipage}
 \end{minipage}
+
+\begin{figure}[H]
+	\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{seil.png}
+\end{figure}
