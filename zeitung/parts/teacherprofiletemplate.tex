@@ -9,7 +9,12 @@
 	\end{minipage}
     \fi
 	\begin{minipage}[c]{0.2\textwidth}
-		\includegraphics[keepaspectratio=true, width=4cm]{rahmen.png}
+        \def\imgpath{parts/generated/teacherimages/\profname.png}
+        \IfFileExists{\imgpath}{}
+        {
+            \def\imgpath{rahmen.png}
+        }
+		\includegraphics[keepaspectratio=true, width=4cm]{\imgpath}
 	\end{minipage}
     \ifodd\profnum\else
     \hspace*{.5cm}%

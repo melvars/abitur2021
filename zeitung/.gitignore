@@ -4,5 +4,6 @@ build/
 *.tmp
 svg-inkscape/
 parts/generated/**/*.tex
+parts/generated/teacherimages/
 parts/generated/students/figures/
 fonts/*

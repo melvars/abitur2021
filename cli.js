@@ -282,15 +282,13 @@ if ((idx = params.indexOf("-r")) > -1) {
         textex = "";
         const profs = (await fs.readFile(__dirname + "/stecks.csv", "utf8")).split("\n").slice(1, -1);
         let flip = 1;
-        let pageY = 0;
         for (const prof of profs) {
             const [t, a, p, s] = prof.split(";").map(sanitize);
-            textex += `\\def\\profname{${t}}\\def\\profabi{${a}}\\def\\profprof{${p}}\\def\\profsecret{${s}}\\def\\profnum{${flip}}\\def\\profx{${pageY}}\\def\\proflast{${+(flip % 3 === 0)}}\\teacherprofile\n`;
+            textex += `\\def\\profname{${t}}\\def\\profabi{${a}}\\def\\profprof{${p}}\\def\\profsecret{${s}}\\def\\profnum{${flip}}\\def\\proflast{${+(flip % 3 === 0)}}\\teacherprofile\n`;
             if (flip % 3 === 0) {
                 textex += "\\clearpage\n";
             }
             flip++;
-            pageY += 6;
         }
         await fs.writeFile(__dirname + "/zeitung/parts/generated/teacherprofiles.tex", textex, "utf8");
 
