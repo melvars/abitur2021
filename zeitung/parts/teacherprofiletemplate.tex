@@ -4,7 +4,7 @@
 	\begin{minipage}[c]{0.79\textwidth}
 		\textbf{Name:}\\ \profname\\
 		\textbf{Abijahrgang:}\\ \profabi\\
-		\textbf{Brauf auf Schiff:}\\ \profprof\\
+		\textbf{Beruf auf Schiff:}\\ \profprof\\
 		\textbf{Das wissen meine Schüler nicht über mich:}\\ \profsecret\\
 	\end{minipage}
     \fi
@@ -16,13 +16,15 @@
 	\begin{minipage}[c]{0.79\textwidth}
 		\textbf{Name:}\\ \profname\\
 		\textbf{Abijahrgang:}\\ \profabi\\
-		\textbf{Brauf auf Schiff:}\\ \profprof\\
+		\textbf{Beruf auf Schiff:}\\ \profprof\\
 		\textbf{Das wissen meine Schüler nicht über mich:}\\ \profsecret\\
 	\end{minipage}
     \fi
 
 \end{minipage}
 
+\ifnum\proflast=0
 \begin{figure}[H]
 	\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{seil.png}
 \end{figure}
+\fi
