@@ -1,0 +1,17 @@
+\ifodd\stdnum
+	\def\tablex{0.5\linewidth}
+	\def\tablewidth{0.55\linewidth} % Left side
+\else
+	\def\tablex{-0cm}
+	\def\tablewidth{0.55\linewidth} % Right side
+\fi
+
+\hspace*{\tablex}\vspace*{1.4cm}\begin{minipage}{\tablewidth}
+	\vspace*{.5cm}
+	\begin{normalsize}
+		\textbf{Name:}\\ \stdname\\
+		\textbf{Abi:}\\ \stdabi\\
+		\textbf{Beruf:}\\ \stdprof\\
+		\textbf{Geheimnis:}\\ \stdsecret\\
+	 \end{normalsize}
+\end{minipage}

@@ -281,6 +281,21 @@ if ((idx = params.indexOf("-r")) > -1) {
             await fs.writeFile(__dirname + "/zeitung/parts/generated/final.tex", textex);
         })();
 
+        const profs = (await fs.readFile(__dirname + "/stecks.csv", "utf8")).split("\n").slice(1, -1);
+        let flip = 1;
+        let textex = "";
+        let pageX = 0;
+        for (const prof of profs) {
+            const [t, a, p, s] = prof.split(";").map(sanitize);
+            textex += `\\def\\stdname{${t}}\\def\\stdabi{${a}}\\def\\stdprof{${p}}\\def\\stdsecret{${s}}\\def\\stdnum{${flip}}\\def\\stdx{${pageX}}\\teacherprofile\n`;
+            if (flip % 3 === 0) {
+                textex += "\\clearpage\n"
+            }
+            flip++;
+            pageX += 6;
+        }
+        await fs.writeFile(__dirname + "/zeitung/parts/generated/teacherprofiles.tex", textex, "utf8");
+
         console.log("Probably finished?");
     });
 } else if ((idx = params.indexOf("-U")) > -1) {
