@@ -12,6 +12,14 @@
 
 	\title{#1 Ranking}
 	\generated{ranking/#1}
+
+	\newpage
+
+	\title{#1 Bilder}
+	\disableheader
+	\thispagestyle{empty}
+	\includepdf[pages=-,noautoscale=true,width=\paperwidth]{parts/collages/#1.pdf}
+	\enableheader
 }
 
 \studentprofile{TGI13.1}
