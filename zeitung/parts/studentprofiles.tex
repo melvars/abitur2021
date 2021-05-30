@@ -1,11 +1,16 @@
 \providecommand\studentprofile[1]{
+	\newpage
+	\title{#1}
 	\classoverview{#1}
 
 	\inputall{parts/generated/students/#1}
 
+	\title{#1 Zitate}
 	\generated{quotes/#1}
 
-	\title{Ranking - #1}
+	\newpage
+
+	\title{#1 Ranking}
 	\generated{ranking/#1}
 }
 
@@ -14,5 +19,3 @@
 \studentprofile{TGM13.1}
 \studentprofile{TGM13.2}
 \studentprofile{TGTM13.1}
-
-%\generated{quotes/teacher}

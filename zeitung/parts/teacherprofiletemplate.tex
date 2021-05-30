@@ -1,37 +1,35 @@
-\begin{minipage}[t][0.28\textheight][t]{\linewidth}
-    % \noindent
-    \ifodd\profnum
-	\begin{minipage}[c]{0.79\textwidth}
-		% \textbf{Name:}\\ \profname\\
-        {\Huge{\textbf{\profname}}}\\
-		\textbf{Abijahrgang:}\\ \profabi\\
-		\textbf{Das wäre meine Aufgabe auf einem Schiff:}\\ \profprof\\
-		\textbf{Das wissen meine Schüler nicht über mich:}\\ \profsecret\\
-	\end{minipage}
-    \fi
+\begin{minipage}[c][0.28\textheight][c]{\linewidth}
+	\ifodd\profnum
+		\begin{minipage}[c]{0.79\textwidth}
+			{\Huge{\textbf{\profname}}}\\
+			\textbf{Abijahrgang:}\\ \profabi\\
+			\textbf{Das wäre meine Aufgabe auf einem Schiff:}\\ \profprof\\
+			\textbf{Das wissen meine SchülerInnen nicht über mich:}\\ \profsecret\\
+		\end{minipage}
+	\fi
+	%
 	\begin{minipage}[c]{0.2\textwidth}
-        \def\imgpath{parts/generated/teacherimages/\profname.png}
-        \IfFileExists{\imgpath}{}
-        {
-            \def\imgpath{rahmen.png}
-        }
+		\def\imgpath{parts/generated/teacherimages/\profname.png}
+		\IfFileExists{\imgpath}{}
+		{
+			\def\imgpath{rahmen.png}
+		}
 		\includegraphics[keepaspectratio=true, width=4cm]{\imgpath}
 	\end{minipage}
-    \ifodd\profnum\else
-    \hspace*{.5cm}%
-	\begin{minipage}[c]{0.79\textwidth}
-		% \textbf{Name:}\\ \profname\\
-		{\Huge{\textbf{\profname}}}\\
-		\textbf{Abijahrgang:}\\ \profabi\\
-		\textbf{Das wäre meine Aufgabe auf einem Schiff:}\\ \profprof\\
-		\textbf{Das wissen meine Schüler nicht über mich:}\\ \profsecret\\
-	\end{minipage}
-    \fi
-
+	%
+	\ifodd\profnum\else
+		\hspace*{.69cm}%
+		\begin{minipage}[c]{0.73\textwidth}
+			{\Huge{\textbf{\profname}}}\\
+			\textbf{Abijahrgang:}\\ \profabi\\
+			\textbf{Das wäre meine Aufgabe auf einem Schiff:}\\ \profprof\\
+			\textbf{Das wissen meine SchülerInnen nicht über mich:}\\ \profsecret\\
+		\end{minipage}
+	\fi
 \end{minipage}
 
 \ifnum\proflast=0
-\begin{figure}[H]
-	\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{seil.png}
-\end{figure}
+	\begin{figure}[H]
+		\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{seil.png}
+	\end{figure}
 \fi
