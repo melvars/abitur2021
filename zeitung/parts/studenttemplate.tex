@@ -43,11 +43,10 @@
 		\AtTextUpperLeft{
 			\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
 				\def\imgpath{parts/generated/students/figures/36_#1.jpg}
-				\IfFileExists{\imgpath}{}
+				\IfFileExists{\imgpath}
 				{
-					\def\imgpath{placeholder/#1.jpg}
-				}
-				\includegraphics[keepaspectratio=true, width=\frameimgwidth]{\imgpath}
+					\includegraphics[keepaspectratio=true, width=\frameimgwidth]{\imgpath}
+				}{}
 			}
 			\put(-\ringx, -\ringy){
 				\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
