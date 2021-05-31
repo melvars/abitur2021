@@ -144,6 +144,8 @@ if ((idx = params.indexOf("-r")) > -1) {
             if (y10progs[user.id] && y10progs[user.id].length > 0)
                 comments = [...comments, ...y10progs[user.id].map((comment) => ({ comment }))];
 
+            comments = comments.sort((a, b) => a.comment.length - b.comment.length);
+
             // Comments contents intents indents events
             if (comments && comments.length > 0) {
                 textex +=
@@ -284,7 +286,10 @@ if ((idx = params.indexOf("-r")) > -1) {
         let flip = 1;
         for (const prof of profs) {
             const [t, a, p, s] = prof.split(";").map(sanitize);
-            textex += `\\def\\profname{${t}}\\def\\profabi{${a}}\\def\\profprof{${p}}\\def\\profsecret{${s}}\\def\\profnum{${flip}}\\def\\proflast{${+(flip % 3 === 0)}}\\teacherprofile\n`;
+            textex += `\\def\\profname{${t}}\\def\\profabi{${a}}\\def\\profprof{${p}}\\def\\profsecret{${s}}\\def\\profnum{${flip}}\\def\\proflast{${+(
+                flip % 3 ===
+                0
+            )}}\\teacherprofile\n`;
             if (flip % 3 === 0) {
                 textex += "\\clearpage\n";
             }
