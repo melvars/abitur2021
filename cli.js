@@ -115,7 +115,8 @@ if ((idx = params.indexOf("-r")) > -1) {
                 future: answer("Zukunftspläne"),
             };
 
-            obj.birthday = new Date(obj.birthday == "nichts" ? "unbekannt" : obj.birthday).toLocaleDateString("de");
+            obj.birthday = new Date(obj.birthday).toLocaleDateString("de");
+            if (obj.birthday == "Invalid Date") obj.birthday = "unbekannt";
 
             // QR-Code
             obj.qrcode = sanitizeQR(answer("QR-Code Text (z.B. Social Media Links, random Text, whatever)"));

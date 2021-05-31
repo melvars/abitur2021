@@ -92,7 +92,7 @@
 	\newpage
 	\disableheader
 	\thispagestyle{empty}
-	\includepdf[noautoscale=true,width=\paperwidth]{parts/overview/#1.pdf}
+	\includepdf[pages=-,noautoscale=true,width=\paperwidth]{parts/overview/#1.pdf}
 	\enableheader
 }
 
@@ -154,12 +154,11 @@
 \disableheader
 \part{titlepage}
 \enableheader
-\advert{asb}
 \part{tableofcontents}
 \part{introduction}
-\adverthalf{gardena}
-\part{classphoto}
+\adverthalfnorot{gardena}
 \part{questionnaire}
+\advert{asb}
 \part{teacherprofiles}
 \part{teacherquotes}
 \part{teacherranking}
@@ -167,10 +166,9 @@
 \advert{ihk}
 \part{studentprofiles}
 \advert{uni-ulm}
-\part{photos}
 \part{trips}
-\adverthalfnorot{b-group}
 \part{conclusion}
+\adverthalfnorot{b-group}
 \part{imprint}
 \part{final}
 
