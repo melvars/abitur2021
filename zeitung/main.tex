@@ -96,6 +96,23 @@
 	\enableheader
 }
 
+% Trips
+\newcommand\trip[1]{
+	\newpage
+	\disableheader
+	\thispagestyle{empty}
+	\includepdf[pages=-,noautoscale=true,width=\paperwidth]{parts/trips/#1.pdf}
+	\enableheader
+}
+
+% Other PDFs
+\newcommand\other[1]{
+	\newpage
+	\disableheader
+	\thispagestyle{empty}
+	\includepdf[pages=-,noautoscale=true,width=\paperwidth]{parts/other/#1.pdf}
+	\enableheader
+}
 
 % Header & footer
 \renewcommand{\headrulewidth}{0pt}
@@ -131,7 +148,6 @@
 
 \begin{document}
 
-\title{ABI Zeitung 2021}
 \author{RBS Ulm TG13}
 
 % Updated: https://tex.stackexchange.com/a/7657
@@ -151,9 +167,7 @@
 
 %\maketitle
 
-\disableheader
 \part{titlepage}
-\enableheader
 \part{tableofcontents}
 \part{introduction}
 \adverthalfnorot{gardena}
