@@ -43,10 +43,11 @@
 		\AtTextUpperLeft{
 			\put(-\ringx + \ringoffset, -\ringy + \ringoffset){
 				\def\imgpath{parts/generated/students/figures/36_#1.jpg}
-				\IfFileExists{\imgpath}
+				\IfFileExists{\imgpath}{}
 				{
-					\includegraphics[keepaspectratio=true, width=\frameimgwidth]{\imgpath}
-				}{}
+					\def\imgpath{bloed.png}
+				}
+				\includegraphics[keepaspectratio=true, width=\frameimgwidth]{\imgpath}
 			}
 			\put(-\ringx, -\ringy){
 				\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
@@ -54,7 +55,11 @@
 		}
 		\AtTextLowerLeft{
 			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset + 8pt){
-				\dfincludegraphics[keepaspectratio=true, width=\frameimgwidth]{parts/generated/students/figures/11_#1.jpg}
+				\def\imgpath{parts/generated/students/figures/11_#1.jpg}
+				\IfFileExists{\imgpath}{}{
+					\def\imgpath{enkel.png}
+				}
+				\includegraphics[keepaspectratio=true, width=\frameimgwidth]{\imgpath}
 			}
 			\put(\textwidth - \framex, \framey){
 				\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
