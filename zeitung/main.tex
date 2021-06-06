@@ -142,6 +142,10 @@
 	\sectionmark{#1}
 	\addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}
 }
+\newcommand{\subtitle}[2]{
+	\sectionmark{#1 #2}
+	\addcontentsline{toc}{subsection}{#2}
+}
 
 % I don't like paragraph indentation
 \setlength{\parindent}{0pt}
@@ -173,9 +177,7 @@
 \adverthalfnorot{gardena}
 \part{questionnaire}
 \advert{asb}
-\part{teacherprofiles}
-\part{teacherquotes}
-\part{teacherranking}
+\part{teachers}
 \part{secrets}
 \advert{ihk}
 \part{studentprofiles}

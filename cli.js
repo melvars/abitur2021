@@ -92,7 +92,7 @@ if ((idx = params.indexOf("-r")) > -1) {
         else return "nichts";
     };
 
-    const classes = ["teacher", "TGM13.1", "TGM13.2", "TGTM13.1", "TGI13.1", "TGI13.2"];
+    const classes = ["teacher", "TGM13.1", "TGM13.2", "TGTM13", "TGI13.1", "TGI13.2"];
 
     // Be aware, I'm a longtime rhyme primer
     db.dump().then(async (data) => {
