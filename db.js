@@ -28,7 +28,7 @@ class DB {
     async initValues() {
         await this.query("INSERT INTO types (name) VALUES ('pupil'), ('teacher')");
         await this.query(
-            "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13.1'), ('TGI13.1'), ('TGI13.2'), ('teacher')",
+            "INSERT INTO class (name) VALUES ('TGM13.1'), ('TGM13.2'), ('TGTM13'), ('TGI13.1'), ('TGI13.2'), ('teacher')",
         );
 
         await this.initPolls();

@@ -1,4 +1,4 @@
-const classes = ["teacher", "TGM13.1", "TGM13.2", "TGTM13.1", "TGI13.1", "TGI13.2"];
+const classes = ["teacher", "TGM13.1", "TGM13.2", "TGTM13", "TGI13.1", "TGI13.2"];
 
 fetch("api/questions")
     .then((questions) => questions.json())

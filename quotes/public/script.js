@@ -1,5 +1,5 @@
 const dropdown = document.getElementById("author");
-const classes = ["TGM13.1", "TGM13.2", "TGTM13.1", "TGI13.1", "TGI13.2", "teacher"];
+const classes = ["TGM13.1", "TGM13.2", "TGTM13", "TGI13.1", "TGI13.2", "teacher"];
 
 dropdown.insertAdjacentHTML(
     "beforeend",
