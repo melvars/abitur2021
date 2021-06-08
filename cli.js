@@ -99,7 +99,7 @@ if ((idx = params.indexOf("-r")) > -1) {
         const y10progs = JSON.parse(await fs.readFile(__dirname + "/progs.json", "utf8"));
         await data.users.forEach(async (user) => {
             hay = data.profile.filter((e) => e.user_id === user.id);
-            let comments = user.comments;
+            let comments = user.comments.map((c) => ({ comment: sanitize(c.comment) }));
             const chars = user.chars;
             const obj = {
                 id: user.id,
@@ -143,7 +143,10 @@ if ((idx = params.indexOf("-r")) > -1) {
 
             textex += "\\divider";
             if (y10progs[user.id] && y10progs[user.id].length > 0)
-                comments = [...comments, ...y10progs[user.id].map((comment) => ({ comment }))];
+                comments = [
+                    ...comments,
+                    ...y10progs[user.id].map((comment) => ({ comment: `\\textbf{${sanitize(comment)}}` })),
+                ];
 
             comments = comments.sort((a, b) => a.comment.length - b.comment.length);
 
@@ -154,12 +157,12 @@ if ((idx = params.indexOf("-r")) > -1) {
                 for (let i = 0; i < comments.length; i += 2) {
                     const first = comments[i].comment;
                     if (comments[i] && !comments[i + 1]) {
-                        textex += `\\multicolumn{2}{p{\\commentswidth}}{\\RaggedRight{${sanitize(first)}}}`;
+                        textex += `\\multicolumn{2}{p{\\commentswidth}}{\\RaggedRight{${first}}}`;
                         break;
                     }
 
                     const second = comments[i + 1] ? comments[i + 1].comment : " ";
-                    textex += `${sanitize(first)} & ${sanitize(second)} \\\\\n`;
+                    textex += `${first} & ${second} \\\\\n`;
                     if (i + 2 < comments.length) textex += " \\specialrule{.03em}{0em}{0em}\n";
                 }
                 textex += "\\end{tabularx}\\renewcommand{\\arraystretch}{1}\\end{small}";
