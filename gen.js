@@ -195,10 +195,9 @@ db.dump().then(async (data) => {
         }
         const author = genAuthor(quote);
         if (i === 0 || author !== genAuthor(data.quotes[i - 1])) {
-            textex += `\\large{\\textbf{${author}:}}\\normalsize\\newline\n`;
+            textex += `\\quoteauthor{${author}}\n`;
         }
-        // textex += `\\quoteadd{${author}}{${sanitize(quote.quote)}}\n`;
-        textex += `${quote.quote}\\newline\n`;
+        textex += `\\quoteadd{${sanitize(quote.quote)}}\n`;
         i++;
     }
     // Lol
