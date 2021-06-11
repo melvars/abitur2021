@@ -118,12 +118,12 @@ db.dump().then(async (data) => {
     const questions = [...new Set(data.questions.map((a) => a[0].id))];
     const statrad = 2.5;
     const statxinc = 8,
-        statyinc = 6;
+        statyinc = 6.4;
     let statx = 0,
         staty = 0;
     await questions.forEach((q) => {
         const options = data.questions[q - 1].sort((a, b) => b.count - a.count);
-        textex += `\\node at (${statx}, ${staty + statrad / 2 + 1.5}) {${options[0].question}};`;
+        textex += `\\node at (${statx}, ${staty + statrad / 2 + 1.8}) {${options[0].question}};`;
         textex += `\\pie[hide number, sum=auto, text=inside, pos={${statx},${staty}}, radius=${statrad}]{`;
         options.forEach((option, ind) => {
             textex += `${option.count}/${sanitize(option.option)}`;
@@ -204,13 +204,13 @@ db.dump().then(async (data) => {
     await fs.writeFile(__dirname + "/zeitung/parts/generated/quotes/teacher.tex", textex);
 
     // SECRET!!
-    textex = "\\begin{longtable}{R R R}\n\n";
+    textex = "\\renewcommand{\\arraystretch}{1.5}\n\\begin{longtable}{R R R}\n\n";
     await data.secrets.forEach(async (secret, ind) => {
         textex += `{\\small ${secret.secret}}`;
         textex += ((ind + 1) % 3 == 0 ? "\\\\" : "&") + "\n";
         if ((ind + 1) % 3 == 0) textex += "\\specialrule{.03em}{0em}{0em}\n";
     });
-    textex += "\\end{longtable}\n";
+    textex += "\\end{longtable}\n\\renewcommand{\\arraystretch}{1}\n";
     await fs.writeFile(__dirname + "/zeitung/parts/generated/secrets.tex", textex);
 
     // Final spinal vinyl
