@@ -63,7 +63,7 @@ if ((idx = params.indexOf("-r")) > -1) {
             process.exit(0);
             break;
     }
-} else if ((idx = params.indexOf("-d")) > -1) {
+} else if ((idx = params.indexOf("-d")) > -1 || params.length === 0) {
     // WARNING: UGLY AND INEFFICIENT!
     // Coding rule: Everything is acceptable if the total execution time doesn't exceed 5s
 
@@ -248,6 +248,7 @@ if ((idx = params.indexOf("-r")) > -1) {
         });
 
         // Quotes boats coats floats goats oats
+        const genAuthor = (quote) => `${quote.name} ${quote.middlename || ""} ${quote.surname}`;
         textex = "\\def\\quoteclass{TGM13.1}\n\\quotepage";
         let i = 0;
         for (const quote of data.quotes) {
@@ -258,9 +259,12 @@ if ((idx = params.indexOf("-r")) > -1) {
                 );
                 textex = `\\def\\quoteclass{${quote.class}}\n\\quotepage`;
             }
-            textex += `\\quoteadd{${quote.name} ${quote.middlename || ""} ${quote.surname}}{${sanitize(
-                quote.quote,
-            )}}\n`;
+            const author = genAuthor(quote);
+            if (i === 0 || author !== genAuthor(data.quotes[i - 1])) {
+                textex += `\\large{\\textbf{${author}:}}\\normalsize\\newline\n`;
+            }
+            // textex += `\\quoteadd{${author}}{${sanitize(quote.quote)}}\n`;
+            textex += `${quote.quote}\\newline\n`;
             i++;
         }
         // Lol
