@@ -185,7 +185,7 @@ db.dump().then(async (data) => {
     });
 
     // Quotes boats coats floats goats oats
-    const genAuthor = (quote) => `${quote.name} ${quote.middlename || ""} ${quote.surname}`;
+    const genAuthor = (quote) => (quote ? `${quote.name} ${quote.middlename || ""} ${quote.surname}` : "");
     textex = "\\def\\quoteclass{TGM13.1}\n\\quotepage";
     let i = 0;
     for (const quote of data.quotes) {
@@ -195,9 +195,12 @@ db.dump().then(async (data) => {
         }
         const author = genAuthor(quote);
         if (i === 0 || author !== genAuthor(data.quotes[i - 1])) {
-            textex += `\\quoteauthor{${author}}\n`;
+            textex += `\\quoteauthor{${author}}\\begin{itemize}\n`;
         }
-        textex += `\\quoteadd{${sanitize(quote.quote)}}\n`;
+        textex += `\\item \\quoteadd{${sanitize(quote.quote)}}\n`;
+        if (author !== genAuthor(data.quotes[i + 1])) {
+            textex += `\\end{itemize}\n`;
+        }
         i++;
     }
     // Lol
