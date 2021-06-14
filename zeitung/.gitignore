@@ -3,6 +3,7 @@ build/
 *.pdf
 *.tmp
 svg-inkscape/
+parts/advertisements/*.jpg
 parts/generated/**/*.tex
 parts/generated/teacherimages/
 parts/generated/students/figures/
