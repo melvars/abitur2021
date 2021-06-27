@@ -62,12 +62,12 @@ db.dump().then(async (data) => {
         if (obj.qrcode === "nichts") obj.qrcode = "";
 
         // 5head
-        let textex = "";
+        let textex = "\\student";
         for (elem of Object.keys(obj)) {
             textex += `\\def\\std${elem}{${obj[elem]}}`;
         }
 
-        textex += `\\student\\studentbackground{${obj.id}}{${obj.qrcode}}\n\n`;
+        textex += `\\studentbackground{${obj.id}}{${obj.qrcode}}\n\n`;
 
         // Characteristics olympics kinetics acoustics
         textex += "\\begin{center}\\begin{minipage}{0.75\\paperwidth}\\begin{center}\n";
@@ -241,5 +241,8 @@ db.dump().then(async (data) => {
     }
     await fs.writeFile(__dirname + "/zeitung/parts/generated/teacherprofiles.tex", textex, "utf8");
 
-    console.log("Probably finished?");
+    setTimeout(() => {
+        console.log("Finished!");
+        process.exit(0);
+    }, 50);
 });

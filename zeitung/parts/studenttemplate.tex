@@ -3,8 +3,6 @@
 \clearpage
 \checkoddpage
 
-\sectionmark{Steckbrief - \stdname}
-
 % Returns a default file if not found
 \providecommand\dfincludegraphics[2][]{
 	\IfFileExists{#2}
@@ -17,6 +15,8 @@
 }
 
 \providecommand\studentbackground[2]{
+	\sectionmark{Steckbrief - \stdname}
+
 	% Ring
 	\def\ringx{20pt}
 	\def\ringy{250pt}
@@ -52,6 +52,34 @@
 			\put(-\ringx, -\ringy){
 				\includegraphics[keepaspectratio=true, width=\ringwidth]{ring.png}
 			}
+			\put(0, -4cm){
+				% Steckbrief Tabelle
+				\ifoddpage
+					\def\tablex{-0cm}
+					\def\tablewidth{0.53\textwidth} % Right page
+				\else
+					\def\tablex{0.46\linewidth}
+					\def\tablewidth{0.53\textwidth} % Left page
+				\fi
+
+				\hspace*{\tablex}\vspace*{1.4cm}\begin{minipage}{\tablewidth}
+					\vspace*{.5cm}
+					\begin{normalsize}
+						\begin{tabular}{@{}ll@{}}
+							\textbf{Name:}          & \stdname                                                  \\
+							\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
+							\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdfavsub}   \\
+							\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhatesub}  \\
+							\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhobbies}  \\
+							\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdmusic}    \\
+						\end{tabular}\\
+						\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\
+						\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\
+						\textbf{Lebensmotto:}\\\stdquote\\
+						\textbf{Zukunftspläne:}\\\stdfuture\\~\\
+					\end{normalsize}
+				\end{minipage}
+			}
 		}
 		\AtTextLowerLeft{
 			\put(\textwidth - \framex + \frameoffset, \framey + \frameoffset + 8pt){
@@ -77,32 +105,7 @@
 	}
 }
 
-% Steckbrief Tabelle
-\ifoddpage
-	\def\tablex{-0cm}
-	\def\tablewidth{0.55\linewidth} % Right side
-\else
-	\def\tablex{0.5\linewidth}
-	\def\tablewidth{0.55\linewidth} % Left side
-\fi
-
-\hspace*{\tablex}\vspace*{1.4cm}\begin{minipage}{\tablewidth}
-	\vspace*{.5cm}
-	\begin{normalsize}
-		\begin{tabular}{@{}ll@{}}
-			\textbf{Name:}          & \stdname                                                  \\
-			\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
-			\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdfavsub}   \\
-			\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhatesub}  \\
-			\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhobbies}  \\
-			\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdmusic}    \\
-		\end{tabular}\\
-		\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\
-		\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\
-		\textbf{Lebensmotto:}\\\stdquote\\
-		\textbf{Zukunftspläne:}\\\stdfuture\\~\\
-	\end{normalsize}
-\end{minipage}
+\vspace*{8cm}
 
 % Characteristics
 \providecommand\studentchar[1]{

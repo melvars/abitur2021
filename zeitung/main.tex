@@ -66,7 +66,14 @@
 }
 
 \newcommand\enableheader{
-	\backgroundsetup{contents={\oddflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position={0.4\textwidth, 3.3cm}}
+	\backgroundsetup{contents={\evenflip[keepaspectratio=true, width=\paperwidth]{kordel.png}},scale=1.1,placement=top,opacity=1,position={0.4\textwidth, 3.3cm}}
+}
+
+\newcommand\emptypage{
+	\disableheader
+	\thispagestyle{empty}
+	\null\newpage
+	\enableheader
 }
 
 % Awesome column type
@@ -182,10 +189,6 @@
 \def\ranking{\input{parts/rankingtemplate.tex}}
 \def\generated#1{\input{parts/generated/#1.tex}}
 
-% \part{titlepage}
-% \disableheader
-% \thispagestyle{empty}
-% \null\newpage
 \enableheader
 
 \part{tableofcontents}
@@ -203,10 +206,8 @@
 \part{conclusion}
 \part{imprint}
 
-\disableheader
-\thispagestyle{empty}
-\null\newpage
-\enableheader
+\emptypage
+\emptypage
 
 % \advert{asb}
 % \part{final}
