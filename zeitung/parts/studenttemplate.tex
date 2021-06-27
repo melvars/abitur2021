@@ -1,9 +1,13 @@
 % Student template
 
 \clearpage
-\checkoddpage
+\newpage
+\mbox{~}
+\clearpage
+\newpage
+\unskip
 
-\sectionmark{Steckbrief - \stdname}
+\checkoddpage
 
 % Returns a default file if not found
 \providecommand\dfincludegraphics[2][]{
@@ -17,6 +21,8 @@
 }
 
 \providecommand\studentbackground[2]{
+	\sectionmark{Steckbrief - \stdname}
+
 	% Ring
 	\def\ringx{20pt}
 	\def\ringy{250pt}
@@ -77,32 +83,43 @@
 	}
 }
 
-% Steckbrief Tabelle
-\ifoddpage
-	\def\tablex{-0cm}
-	\def\tablewidth{0.55\linewidth} % Right side
-\else
-	\def\tablex{0.5\linewidth}
-	\def\tablewidth{0.55\linewidth} % Left side
-\fi
+\providecommand\studentinit{
+	% Steckbrief Tabelle
+	\ifoddpage
+		\def\tablex{-0cm}
+		\def\tablewidth{0.55\linewidth} % Right side
+	\else
+		\def\tablex{0.5\linewidth}
+		\def\tablewidth{0.55\linewidth} % Left side
+	\fi
 
-\hspace*{\tablex}\vspace*{1.4cm}\begin{minipage}{\tablewidth}
-	\vspace*{.5cm}
-	\begin{normalsize}
-		\begin{tabular}{@{}ll@{}}
-			\textbf{Name:}          & \stdname                                                  \\
-			\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
-			\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdfavsub}   \\
-			\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhatesub}  \\
-			\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhobbies}  \\
-			\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdmusic}    \\
-		\end{tabular}\\
-		\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\
-		\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\
-		\textbf{Lebensmotto:}\\\stdquote\\
-		\textbf{Zukunftspläne:}\\\stdfuture\\~\\
-	\end{normalsize}
-\end{minipage}
+	\hspace*{\tablex}\vspace*{1.4cm}\begin{minipage}{\tablewidth}
+		\vspace*{.5cm}
+		\begin{normalsize}
+			\begin{tabular}{@{}ll@{}}
+				\textbf{Name:}          & \stdname                                                  \\
+				\textbf{Geburtstag:}    & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdbirthday} \\
+				\textbf{Lieblingsfach:} & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdfavsub}   \\
+				\textbf{Hassfach:}      & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhatesub}  \\
+				\textbf{Hobbies:}       & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdhobbies}  \\
+				\textbf{Musik:}         & \multicolumn{1}{p{\tablewidth}}{\RaggedRight\stdmusic}    \\
+			\end{tabular}\\
+			\textbf{Das werde ich am meisten vermissen:}\\\stdmissing\\
+			\textbf{Ohne das hätte ich die Oberstufe nicht geschafft:}\\\stdmotivation\\
+			\textbf{Lebensmotto:}\\\stdquote\\
+			\textbf{Zukunftspläne:}\\\stdfuture\\~\\
+		\end{normalsize}
+	\end{minipage}
+
+	% Comments
+	\def\commentswidth{0.7\linewidth}
+	\ifoddpage
+		\def\commentsx{\framewidth}
+	\else
+		\def\commentsx{-0cm}
+	\fi
+
+}
 
 % Characteristics
 \providecommand\studentchar[1]{
@@ -119,11 +136,3 @@
 		\fi
 	\end{figure}
 }
-
-% Comments
-\def\commentswidth{0.7\linewidth}
-\ifoddpage
-	\def\commentsx{\framewidth}
-\else
-	\def\commentsx{-0cm}
-\fi

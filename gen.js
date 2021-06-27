@@ -61,13 +61,18 @@ db.dump().then(async (data) => {
         obj.qrcode = sanitizeQR(answer("QR-Code Text (z.B. Social Media Links, random Text, whatever)"));
         if (obj.qrcode === "nichts") obj.qrcode = "";
 
+        textex += `\\student\n`;
+
         // 5head
         let textex = "";
         for (elem of Object.keys(obj)) {
             textex += `\\def\\std${elem}{${obj[elem]}}`;
         }
 
-        textex += `\\student\\studentbackground{${obj.id}}{${obj.qrcode}}\n\n`;
+        textex += `\\studentbackground{${obj.id}}{${obj.qrcode}}\n`;
+
+        textex +=
+            "\\AddToShipoutPictureBG*{\\AtTextUpperLeft{\\put(0, -225pt){\\begin{minipage}{\\linewidth}\\studentinit\n";
 
         // Characteristics olympics kinetics acoustics
         textex += "\\begin{center}\\begin{minipage}{0.75\\paperwidth}\\begin{center}\n";
@@ -92,7 +97,7 @@ db.dump().then(async (data) => {
         // Comments contents intents indents events
         if (comments && comments.length > 0) {
             textex +=
-                "\n\n\\begin{small}\\renewcommand{\\arraystretch}{1.5}\\hspace*{\\commentsx}\\begin{tabularx}{\\commentswidth}{*{2}{>{\\RaggedRight\\arraybackslash}X}}";
+                "\n\n\\begin{small}\\renewcommand{\\arraystretch}{1.5}\\hspace*{\\commentsx}\\begin{tabularx}{\\commentswidth}{*{2}{>{\\RaggedRight\\arraybackslash}X}}\n";
             for (let i = 0; i < comments.length; i += 2) {
                 const first = comments[i].comment;
                 if (comments[i] && !comments[i + 1]) {
@@ -104,8 +109,10 @@ db.dump().then(async (data) => {
                 textex += `${first} & ${second} \\\\\n`;
                 if (i + 2 < comments.length) textex += " \\specialrule{.03em}{0em}{0em}\n";
             }
-            textex += "\\end{tabularx}\\renewcommand{\\arraystretch}{1}\\end{small}";
+            textex += "\\end{tabularx}\\renewcommand{\\arraystretch}{1}\\end{small}\n";
         }
+
+        textex += "\\end{minipage}}}}";
 
         await fs.writeFile(
             __dirname + "/zeitung/parts/generated/students/" + user.class + "/" + user.username + ".tex",
@@ -241,5 +248,8 @@ db.dump().then(async (data) => {
     }
     await fs.writeFile(__dirname + "/zeitung/parts/generated/teacherprofiles.tex", textex, "utf8");
 
-    console.log("Probably finished?");
+    setTimeout(() => {
+        console.log("Finished!");
+        process.exit(0);
+    }, 100);
 });
