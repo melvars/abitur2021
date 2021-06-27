@@ -23,9 +23,9 @@
 	\def\ringwidth{250pt}
 	\def\ringimgwidth{180pt}
 	\def\ringoffset{(\ringwidth - \ringimgwidth) / 2}
-	\ifoddpage\else
+	\ifoddpage
 		\def\ringx{-\paperwidth - 325pt} % ringwidth + 2 * ringx % Nope, idk anymore
-	\fi
+	\else\fi
 
 	% Frame and QR-Code
 	\def\framex{160pt}
@@ -34,10 +34,10 @@
 	\def\frameimgwidth{160pt}
 	\def\frameoffset{(\framewidth - \frameimgwidth) / 2}
 	\def\qrcodex{90pt}
-	\ifoddpage\else
+	\ifoddpage
 		\def\framex{540pt} % paperwidth - framewidth / 2 % Nope, idk anymore
 		\def\qrcodex{470pt}
-	\fi
+	\else\fi
 
 	\AddToShipoutPictureBG*{
 		\AtTextUpperLeft{
@@ -62,7 +62,7 @@
 				\includegraphics[keepaspectratio=true, width=\frameimgwidth]{\imgpath}
 			}
 			\put(\textwidth - \framex, \framey){
-				\oddflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
+				\evenflip[keepaspectratio=true, width=\framewidth]{rahmen.png}
 			}
 			\put(\textwidth - \qrcodex, \framey - 25pt){
 				\def\stdqrcode{#2}
@@ -71,7 +71,7 @@
 				}
 			}
 			\put(\textwidth - \qrcodex, 250pt){
-				\oddflip[keepaspectratio=true, height=3cm]{captain.png}
+				\evenflip[keepaspectratio=true, height=3cm]{captain.png}
 			}
 		}
 	}
@@ -79,11 +79,11 @@
 
 % Steckbrief Tabelle
 \ifoddpage
-	\def\tablex{0.5\linewidth}
-	\def\tablewidth{0.55\linewidth} % Left side
-\else
 	\def\tablex{-0cm}
 	\def\tablewidth{0.55\linewidth} % Right side
+\else
+	\def\tablex{0.5\linewidth}
+	\def\tablewidth{0.55\linewidth} % Left side
 \fi
 
 \hspace*{\tablex}\vspace*{1.4cm}\begin{minipage}{\tablewidth}
@@ -113,9 +113,9 @@
 \providecommand\divider{
 	\begin{figure}[H]
 		\ifoddpage
-			\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
-		\else
 			\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle_r.png}
+		\else
+			\hspace*{-1.5cm}\includegraphics[keepaspectratio=true, width=\paperwidth]{mittelwelle.png}
 		\fi
 	\end{figure}
 }
@@ -123,7 +123,7 @@
 % Comments
 \def\commentswidth{0.7\linewidth}
 \ifoddpage
-	\def\commentsx{-0cm}
-\else
 	\def\commentsx{\framewidth}
+\else
+	\def\commentsx{-0cm}
 \fi

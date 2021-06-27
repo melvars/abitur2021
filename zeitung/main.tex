@@ -53,6 +53,14 @@
 	\fi
 }
 
+% Flip image if even
+\newcommand\evenflip[2][]{
+	\checkoddpage
+	\ifoddpage\scalebox{-1}[1]{\includegraphics[#1]{#2}}
+	\else\includegraphics[#1]{#2}
+	\fi
+}
+
 \newcommand\disableheader{
 	\backgroundsetup{contents={}}
 }
@@ -126,11 +134,11 @@
 \fancyfootoffset{1.5cm}
 \fancyhf{}
 \fancyhead[L]{\hspace*{1cm}\vspace*{0cm}{\cartamarina\Huge{\rightmark}}}
-\fancyfoot[R]{\vspace*{-0.8cm}\oddflip[keepaspectratio=true, width=\paperwidth]{welle.png}}
+\fancyfoot[R]{\vspace*{-0.8cm}\evenflip[keepaspectratio=true, width=\paperwidth]{welle.png}}
 \fancyfoot[L]{
 	% Hacky but works :)
 	\checkoddpage
-	\begin{textblock*}{1cm}(\ifoddpage 1.4cm \else 18.6cm \fi, \paperheight-2.1cm)
+	\begin{textblock*}{1cm}(\ifoddpage 18.6cm \else 1.4cm \fi, \paperheight-2.1cm)
 		\begin{center}
 			\huge{\thepage}
 		\end{center}
