@@ -22,7 +22,7 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage[absolute,overlay]{textpos}
-%\usepackage[cam,width=213truemm,height=300truemm,center]{crop} % 3mm print padding
+% \usepackage[cam,width=216truemm,height=303truemm,center]{crop} % 3mm print padding on each side
 \backgroundsetup{contents={}}
 
 % Font % TODO: Colored emojis? (very hard)
@@ -183,7 +183,11 @@
 \def\generated#1{\input{parts/generated/#1.tex}}
 
 % \part{titlepage}
+% \disableheader
+% \thispagestyle{empty}
+% \null\newpage
 \enableheader
+
 \part{tableofcontents}
 \part{introduction}
 \adverthalfnorot{gardena}
@@ -202,6 +206,7 @@
 \disableheader
 \thispagestyle{empty}
 \null\newpage
+\enableheader
 
 % \advert{asb}
 % \part{final}
